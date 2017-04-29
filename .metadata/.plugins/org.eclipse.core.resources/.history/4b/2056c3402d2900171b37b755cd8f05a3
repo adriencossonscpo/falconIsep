@@ -1,0 +1,120 @@
+package com.falcon.avisep.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
+import com.falcon.avisep.domain.VTeacher;
+
+import com.falcon.avisep.repository.VTeacherRepository;
+import com.falcon.avisep.web.rest.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * REST controller for managing VTeacher.
+ */
+@RestController
+@RequestMapping("/api")
+public class VTeacherResource {
+
+    private final Logger log = LoggerFactory.getLogger(VTeacherResource.class);
+
+    private static final String ENTITY_NAME = "vTeacher";
+        
+    private final VTeacherRepository vTeacherRepository;
+
+    public VTeacherResource(VTeacherRepository vTeacherRepository) {
+        this.vTeacherRepository = vTeacherRepository;
+    }
+
+    /**
+     * POST  /v-teachers : Create a new vTeacher.
+     *
+     * @param vTeacher the vTeacher to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new vTeacher, or with status 400 (Bad Request) if the vTeacher has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/v-teachers")
+    @Timed
+    public ResponseEntity<VTeacher> createVTeacher(@Valid @RequestBody VTeacher vTeacher) throws URISyntaxException {
+        log.debug("REST request to save VTeacher : {}", vTeacher);
+        if (vTeacher.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new vTeacher cannot already have an ID")).body(null);
+        }
+        VTeacher result = vTeacherRepository.save(vTeacher);
+        return ResponseEntity.created(new URI("/api/v-teachers/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /v-teachers : Updates an existing vTeacher.
+     *
+     * @param vTeacher the vTeacher to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated vTeacher,
+     * or with status 400 (Bad Request) if the vTeacher is not valid,
+     * or with status 500 (Internal Server Error) if the vTeacher couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/v-teachers")
+    @Timed
+    public ResponseEntity<VTeacher> updateVTeacher(@Valid @RequestBody VTeacher vTeacher) throws URISyntaxException {
+        log.debug("REST request to update VTeacher : {}", vTeacher);
+        if (vTeacher.getId() == null) {
+            return createVTeacher(vTeacher);
+        }
+        VTeacher result = vTeacherRepository.save(vTeacher);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, vTeacher.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /v-teachers : get all the vTeachers.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of vTeachers in body
+     */
+    @GetMapping("/v-teachers")
+    @Timed
+    public List<VTeacher> getAllVTeachers() {
+        log.debug("REST request to get all VTeachers");
+        List<VTeacher> vTeachers = vTeacherRepository.findAll();
+        return vTeachers;
+    }
+
+    /**
+     * GET  /v-teachers/:id : get the "id" vTeacher.
+     *
+     * @param id the id of the vTeacher to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the vTeacher, or with status 404 (Not Found)
+     */
+    @GetMapping("/v-teachers/{id}")
+    @Timed
+    public ResponseEntity<VTeacher> getVTeacher(@PathVariable Long id) {
+        log.debug("REST request to get VTeacher : {}", id);
+        VTeacher vTeacher = vTeacherRepository.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(vTeacher));
+    }
+
+    /**
+     * DELETE  /v-teachers/:id : delete the "id" vTeacher.
+     *
+     * @param id the id of the vTeacher to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/v-teachers/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteVTeacher(@PathVariable Long id) {
+        log.debug("REST request to delete VTeacher : {}", id);
+        vTeacherRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+}

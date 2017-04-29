@@ -1,0 +1,103 @@
+package com.falcon.avisep.controllers;
+
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.falcon.avisep.model.Module;
+import com.falcon.avisep.repository.ModuleRepository;
+import com.falcon.avisep.util.HeaderUtil;
+
+/**
+ * REST controller for managing Module.
+ */
+@RestController
+@RequestMapping("/api")
+public class ModuleResource {
+
+    private final Logger log = LoggerFactory.getLogger(ModuleResource.class);
+
+    private static final String ENTITY_NAME = "module";
+        
+    private final ModuleRepository moduleRepository;
+
+    public ModuleResource(ModuleRepository moduleRepository) {
+        this.moduleRepository = moduleRepository;
+    }
+
+    /**
+     * POST  /modules : Create a new module.
+     */
+    @PostMapping("/modules")
+    public ResponseEntity<Module> createModule(@Valid @RequestBody Module module) throws URISyntaxException {
+        log.debug("REST request to save Module : {}", module);
+        if (module.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new module cannot already have an ID")).body(null);
+        }
+        Module result = moduleRepository.save(module);
+        return ResponseEntity.created(new URI("/api/modules/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /modules : Updates an existing module.
+     */
+    @PutMapping("/modules")
+    public ResponseEntity<Module> updateModule(@Valid @RequestBody Module module) throws URISyntaxException {
+        log.debug("REST request to update Module : {}", module);
+        if (module.getId() == null) {
+            return createModule(module);
+        }
+        Module result = moduleRepository.save(module);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, module.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /modules : get all the modules.
+     */
+    @GetMapping("/modules")
+    public List<Module> getAllModules() {
+        log.debug("REST request to get all Modules");
+        List<Module> modules = moduleRepository.findAll();
+        return modules;
+    }
+
+    /**
+     * GET  /modules/:id : get the "id" module.
+     */
+//    @GetMapping("/modules/{id}")
+//    public ResponseEntity<Module> getModule(@PathVariable Long id) {
+//        log.debug("REST request to get Module : {}", id);
+//        Module module = moduleRepository.findOne(id);
+//        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(module));
+//    }
+
+    /**
+     * DELETE  /modules/:id : delete the "id" module.
+     */
+    @DeleteMapping("/modules/{id}")
+    public ResponseEntity<Void> deleteModule(@PathVariable Long id) {
+        log.debug("REST request to delete Module : {}", id);
+        moduleRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+}

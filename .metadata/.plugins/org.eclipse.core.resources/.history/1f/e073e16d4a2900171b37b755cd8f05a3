@@ -1,0 +1,163 @@
+package com.falcon.avisep.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
+
+/**
+ * A Form.
+ */
+@Entity
+@Table(name = "form")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Form implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long formId;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @NotNull
+    @JoinTable(name = "form_template",
+               joinColumns = @JoinColumn(name="forms_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="templates_id", referencedColumnName="id"))
+    private Set<Template> templates = new HashSet<Template>();
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Question question;
+
+    @OneToOne(mappedBy = "form")
+    @JsonIgnore
+    private VTeacher vTeacher;
+
+    @ManyToOne
+    private AdminAvis admin;
+
+    @ManyToOne
+    private ETeacher eTeacher;
+
+    public Long getId() {
+        return formId;
+    }
+
+    public void setId(Long id) {
+        this.formId = id;
+    }
+
+    public Set<Template> getTemplates() {
+        return templates;
+    }
+
+    public Form templates(Set<Template> templates) {
+        this.templates = templates;
+        return this;
+    }
+
+    public Form addTemplate(Template template) {
+        this.templates.add(template);
+        template.getForms().add(this);
+        return this;
+    }
+
+    public Form removeTemplate(Template template) {
+        this.templates.remove(template);
+        template.getForms().remove(this);
+        return this;
+    }
+
+    public void setTemplates(Set<Template> templates) {
+        this.templates = templates;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public Form question(Question question) {
+        this.question = question;
+        return this;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public VTeacher getVTeacher() {
+        return vTeacher;
+    }
+
+    public Form vTeacher(VTeacher vTeacher) {
+        this.vTeacher = vTeacher;
+        return this;
+    }
+
+    public void setVTeacher(VTeacher vTeacher) {
+        this.vTeacher = vTeacher;
+    }
+
+    public AdminAvis getAdmin() {
+        return admin;
+    }
+
+    public Form admin(AdminAvis adminAvis) {
+        this.admin = adminAvis;
+        return this;
+    }
+
+    public void setAdmin(AdminAvis adminAvis) {
+        this.admin = adminAvis;
+    }
+
+    public ETeacher getETeacher() {
+        return eTeacher;
+    }
+
+    public Form eTeacher(ETeacher eTeacher) {
+        this.eTeacher = eTeacher;
+        return this;
+    }
+
+    public void setETeacher(ETeacher eTeacher) {
+        this.eTeacher = eTeacher;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Form form = (Form) o;
+        if (form.formId == null || formId == null) {
+            return false;
+        }
+        return Objects.equals(formId, form.formId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(formId);
+    }
+
+    @Override
+    public String toString() {
+        return "Form{" +
+            "id=" + formId +
+            ", formId='" + formId + "'" +
+            '}';
+    }
+}

@@ -1,0 +1,102 @@
+package com.falcon.avisep.controllers;
+
+
+import com.falcon.avisep.repository.QuestionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+/**
+ * REST controller for managing Question.
+ */
+@RestController
+@RequestMapping("/api")
+public class QuestionResource {
+
+    private final Logger log = LoggerFactory.getLogger(QuestionResource.class);
+
+    private static final String ENTITY_NAME = "question";
+        
+    private final QuestionRepository questionRepository;
+
+    public QuestionResource(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
+
+    /**
+     * POST  /questions : Create a new question.
+     */
+    @PostMapping("/questions")
+    public ResponseEntity<Question> createQuestion(@Valid @RequestBody Question question) throws URISyntaxException {
+        log.debug("REST request to save Question : {}", question);
+        if (question.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new question cannot already have an ID")).body(null);
+        }
+        Question result = questionRepository.save(question);
+        return ResponseEntity.created(new URI("/api/questions/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /questions : Updates an existing question.
+     */
+    @PutMapping("/questions")
+    public ResponseEntity<Question> updateQuestion(@Valid @RequestBody Question question) throws URISyntaxException {
+        log.debug("REST request to update Question : {}", question);
+        if (question.getId() == null) {
+            return createQuestion(question);
+        }
+        Question result = questionRepository.save(question);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, question.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /questions : get all the questions.
+     */
+    @GetMapping("/questions")
+    public List<Question> getAllQuestions(@RequestParam(required = false) String filter) {
+        if ("form-is-null".equals(filter)) {
+            log.debug("REST request to get all Questions where form is null");
+            return StreamSupport
+                .stream(questionRepository.findAll().spliterator(), false)
+                .filter(question -> question.getForm() == null)
+                .collect(Collectors.toList());
+        }
+        log.debug("REST request to get all Questions");
+        List<Question> questions = questionRepository.findAll();
+        return questions;
+    }
+
+    /**
+     * GET  /questions/:id : get the "id" question.
+     */
+//    @GetMapping("/questions/{id}")
+//    public ResponseEntity<Question> getQuestion(@PathVariable Long id) {
+//        log.debug("REST request to get Question : {}", id);
+//        Question question = questionRepository.findOne(id);
+//        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(question));
+//    }
+
+    /**
+     * DELETE  /questions/:id : delete the "id" question.
+     */
+    @DeleteMapping("/questions/{id}")
+    public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
+        log.debug("REST request to delete Question : {}", id);
+        questionRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+}

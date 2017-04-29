@@ -1,0 +1,120 @@
+package com.falcon.avisep.controllers;
+
+import com.codahale.metrics.annotation.Timed;
+import com.falcon.avisep.domain.AdminAvis;
+
+import com.falcon.avisep.repository.AdminAvisRepository;
+import com.falcon.avisep.web.rest.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * REST controller for managing AdminAvis.
+ */
+@RestController
+@RequestMapping("/api")
+public class AdminAvisResource {
+
+    private final Logger log = LoggerFactory.getLogger(AdminAvisResource.class);
+
+    private static final String ENTITY_NAME = "adminAvis";
+        
+    private final AdminAvisRepository adminAvisRepository;
+
+    public AdminAvisResource(AdminAvisRepository adminAvisRepository) {
+        this.adminAvisRepository = adminAvisRepository;
+    }
+
+    /**
+     * POST  /admin-avis : Create a new adminAvis.
+     *
+     * @param adminAvis the adminAvis to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new adminAvis, or with status 400 (Bad Request) if the adminAvis has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/admin-avis")
+    @Timed
+    public ResponseEntity<AdminAvis> createAdminAvis(@Valid @RequestBody AdminAvis adminAvis) throws URISyntaxException {
+        log.debug("REST request to save AdminAvis : {}", adminAvis);
+        if (adminAvis.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new adminAvis cannot already have an ID")).body(null);
+        }
+        AdminAvis result = adminAvisRepository.save(adminAvis);
+        return ResponseEntity.created(new URI("/api/admin-avis/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /admin-avis : Updates an existing adminAvis.
+     *
+     * @param adminAvis the adminAvis to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated adminAvis,
+     * or with status 400 (Bad Request) if the adminAvis is not valid,
+     * or with status 500 (Internal Server Error) if the adminAvis couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/admin-avis")
+    @Timed
+    public ResponseEntity<AdminAvis> updateAdminAvis(@Valid @RequestBody AdminAvis adminAvis) throws URISyntaxException {
+        log.debug("REST request to update AdminAvis : {}", adminAvis);
+        if (adminAvis.getId() == null) {
+            return createAdminAvis(adminAvis);
+        }
+        AdminAvis result = adminAvisRepository.save(adminAvis);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, adminAvis.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /admin-avis : get all the adminAvis.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of adminAvis in body
+     */
+    @GetMapping("/admin-avis")
+    @Timed
+    public List<AdminAvis> getAllAdminAvis() {
+        log.debug("REST request to get all AdminAvis");
+        List<AdminAvis> adminAvis = adminAvisRepository.findAll();
+        return adminAvis;
+    }
+
+    /**
+     * GET  /admin-avis/:id : get the "id" adminAvis.
+     *
+     * @param id the id of the adminAvis to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the adminAvis, or with status 404 (Not Found)
+     */
+    @GetMapping("/admin-avis/{id}")
+    @Timed
+    public ResponseEntity<AdminAvis> getAdminAvis(@PathVariable Long id) {
+        log.debug("REST request to get AdminAvis : {}", id);
+        AdminAvis adminAvis = adminAvisRepository.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(adminAvis));
+    }
+
+    /**
+     * DELETE  /admin-avis/:id : delete the "id" adminAvis.
+     *
+     * @param id the id of the adminAvis to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/admin-avis/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteAdminAvis(@PathVariable Long id) {
+        log.debug("REST request to delete AdminAvis : {}", id);
+        adminAvisRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+}

@@ -1,0 +1,22 @@
+package com.falcon.avisep.repository;
+
+import com.falcon.avisep.domain.UserAvis;
+
+import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+/**
+ * Spring Data JPA repository for the UserAvis entity.
+ */
+@SuppressWarnings("unused")
+public interface UserAvisRepository extends JpaRepository<UserAvis,Long> {
+
+    @Query("select distinct userAvis from UserAvis userAvis left join fetch userAvis.classes")
+    List<UserAvis> findAllWithEagerRelationships();
+
+    @Query("select userAvis from UserAvis userAvis left join fetch userAvis.classes where userAvis.id =:id")
+    UserAvis findOneWithEagerRelationships(@Param("id") Long id);
+
+}

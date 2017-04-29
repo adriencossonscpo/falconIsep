@@ -1,0 +1,15 @@
+package com.falcon.avisep.repository;
+
+import com.falcon.avisep.domain.VTeacher;
+
+import org.springframework.data.jpa.repository.*;
+
+import java.util.List;
+
+/**
+ * Spring Data JPA repository for the VTeacher entity.
+ */
+@SuppressWarnings("unused")
+public interface VTeacherRepository extends JpaRepository<VTeacher,Long> {
+
+}

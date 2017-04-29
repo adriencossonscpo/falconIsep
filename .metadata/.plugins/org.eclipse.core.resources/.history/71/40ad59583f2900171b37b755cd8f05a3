@@ -1,0 +1,71 @@
+package com.falcon.avisep.controllers;
+
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.falcon.avisep.model.UserAvis;
+import com.falcon.avisep.repository.UserAvisRepository;
+import com.falcon.avisep.util.HeaderUtil;
+
+/**
+ * REST controller for managing UserAvis.
+ */
+@RestController
+@RequestMapping("/avisepUser")
+public class UserAvisResource {
+
+    private final Logger log = LoggerFactory.getLogger(UserAvisResource.class);
+    private static final String ENTITY_NAME = "userAvis";
+        
+    private final UserAvisRepository userAvisRepository;
+
+    public UserAvisResource(UserAvisRepository userAvisRepository) {
+        this.userAvisRepository = userAvisRepository;
+    }
+
+    @RequestMapping("listaconvidados")
+	public String listaConvidados(Model model){
+		
+		Iterable<Convidado> convidados = service.obterTodos();
+		
+		model.addAttribute("convidados", convidados);
+		
+		return "listaconvidados";
+	}
+	
+	@RequestMapping(value = "salvar", method = RequestMethod.POST )
+	public String saveUser(@RequestParam("nome") String nome, @RequestParam("email")String email, 
+			@RequestParam("telefone") String telefone, Model model){
+		
+		UserAvis userAvis = new userAvis();
+		
+		userAvisRepository.save(userAvis);
+		
+		//new EmailService().enviar(nome, email);
+		
+		Iterable<Convidado> convidados = service.obterTodos();
+		
+		
+		model.addAttribute("convidados", convidados);
+		
+		return "listaconvidados";
+		
+	}
+}

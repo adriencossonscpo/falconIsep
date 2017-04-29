@@ -1,0 +1,103 @@
+package com.falcon.avisep.controllers;
+
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.falcon.avisep.model.Salle;
+import com.falcon.avisep.repository.SalleRepository;
+import com.falcon.avisep.util.HeaderUtil;
+
+/**
+ * REST controller for managing Salle.
+ */
+@RestController
+@RequestMapping("/api")
+public class SalleResource {
+
+    private final Logger log = LoggerFactory.getLogger(SalleResource.class);
+
+    private static final String ENTITY_NAME = "salle";
+        
+    private final SalleRepository salleRepository;
+
+    public SalleResource(SalleRepository salleRepository) {
+        this.salleRepository = salleRepository;
+    }
+
+    /**
+     * POST  /salles : Create a new salle.
+     */
+    @PostMapping("/salles")
+    public ResponseEntity<Salle> createSalle(@Valid @RequestBody Salle salle) throws URISyntaxException {
+        log.debug("REST request to save Salle : {}", salle);
+        if (salle.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new salle cannot already have an ID")).body(null);
+        }
+        Salle result = salleRepository.save(salle);
+        return ResponseEntity.created(new URI("/api/salles/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /salles : Updates an existing salle.
+     */
+    @PutMapping("/salles")
+    public ResponseEntity<Salle> updateSalle(@Valid @RequestBody Salle salle) throws URISyntaxException {
+        log.debug("REST request to update Salle : {}", salle);
+        if (salle.getId() == null) {
+            return createSalle(salle);
+        }
+        Salle result = salleRepository.save(salle);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, salle.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /salles : get all the salles.
+     */
+    @GetMapping("/salles")
+    public List<Salle> getAllSalles() {
+        log.debug("REST request to get all Salles");
+        List<Salle> salles = (List<Salle>) salleRepository.findAll();
+        return salles;
+    }
+
+    /**
+     * GET  /salles/:id : get the "id" salle.
+     */
+//    @GetMapping("/salles/{id}")
+//    public ResponseEntity<Salle> getSalle(@PathVariable Long id) {
+//        log.debug("REST request to get Salle : {}", id);
+//        Salle salle = salleRepository.findOne(id);
+//        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(salle));
+//    }
+
+    /**
+     * DELETE  /salles/:id : delete the "id" salle.
+     */
+    @DeleteMapping("/salles/{id}")
+    public ResponseEntity<Void> deleteSalle(@PathVariable Long id) {
+        log.debug("REST request to delete Salle : {}", id);
+        salleRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+}

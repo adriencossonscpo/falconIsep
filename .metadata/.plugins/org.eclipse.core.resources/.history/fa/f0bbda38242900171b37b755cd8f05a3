@@ -1,0 +1,110 @@
+package com.falcon.avisep.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
+
+/**
+ * A ETeacher.
+ */
+@Entity
+@Table(name = "e_teacher")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class ETeacher implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
+
+    @Column(name = "et_id")
+    private Integer etId;
+
+    @OneToMany(mappedBy = "eTeacher")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Form> forms = new HashSet<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getEtId() {
+        return etId;
+    }
+
+    public ETeacher etId(Integer etId) {
+        this.etId = etId;
+        return this;
+    }
+
+    public void setEtId(Integer etId) {
+        this.etId = etId;
+    }
+
+    public Set<Form> getForms() {
+        return forms;
+    }
+
+    public ETeacher forms(Set<Form> forms) {
+        this.forms = forms;
+        return this;
+    }
+
+    public ETeacher addForm(Form form) {
+        this.forms.add(form);
+        form.setETeacher(this);
+        return this;
+    }
+
+    public ETeacher removeForm(Form form) {
+        this.forms.remove(form);
+        form.setETeacher(null);
+        return this;
+    }
+
+    public void setForms(Set<Form> forms) {
+        this.forms = forms;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ETeacher eTeacher = (ETeacher) o;
+        if (eTeacher.id == null || id == null) {
+            return false;
+        }
+        return Objects.equals(id, eTeacher.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "ETeacher{" +
+            "id=" + id +
+            ", etId='" + etId + "'" +
+            '}';
+    }
+}
