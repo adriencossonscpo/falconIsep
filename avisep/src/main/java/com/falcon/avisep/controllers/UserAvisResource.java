@@ -40,8 +40,66 @@ public class UserAvisResource {
 	public String index(){
 		return "index";
 	}
-    @RequestMapping("displayUser")
+    
+    // Some Mapping to navigate in the pages of the app
+    // Student main page after being connected
+    @RequestMapping("welcomeStudent")
 	public String consultUsers(Model model){
+    	Iterable<UserAvis> userAvis = null;
+		if(userAvisRepository.findAll()!=null){
+			userAvis = userAvisRepository.findAll();
+			model.addAttribute("userAvis", userAvis);
+		}else {model.addAttribute("userAvis", null);}
+		
+		return "welcomeStudent";
+	}
+    // Teacher main page after being connected
+    @RequestMapping("welcomeTeacher")
+	public String consultUsers1(Model model){
+    	Iterable<UserAvis> userAvis = null;
+		if(userAvisRepository.findAll()!=null){
+			userAvis = userAvisRepository.findAll();
+			model.addAttribute("userAvis", userAvis);
+		}else {model.addAttribute("userAvis", null);}
+		
+		return "welcomeTeacher";
+	}
+    // Admin main page after being connected
+    @RequestMapping("welcomeAdmin")
+	public String consultUsers2(Model model){
+    	Iterable<UserAvis> userAvis = null;
+		if(userAvisRepository.findAll()!=null){
+			userAvis = userAvisRepository.findAll();
+			model.addAttribute("userAvis", userAvis);
+		}else {model.addAttribute("userAvis", null);}
+		
+		return "welcomeAdmin";
+	}
+    // Create and display forms
+    @RequestMapping("createForm")
+	public String consultUsers3(Model model){
+    	Iterable<UserAvis> userAvis = null;
+		if(userAvisRepository.findAll()!=null){
+			userAvis = userAvisRepository.findAll();
+			model.addAttribute("userAvis", userAvis);
+		}else {model.addAttribute("userAvis", null);}
+		
+		return "createForm";
+	}
+    // Display the form to answer
+    @RequestMapping("answerForm")
+	public String consultUsers4(Model model){
+    	Iterable<UserAvis> userAvis = null;
+		if(userAvisRepository.findAll()!=null){
+			userAvis = userAvisRepository.findAll();
+			model.addAttribute("userAvis", userAvis);
+		}else {model.addAttribute("userAvis", null);}
+		
+		return "answerForm";
+	}	
+    // Create and display new users
+    @RequestMapping("displayUser")
+	public String consultUsers5(Model model){
     	Iterable<UserAvis> userAvis = null;
 		if(userAvisRepository.findAll()!=null){
 			userAvis = userAvisRepository.findAll();

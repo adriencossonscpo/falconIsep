@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>AVISEP 0.1</title>
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Create Form !</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-	
+
 	
 <nav class="navbar navbar-default navabar-static-top">
   <div class="container-fluid">
@@ -44,21 +42,48 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-	
-	
-		<div class="container" >
-			<div class="jumbotron" align="center" style="margin-top: 50px;">
-				<h2>Welcome to AVISEP, the new evaluation system for courses, dedicated to ISEP</h2>
-				<div align="center">
-					<a href="welcomeStudent" class="btn btn-primary">Welcome Student</a>
-					<a href="welcomeTeacher" class="btn btn-primary">Welcome Teacher</a>
-					<a href="welcomeAdmin" class="btn btn-primary">Welcome Admin</a>
-					<a href="createForm" class="btn btn-primary">Create Form</a>
-					<a href="displayUser" class="btn btn-primary">Display User</a>
+
+
+<!-- Create form tab -->		
+<div class="container col-md-8 col-lg-8">
+	<ul class="nav nav-tabs">
+    	<li class="active"><a data-toggle="tab" href="#home">Course 2</a></li>
+	</ul>
+
+	<div class="tab-content">
+    	<div id="home" class="tab-pane fade in active">
+    		<div class="panel panel-default" align="center">
+    			<div class="panel panel-default" style="width:95%;margin:10px 0 10px 0">
+  					<div class="panel-heading">Choose your evaluation way</div>
+  					<div class="panel-body">
+						ROTI x Personal Survey
+  					</div>
 				</div>
-			</div>
-		</div>
-	
+				<div class="panel panel-default" style="width:95%;margin:10px 0 10px 0">
+  					<div class="panel-heading">Chose a template</div>
+  					<div class="panel-body">
+						For Courses, For Teachers ...
+  					</div>
+				</div>
+    		</div>
+    	</div>
+	</div>
+</div>
+
+<!-- Stats from last course in the same module -->		
+<div class="container col-md-4 col-lg-4">
+	<ul class="nav nav-tabs">
+    	<li class="active"><a data-toggle="tab" href="#home">Course 1 's Statistics</a></li>
+	</ul>
+
+	<div class="tab-content">
+    	<div id="home" class="tab-pane fade in active">
+    		<div class="panel panel-default">
+    			<h3 class="panel-body">Statistics coming from Course 1</h3>
+    		</div>
+    	</div>
+	</div>
+</div>
 
 </body>
 </html>
