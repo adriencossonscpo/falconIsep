@@ -88,11 +88,11 @@
         	<div class="row panel-body">
   				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
     				<div href="#" class="thumbnail well" style="height:141px;width:150px" align="center">Evaluated Course 1</div>
-    				<button href="#" class="btn btn-primary" style="margin-bottom:20px">See Your Answers</button>
+    				<button data-toggle="modal" data-target="#checkresults" class="btn btn-primary" style="margin-bottom:20px">See Your Answers</button>
   				</div>
   				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
     				<div href="#" class="thumbnail well" style="height:141px;width:150px" align="center">Evaluated Course 2</div>
-    				<button href="#" class="btn btn-primary" style="margin-bottom:20px">See Your Answers</button>
+    				<button data-toggle="modal" data-target="#checkresults" class="btn btn-primary" style="margin-bottom:20px">See Your Answers</button>
   				</div>
 			</div>
     	</div>
@@ -152,11 +152,12 @@
   </div>
 </div>
 
-<!-- Modal -->
+
+
+<!-- Modal to answer a Form -->
 <div id="answer" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -173,11 +174,12 @@
   </div>
 </div>
 
-<!-- Modal -->
+
+
+<!-- Modal to check answers + valid sent -->
 <div id="modalconfirm" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -191,7 +193,6 @@
       		<div class="panel-heading">Your answers</div>
       		<div class="panel-body">There will be displayed your answers</div>
     	</div>
-      
       </div>
       <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
@@ -199,6 +200,31 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- Modal to check answers -->
+<div id="checkresults" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your answers</h4>
+      </div>
+      <div class="modal-body">
+    	<div class="panel panel-default">
+      		<div class="panel-heading">Your answers</div>
+      		<div class="panel-body">There will be displayed your answers</div>
+    	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 </body>

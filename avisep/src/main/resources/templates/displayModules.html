@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>AVISEP</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+	<div class="container">
+
+		<div id="userAvis">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Module Name</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tr th:each="module : ${Module}">
+					<td><span th:text="${module.name}"></span></td>
+					<td><span th:text="${module.description}"></span></td>
+				</tr>
+
+			</table>
+		</div>
+		
+		<hr/>
+
+		<form action="saveModule" method="post">
+			<div class="form-group">
+				<label for="fname">Name</label> <input type="date"
+					class="form-control" id="name" name="name" placeholder="Module's Name" />
+			</div>
+			<div class="form-group">
+				<label for="lname">Module's Description</label> <textarea
+					class="form-control" id="description" name="description"></textarea>
+			</div>
+			
+			
+			<button type="submit" class="btn btn-success">Create Module</button>
+		</form>
+
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>
