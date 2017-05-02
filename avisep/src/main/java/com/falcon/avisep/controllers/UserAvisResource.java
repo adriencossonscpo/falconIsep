@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.falcon.avisep.enumeration.RoleAvis;
-import com.falcon.avisep.model.Classe;
-import com.falcon.avisep.model.Evaluation;
 import com.falcon.avisep.model.UserAvis;
 import com.falcon.avisep.repository.UserAvisRepository;
-
 /**
  * REST controller for managing UserAvis.
  */
@@ -108,12 +105,24 @@ public class UserAvisResource {
 		
 		return "displayUser";
 	}
-	
+    // Create and display new users
+    @RequestMapping("displayModules")
+	public String consultUsers6(Model model){
+    	Iterable<UserAvis> userAvis = null;
+		if(userAvisRepository.findAll()!=null){
+			userAvis = userAvisRepository.findAll();
+			model.addAttribute("userAvis", userAvis);
+		}else {model.addAttribute("userAvis", null);}
+		
+		return "displayModules";
+	}
+    
+	// Creating some users
 	@RequestMapping(value = "saveUserAvis", method = RequestMethod.POST )
 	public String saveUser(@RequestParam("firstN") String firstN, @RequestParam("lastN")String lastN, 
 			@RequestParam("login") String login,@RequestParam("email") String email,@RequestParam("password") String password, Model model){
 		
-		RoleAvis roleAvis=RoleAvis.STUDENT;
+		RoleAvis roleAvis=RoleAvis.ADMINAVIS;
 		UserAvis userAvis =new UserAvis(null,login,firstN,email, password,roleAvis,null, null);
 		userAvisRepository.saveAndFlush(userAvis);
 		//new EmailService().enviar(nome, email);

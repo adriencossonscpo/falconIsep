@@ -15,7 +15,7 @@ public class Configuration {
 //	    dataSource.setDriverClassName("org.postgresql.Driver");
 //	    dataSource.setUrl("jdbc:postgresql://localhost:5432/avisepdb");
 //	    dataSource.setUsername("postgres");
-//	    dataSource.setPassword("root92");
+//	    dataSource.setPassword("falconteama2");
 //	    return dataSource;
 //	}
 }

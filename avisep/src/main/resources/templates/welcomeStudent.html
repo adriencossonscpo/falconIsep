@@ -64,19 +64,19 @@
         	<div class="row panel-body">
   				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
     				<div href="#" class="thumbnail well" style="height:141px;width:150px" align="center">Available Survey 1</div>
-    				<button href="answerForm" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
+    				<button data-toggle="modal" data-target="#answer" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
   				</div>
   				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
     				<div href="#" class="thumbnail well" style="height:141px;width:150px" align="center">Available Survey 2</div>
-    				<button href="answerForm" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
+    				<button data-toggle="modal" data-target="#answer" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
   				</div>
   				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
     				<div href="#" class="thumbnail well" style="height:141px;width:150px" align="center">Available Survey 3</div>
-    				<button href="answerForm" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
+    				<button data-toggle="modal" data-target="#answer" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
   				</div>
   				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
     				<div href="#" class="thumbnail well" style="height:141px;width:150px" align="center">Available Survey 4</div>
-    				<button href="answerForm" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
+    				<button data-toggle="modal" data-target="#answer" class="btn btn-primary" style="margin-bottom:20px">Answer Form</button>
   				</div>
 			</div>
     	</div>
@@ -148,6 +148,54 @@
   				</div>
 			</div>
     	</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="answer" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Answer to this course</h4>
+      </div>
+      <div class="modal-body">
+        <p>There will be displayed the data</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-toggle="modal" data-target="#modalconfirm" class="btn btn-primary" data-dismiss="modal">Send Form</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modalconfirm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Box</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="alert alert-success">
+      		Your answers has been correctly sent.
+      	</div>
+    	<div class="panel panel-default">
+      		<div class="panel-heading">Your answers</div>
+      		<div class="panel-body">There will be displayed your answers</div>
+    	</div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+      </div>
     </div>
   </div>
 </div>
