@@ -52,8 +52,7 @@
   <ul class="nav nav-tabs" style="border-color:">
     <li class="active"><a data-toggle="tab" href="#home">Available Surveys <span class="badge" style="background-color:#428bca">4</span></a></li>
     <li><a data-toggle="tab" href="#menu1">Evaluated Courses <span class="badge" style="background-color:#428bca">2</span></a></li>
-    <li><a data-toggle="tab" href="#menu2">My Courses <span class="badge" style="background-color:#428bca">7</span></a></li>
-    <li><a data-toggle="tab" href="#menu3">My Modules <span class="badge" style="background-color:#428bca">5</span></a></li>
+    <li><a data-toggle="tab" href="#menu2">My Modules <span class="badge" style="background-color:#428bca">5</span></a></li>
   </ul>
 
   <div class="tab-content">
@@ -98,35 +97,6 @@
     	</div>
     </div>
     <div id="menu2" class="tab-pane fade">
-     	<div class="panel panel-default">
-    		<h3 class="panel-body">My Courses</h3>
-        	<p class="panel-body">Simple menu to check which courses you are registered in.</p>
-        	<div class="row panel-body">
-  				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    				<div class="thumbnail well" style="height:141px;width:150px" align="center">My Course 1</div>
-  				</div>
-  				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    				<div class="thumbnail well" style="height:141px;width:150px" align="center">My Course 2</div>
-  				</div>
-  				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    				<div class="thumbnail well" style="height:141px;width:150px" align="center">My Course 3</div>
-  				</div>
-  				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    				<div class="thumbnail well" style="height:141px;width:150px" align="center">My Course 4</div>
-  				</div>
-  				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    				<div class="thumbnail well" style="height:141px;width:150px" align="center">My Course 5</div>
-  				</div>
-  				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    				<div class="thumbnail well" style="height:141px;width:150px" align="center">My Course 6</div>
-  				</div>
-  				<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-    				<div class="thumbnail well" style="height:141px;width:150px" align="center">My Course 7</div>
-  				</div>
-			</div>
-    	</div>
-    </div>
-    <div id="menu3" class="tab-pane fade">
     	<div class="panel panel-default">
     		<h3 class="panel-body">My Modules</h3>
         	<p class="panel-body">Simple menu to check which modules you are registered in.</p>
@@ -164,7 +134,16 @@
         <h4 class="modal-title">Answer to this course</h4>
       </div>
       <div class="modal-body">
-        <p>There will be displayed the data</p>
+        <form action="#" method="POST">
+        		<div class="form-group">
+        			<label for="question">How was the course today ?</label>
+        			<input type="text" class="form-control" name="question1" placeholder="Define in one word" />
+        		</div>
+        		<div class="form-group">
+        			<label for="question">What was the most interesting part and why ?</label>
+        			<textarea class="form-control" name="question2"></textarea>
+        		</div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" data-toggle="modal" data-target="#modalconfirm" class="btn btn-primary" data-dismiss="modal">Send Form</button>
