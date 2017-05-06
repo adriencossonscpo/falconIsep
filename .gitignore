@@ -2,7 +2,10 @@ avisep/.classpath
 avisep/.settings
 avisep/.project
 avisep/pom.xml
-
+*.properties
+*.metadata
+RemoteSystemsTempFiles
+Servers
 
 # Compiled source #
 ###################
