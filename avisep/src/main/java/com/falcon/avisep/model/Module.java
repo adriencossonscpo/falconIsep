@@ -29,8 +29,8 @@ public class Module implements Serializable
 	protected Set<Cours> cours;
 
 	 
-	@javax.persistence.ManyToOne 
-	protected UserAvis userAvis;
+	@javax.persistence.ManyToMany(mappedBy = "module") 
+	protected Set<UserAvis> userAvis;
 
 	@javax.persistence.Id 
 	@javax.persistence.Column(nullable = false) 
@@ -39,20 +39,14 @@ public class Module implements Serializable
 	public Module(){
 		super();
 	}
-
-	public void basicSetUserAvis(UserAvis myUserAvis) {
-		if (this.userAvis != myUserAvis) {
-			if (myUserAvis != null){
-				if (this.userAvis != myUserAvis) {
-					UserAvis olduserAvis = this.userAvis;
-					this.userAvis = myUserAvis;
-					if (olduserAvis != null)
-						olduserAvis.removeModule(this);
-				}
-			}
+	public void addUserAvis(UserAvis newUserAvis) {
+		if(this.userAvis == null) {
+			this.userAvis = new HashSet<UserAvis>();
 		}
+		
+		if (this.userAvis.add(newUserAvis))
+			newUserAvis.addModule(this);
 	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -74,8 +68,11 @@ public class Module implements Serializable
 		return (Set<Cours>) this.cours;
 	}
 
-	public UserAvis getUserAvis() {
-		return this.userAvis;
+	public Set<UserAvis> getUserAvis() {
+		if(this.userAvis == null) {
+				this.userAvis = new HashSet<UserAvis>();
+		}
+		return (Set<UserAvis>) this.userAvis;
 	}
 
 	public long getModuleId() {
@@ -142,9 +139,13 @@ public class Module implements Serializable
 			newCours.basicSetModule(this);
 	}
 
-	public void setUserAvis(UserAvis myUserAvis) {
-		this.basicSetUserAvis(myUserAvis);
-		myUserAvis.addModule(this);
+	public void addAllUserAvis(Set<UserAvis> newUserAvis) {
+		if (this.userAvis == null) {
+			this.userAvis = new HashSet<UserAvis>();
+		}
+		for (UserAvis tmp : newUserAvis)
+			tmp.addModule(this);
+		
 	}
 
 	public void unsetName() {
@@ -172,13 +173,20 @@ public class Module implements Serializable
 			oldCours.unsetModule();
 		
 	}
-
-	public void unsetUserAvis() {
-		if (this.userAvis == null)
+	public void removeUserAvis(UserAvis oldUserAvis) {
+		if(this.userAvis == null)
 			return;
-		UserAvis olduserAvis = this.userAvis;
-		this.userAvis = null;
-		olduserAvis.removeModule(this);
+		
+		if (this.userAvis.remove(oldUserAvis))
+			oldUserAvis.removeModule(this);
+		
+	}
+	public void removeAllUserAvis(Set<UserAvis> newUserAvis) {
+		if(this.userAvis == null) {
+			return;
+		}
+		
+		this.userAvis.removeAll(newUserAvis);
 	}
 
 }

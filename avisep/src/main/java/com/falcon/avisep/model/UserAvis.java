@@ -39,7 +39,7 @@ public class UserAvis implements Serializable
 	protected Set<Classe> classe;
 
 	 
-	@javax.persistence.OneToMany(mappedBy = "userAvis", cascade = javax.persistence.CascadeType.ALL) 
+	@javax.persistence.ManyToMany(cascade = javax.persistence.CascadeType.ALL) 
 	protected Set<Module> module;
 
 	@javax.persistence.Id 
@@ -129,7 +129,7 @@ public class UserAvis implements Serializable
 			this.module = new HashSet<Module>();
 		}
 		for (Module tmp : newModule)
-			tmp.setUserAvis(this);
+			tmp.addUserAvis(this);
 		
 	}
 	public void removeAllRoleAvis(Set<RoleAvis> newRoleAvis) {
@@ -213,7 +213,7 @@ public class UserAvis implements Serializable
 		}
 		
 		if (this.module.add(newModule))
-			newModule.basicSetUserAvis(this);
+			newModule.addUserAvis(this);
 	}
 
 	public void unsetLastName() {
@@ -263,7 +263,7 @@ public class UserAvis implements Serializable
 			return;
 		
 		if (this.module.remove(oldModule))
-			oldModule.unsetUserAvis();
+			oldModule.removeUserAvis(this);
 		
 	}
 
