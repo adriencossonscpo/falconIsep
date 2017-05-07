@@ -108,7 +108,7 @@ public class UserAvisResource {
 	public String saveUser(@RequestParam("firstN") String firstN, @RequestParam("lastN")String lastN, 
 			@RequestParam("login") String login,@RequestParam("email") String email,@RequestParam("password") String password, Model model){
 		
-		com.falcon.avisep.model.RoleAvis roleAvis=com.falcon.avisep.model.RoleAvis.AdminAvis;
+		com.falcon.avisep.model.RoleAvis roleAvis=com.falcon.avisep.model.RoleAvis.ROLE_ADMIN;
 		UserAvis userAvis =new UserAvis();
 		//login,firstN,email, password,roleAvis,
 		userAvis.setLogin(login);
