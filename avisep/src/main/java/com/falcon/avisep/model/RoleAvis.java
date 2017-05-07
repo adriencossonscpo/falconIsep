@@ -2,5 +2,5 @@ package com.falcon.avisep.model;
 
 public enum RoleAvis
 {
-	Student, ETeacher, VTeacher, AdminAvis;
+	ROLE_STUDENT, ROLE_ETEACHER, ROLE_VTEACHER, ROLE_ADMIN;
 }

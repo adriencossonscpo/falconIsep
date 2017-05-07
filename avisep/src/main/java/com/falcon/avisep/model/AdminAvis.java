@@ -10,9 +10,6 @@ public class AdminAvis  extends UserAvis implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = -1509526703375926269L;
-
-	@javax.persistence.Column 
-	protected Integer adminId;
 	
 	@javax.persistence.OneToMany(mappedBy = "admin") 
 	protected Set<Form> form;
@@ -21,9 +18,6 @@ public class AdminAvis  extends UserAvis implements Serializable
 		super();
 	}
 
-	public Integer getAdminId() {
-		return this.adminId;
-	}
 
 	public Set<Form> getForm() {
 		if(this.form == null) {
@@ -49,9 +43,6 @@ public class AdminAvis  extends UserAvis implements Serializable
 		this.form.removeAll(newForm);
 	}
 
-	public void setAdminId(Integer myAdminId) {
-		this.adminId = myAdminId;
-	}
 
 	public void addForm(Form newForm) {
 		if(this.form == null) {
@@ -62,9 +53,6 @@ public class AdminAvis  extends UserAvis implements Serializable
 			newForm.basicSetAdmin(this);
 	}
 
-	public void unsetAdminId() {
-		this.adminId = null;
-	}
 
 	public void removeForm(Form oldForm) {
 		if(this.form == null)
