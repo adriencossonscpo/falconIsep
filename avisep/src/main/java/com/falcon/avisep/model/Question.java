@@ -2,252 +2,225 @@ package com.falcon.avisep.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-/**
- * A Question.
- */
-@Entity
-@Table(name = "question")
-public class Question implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long qId;
 
 
-    @Column(name = "in_template")
-    private String inTemplate;
+ 
+@javax.persistence.Entity 
+public class Question implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3980318607063807474L;
 
-    @Column(name = "as_pertinance")
-    private String asPertinance;
+	@javax.persistence.Column 
+	protected String inTemplate;
 
-    @Column(name = "is_pertinent")
-    private Boolean isPertinent;
+	@javax.persistence.Column 
+	protected String asPertinance;
 
-    @Column(name = "content")
-    private String content;
+	@javax.persistence.Column 
+	protected Boolean isPertinent;
 
-    @Column(name = "q_type")
-    private String qType;
+	@javax.persistence.Column 
+	protected String content;
+	 
+	@javax.persistence.Column 
+	protected String qType;
 
-    @OneToMany(mappedBy = "question")
-    @JsonIgnore
-    private Set<Evaluation> evaluations = new HashSet<Evaluation>();
+	@javax.persistence.OneToOne 
+	protected Form form;
 
-    @OneToOne(mappedBy = "question")
-    @JsonIgnore
-    private Form form;
+	@javax.persistence.ManyToMany(mappedBy = "question") 
+	protected Set<Template> template;
 
-    @ManyToMany(mappedBy = "questions")
-    @JsonIgnore
-    private Set<Template> templates = new HashSet<Template>();
+	@javax.persistence.OneToMany(mappedBy = "question", cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Evaluation> evaluation;
 
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long qId = 0L;
 
-    public Question(String inTemplate, String asPertinance, Boolean isPertinent, String content, String qType,
-			Set<Evaluation> evaluations, Form form, Set<Template> templates) {
+	public Question(){
 		super();
-		this.inTemplate = inTemplate;
-		this.asPertinance = asPertinance;
-		this.isPertinent = isPertinent;
-		this.content = content;
-		this.qType = qType;
-		this.evaluations = evaluations;
-		this.form = form;
-		this.templates = templates;
 	}
 
-	public Question() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getqId() {
-		return qId;
-	}
-
-	public void setqId(Long qId) {
-		this.qId = qId;
-	}
-
-	public Boolean getIsPertinent() {
-		return isPertinent;
+	public void basicSetForm(Form myForm) {
+		if (this.form != myForm) {
+			if (myForm != null){
+				if (this.form != myForm) {
+					Form oldform = this.form;
+					this.form = myForm;
+					if (oldform != null)
+						oldform.unsetQuestion();
+				}
+			}
+		}
 	}
 
 	public String getInTemplate() {
-        return inTemplate;
-    }
+		return this.inTemplate;
+	}
 
-    public Question inTemplate(String inTemplate) {
-        this.inTemplate = inTemplate;
-        return this;
-    }
+	public String getAsPertinance() {
+		return this.asPertinance;
+	}
 
-    public void setInTemplate(String inTemplate) {
-        this.inTemplate = inTemplate;
-    }
+	public Boolean getIsPertinent() {
+		return this.isPertinent;
+	}
 
-    public String getAsPertinance() {
-        return asPertinance;
-    }
+	public String getContent() {
+		return this.content;
+	}
+	
+	public String getQType() {
+		return this.qType;
+	}
 
-    public Question asPertinance(String asPertinance) {
-        this.asPertinance = asPertinance;
-        return this;
-    }
+	public Form getForm() {
+		return this.form;
+	}
+	public Set<Template> getTemplate() {
+		if(this.template == null) {
+				this.template = new HashSet<Template>();
+		}
+		return (Set<Template>) this.template;
+	}
+	public Set<Evaluation> getEvaluation() {
+		if(this.evaluation == null) {
+				this.evaluation = new HashSet<Evaluation>();
+		}
+		return (Set<Evaluation>) this.evaluation;
+	}
 
-    public void setAsPertinance(String asPertinance) {
-        this.asPertinance = asPertinance;
-    }
+	public long getQId() {
+		return this.qId;
+	}
 
-    public Boolean isIsPertinent() {
-        return isPertinent;
-    }
+	public void addAllTemplate(Set<Template> newTemplate) {
+		if (this.template == null) {
+			this.template = new HashSet<Template>();
+		}
+		for (Template tmp : newTemplate)
+			tmp.addQuestion(this);
+		
+	}
+	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
+		if (this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		for (Evaluation tmp : newEvaluation)
+			tmp.setQuestion(this);
+		
+	}
 
-    public Question isPertinent(Boolean isPertinent) {
-        this.isPertinent = isPertinent;
-        return this;
-    }
+	public void removeAllTemplate(Set<Template> newTemplate) {
+		if(this.template == null) {
+			return;
+		}
+		
+		this.template.removeAll(newTemplate);
+	}
 
-    public void setIsPertinent(Boolean isPertinent) {
-        this.isPertinent = isPertinent;
-    }
+	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
+		if(this.evaluation == null) {
+			return;
+		}
+		
+		this.evaluation.removeAll(newEvaluation);
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public void setInTemplate(String myInTemplate) {
+		this.inTemplate = myInTemplate;
+	}
+	public void setAsPertinance(String myAsPertinance) {
+		this.asPertinance = myAsPertinance;
+	}
 
-    public Question content(String content) {
-        this.content = content;
-        return this;
-    }
+	public void setIsPertinent(Boolean myIsPertinent) {
+		this.isPertinent = myIsPertinent;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setContent(String myContent) {
+		this.content = myContent;
+	}
 
-    public String getqType() {
-        return qType;
-    }
+	public void setQType(String myQType) {
+		this.qType = myQType;
+	}
 
-    public Question qType(String qType) {
-        this.qType = qType;
-        return this;
-    }
+	public void setForm(Form myForm) {
+		this.basicSetForm(myForm);
+		myForm.basicSetQuestion(this);
+		
+	}
 
-    public void setqType(String qType) {
-        this.qType = qType;
-    }
+	public void addTemplate(Template newTemplate) {
+		if(this.template == null) {
+			this.template = new HashSet<Template>();
+		}
+		
+		if (this.template.add(newTemplate))
+			newTemplate.addQuestion(this);
+	}
 
-    public Set<Evaluation> getEvaluations() {
-        return evaluations;
-    }
+	public void addEvaluation(Evaluation newEvaluation) {
+		if(this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		
+		if (this.evaluation.add(newEvaluation))
+			newEvaluation.basicSetQuestion(this);
+	}
 
-    public Question evaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-        return this;
-    }
+	public void unsetInTemplate() {
+		this.inTemplate = null;
+	}
 
-    public Question addEvaluation(Evaluation evaluation) {
-        this.evaluations.add(evaluation);
-        evaluation.setQuestion(this);
-        return this;
-    }
+	public void unsetAsPertinance() {
+		this.asPertinance = null;
+	}
 
-    public Question removeEvaluation(Evaluation evaluation) {
-        this.evaluations.remove(evaluation);
-        evaluation.setQuestion(null);
-        return this;
-    }
+	public void unsetIsPertinent() {
+		this.isPertinent = null;
+	}
 
-    public void setEvaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
+	public void unsetContent() {
+		this.content = null;
+	}
 
-    public Form getForm() {
-        return form;
-    }
+	public void unsetQType() {
+		this.qType = null;
+	}
 
-    public Question form(Form form) {
-        this.form = form;
-        return this;
-    }
+	public void unsetForm() {
+		if (this.form == null)
+			return;
+		Form oldform = this.form;
+		this.form = null;
+		oldform.unsetQuestion();
+	}
 
-    public void setForm(Form form) {
-        this.form = form;
-    }
+	public void removeTemplate(Template oldTemplate) {
+		if(this.template == null)
+			return;
+		
+		if (this.template.remove(oldTemplate))
+			oldTemplate.removeQuestion(this);
+		
+	}
 
-    public Set<Template> getTemplates() {
-        return templates;
-    }
+	public void removeEvaluation(Evaluation oldEvaluation) {
+		if(this.evaluation == null)
+			return;
+		
+		if (this.evaluation.remove(oldEvaluation))
+			oldEvaluation.unsetQuestion();
+		
+	}
 
-    public Question templates(Set<Template> templates) {
-        this.templates = templates;
-        return this;
-    }
-
-    public Question addTemplate(Template template) {
-        this.templates.add(template);
-        template.getQuestions().add(this);
-        return this;
-    }
-
-    public Question removeTemplate(Template template) {
-        this.templates.remove(template);
-        template.getQuestions().remove(this);
-        return this;
-    }
-
-    public void setTemplates(Set<Template> templates) {
-        this.templates = templates;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Question question = (Question) o;
-        if (question.qId == null || qId == null) {
-            return false;
-        }
-        return Objects.equals(qId, question.qId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(qId);
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-            "id=" + qId +
-            ", qId='" + qId + "'" +
-            ", inTemplate='" + inTemplate + "'" +
-            ", asPertinance='" + asPertinance + "'" +
-            ", isPertinent='" + isPertinent + "'" +
-            ", content='" + content + "'" +
-            ", qType='" + qType + "'" +
-            '}';
-    }
 }
+

@@ -2,172 +2,184 @@ package com.falcon.avisep.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-/**
- * A Module.
- */
-@Entity
-@Table(name = "module")
-public class Module implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long moduleId;
-    
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "description")
-    private String description;
-
-    @OneToMany(mappedBy = "module")
-    @JsonIgnore
-    private Set<Evaluation> evaluations = new HashSet<Evaluation>();
-
-    @OneToMany(mappedBy = "module")
-    @JsonIgnore
-    private Set<Cours> cours = new HashSet<Cours>();
 
 
-    public Module(String name, String description, Set<Evaluation> evaluations, Set<Cours> cours) {
+ 
+@javax.persistence.Entity 
+public class Module implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6322761009649610490L;
+
+	@javax.persistence.Column 
+	protected String name;
+
+	@javax.persistence.Column 
+	protected String description;
+
+	 
+	@javax.persistence.OneToMany(mappedBy = "module", cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Evaluation> evaluation;
+	 
+	@javax.persistence.OneToMany(mappedBy = "module", cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Cours> cours;
+
+	 
+	@javax.persistence.ManyToOne 
+	protected UserAvis userAvis;
+
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long moduleId = 0L;
+
+	public Module(){
 		super();
-		this.name = name;
-		this.description = description;
-		this.evaluations = evaluations;
-		this.cours = cours;
 	}
 
-	public Module() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getModuleId() {
-		return moduleId;
-	}
-
-	public void setModuleId(Long moduleId) {
-		this.moduleId = moduleId;
+	public void basicSetUserAvis(UserAvis myUserAvis) {
+		if (this.userAvis != myUserAvis) {
+			if (myUserAvis != null){
+				if (this.userAvis != myUserAvis) {
+					UserAvis olduserAvis = this.userAvis;
+					this.userAvis = myUserAvis;
+					if (olduserAvis != null)
+						olduserAvis.removeModule(this);
+				}
+			}
+		}
 	}
 
 	public String getName() {
-        return name;
-    }
+		return this.name;
+	}
 
-    public Module name(String name) {
-        this.name = name;
-        return this;
-    }
+	public String getDescription() {
+		return this.description;
+	}
+	public Set<Evaluation> getEvaluation() {
+		if(this.evaluation == null) {
+				this.evaluation = new HashSet<Evaluation>();
+		}
+		return (Set<Evaluation>) this.evaluation;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public Set<Cours> getCours() {
+		if(this.cours == null) {
+				this.cours = new HashSet<Cours>();
+		}
+		return (Set<Cours>) this.cours;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public UserAvis getUserAvis() {
+		return this.userAvis;
+	}
 
-    public Module description(String description) {
-        this.description = description;
-        return this;
-    }
+	public long getModuleId() {
+		return this.moduleId;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
+		if (this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		for (Evaluation tmp : newEvaluation)
+			tmp.setModule(this);
+		
+	}
 
-    public Set<Evaluation> getEvaluations() {
-        return evaluations;
-    }
+	public void addAllCours(Set<Cours> newCours) {
+		if (this.cours == null) {
+			this.cours = new HashSet<Cours>();
+		}
+		for (Cours tmp : newCours)
+			tmp.setModule(this);
+		
+	}
 
-    public Module evaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-        return this;
-    }
+	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
+		if(this.evaluation == null) {
+			return;
+		}
+		
+		this.evaluation.removeAll(newEvaluation);
+	}
 
-    public Module addEvaluation(Evaluation evaluation) {
-        this.evaluations.add(evaluation);
-        evaluation.setModule(this);
-        return this;
-    }
+	public void removeAllCours(Set<Cours> newCours) {
+		if(this.cours == null) {
+			return;
+		}
+		
+		this.cours.removeAll(newCours);
+	}
 
-    public Module removeEvaluation(Evaluation evaluation) {
-        this.evaluations.remove(evaluation);
-        evaluation.setModule(null);
-        return this;
-    }
+	public void setName(String myName) {
+		this.name = myName;
+	}
 
-    public void setEvaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
+	public void setDescription(String myDescription) {
+		this.description = myDescription;
+	}
 
-    public Set<Cours> getCours() {
-        return cours;
-    }
+	public void addEvaluation(Evaluation newEvaluation) {
+		if(this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		
+		if (this.evaluation.add(newEvaluation))
+			newEvaluation.basicSetModule(this);
+	}
 
-    public Module cours(Set<Cours> cours) {
-        this.cours = cours;
-        return this;
-    }
+	public void addCours(Cours newCours) {
+		if(this.cours == null) {
+			this.cours = new HashSet<Cours>();
+		}
+		
+		if (this.cours.add(newCours))
+			newCours.basicSetModule(this);
+	}
 
-    public Module addCours(Cours cours) {
-        this.cours.add(cours);
-        cours.setModule(this);
-        return this;
-    }
+	public void setUserAvis(UserAvis myUserAvis) {
+		this.basicSetUserAvis(myUserAvis);
+		myUserAvis.addModule(this);
+	}
 
-    public Module removeCours(Cours cours) {
-        this.cours.remove(cours);
-        cours.setModule(null);
-        return this;
-    }
+	public void unsetName() {
+		this.name = null;
+	}
 
-    public void setCours(Set<Cours> cours) {
-        this.cours = cours;
-    }
+	public void unsetDescription() {
+		this.description = null;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Module module = (Module) o;
-        if (module.moduleId == null || moduleId == null) {
-            return false;
-        }
-        return Objects.equals(moduleId, module.moduleId);
-    }
+	public void removeEvaluation(Evaluation oldEvaluation) {
+		if(this.evaluation == null)
+			return;
+		
+		if (this.evaluation.remove(oldEvaluation))
+			oldEvaluation.unsetModule();
+		
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(moduleId);
-    }
+	public void removeCours(Cours oldCours) {
+		if(this.cours == null)
+			return;
+		
+		if (this.cours.remove(oldCours))
+			oldCours.unsetModule();
+		
+	}
 
-    @Override
-    public String toString() {
-        return "Module{" +
-            "id=" + moduleId +
-            ", moduleId='" + moduleId + "'" +
-            ", name='" + name + "'" +
-            ", description='" + description + "'" +
-            '}';
-    }
+	public void unsetUserAvis() {
+		if (this.userAvis == null)
+			return;
+		UserAvis olduserAvis = this.userAvis;
+		this.userAvis = null;
+		olduserAvis.removeModule(this);
+	}
+
 }
+

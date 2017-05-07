@@ -2,209 +2,184 @@ package com.falcon.avisep.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-/**
- * A Cours.
- */
-@Entity
-@Table(name = "cours")
-public class Cours implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long coursId;
-
-    @Column(name = "c_date")
-    private String cDate;
-
-    @Column(name = "number_of_courses")
-    private Integer numberOfCourses;
-
-    @Column(name = "description")
-    private String description;
-
-    @OneToMany(mappedBy = "cours")
-    @JsonIgnore
-    private Set<Evaluation> evaluations = new HashSet<Evaluation>();
-
-    @OneToMany(mappedBy = "cours")
-    @JsonIgnore
-    private Set<Salle> salles = new HashSet<Salle>();
-
-    @ManyToOne
-    private Module module;
 
 
-    public Cours() {
+@javax.persistence.Entity 
+public class Cours implements Serializable
+{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8172706585637545690L;
+
+	@javax.persistence.Column 
+	protected String cDate;
+
+	@javax.persistence.Column 
+	protected String description;
+
+	@javax.persistence.OneToMany(mappedBy = "cours") 
+	protected Set<Evaluation> evaluation;
+
+	@javax.persistence.OneToMany(mappedBy = "cours") 
+	protected Set<Salle> salle;
+
+	@javax.persistence.ManyToOne 
+	@javax.persistence.JoinColumn(nullable = false) 
+	protected Module module;
+
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long coursId = 0L;
+
+	public Cours(){
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Cours(String cDate, Integer numberOfCourses, String description, Set<Evaluation> evaluations,
-			Set<Salle> salles, Module module) {
-		super();
-		this.cDate = cDate;
-		this.numberOfCourses = numberOfCourses;
-		this.description = description;
-		this.evaluations = evaluations;
-		this.salles = salles;
-		this.module = module;
+	public void basicSetModule(Module myModule) {
+		if (this.module != myModule) {
+			if (myModule != null){
+				if (this.module != myModule) {
+					Module oldmodule = this.module;
+					this.module = myModule;
+					if (oldmodule != null)
+						oldmodule.removeCours(this);
+				}
+			}
+		}
 	}
 
-	public Long getCoursId() {
-		return coursId;
+	public String getCDate() {
+		return this.cDate;
 	}
 
-	public void setCoursId(Long coursId) {
-		this.coursId = coursId;
+	public String getDescription() {
+		return this.description;
 	}
 
-	public String getcDate() {
-        return cDate;
-    }
+	public Set<Evaluation> getEvaluation() {
+		if(this.evaluation == null) {
+				this.evaluation = new HashSet<Evaluation>();
+		}
+		return (Set<Evaluation>) this.evaluation;
+	}
 
-    public Cours cDate(String cDate) {
-        this.cDate = cDate;
-        return this;
-    }
+	public Set<Salle> getSalle() {
+		if(this.salle == null) {
+				this.salle = new HashSet<Salle>();
+		}
+		return (Set<Salle>) this.salle;
+	}
 
-    public void setcDate(String cDate) {
-        this.cDate = cDate;
-    }
+	public Module getModule() {
+		return this.module;
+	}
 
-    public Integer getNumberOfCourses() {
-        return numberOfCourses;
-    }
+	public long getCoursId() {
+		return this.coursId;
+	}
 
-    public Cours numberOfCourses(Integer numberOfCourses) {
-        this.numberOfCourses = numberOfCourses;
-        return this;
-    }
+	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
+		if (this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		for (Evaluation tmp : newEvaluation)
+			tmp.setCours(this);
+		
+	}
 
-    public void setNumberOfCourses(Integer numberOfCourses) {
-        this.numberOfCourses = numberOfCourses;
-    }
+	public void addAllSalle(Set<Salle> newSalle) {
+		if (this.salle == null) {
+			this.salle = new HashSet<Salle>();
+		}
+		for (Salle tmp : newSalle)
+			tmp.setCours(this);
+		
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
+		if(this.evaluation == null) {
+			return;
+		}
+		
+		this.evaluation.removeAll(newEvaluation);
+	}
 
-    public Cours description(String description) {
-        this.description = description;
-        return this;
-    }
+	public void removeAllSalle(Set<Salle> newSalle) {
+		if(this.salle == null) {
+			return;
+		}
+		
+		this.salle.removeAll(newSalle);
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setCDate(String myCDate) {
+		this.cDate = myCDate;
+	}
 
-    public Set<Evaluation> getEvaluations() {
-        return evaluations;
-    }
+	public void setDescription(String myDescription) {
+		this.description = myDescription;
+	}
 
-    public Cours evaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-        return this;
-    }
+	public void addEvaluation(Evaluation newEvaluation) {
+		if(this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		
+		if (this.evaluation.add(newEvaluation))
+			newEvaluation.basicSetCours(this);
+	}
 
-    public Cours addEvaluation(Evaluation evaluation) {
-        this.evaluations.add(evaluation);
-        evaluation.setCours(this);
-        return this;
-    }
+	public void addSalle(Salle newSalle) {
+		if(this.salle == null) {
+			this.salle = new HashSet<Salle>();
+		}
+		
+		if (this.salle.add(newSalle))
+			newSalle.basicSetCours(this);
+	}
 
-    public Cours removeEvaluation(Evaluation evaluation) {
-        this.evaluations.remove(evaluation);
-        evaluation.setCours(null);
-        return this;
-    }
+	public void setModule(Module myModule) {
+		this.basicSetModule(myModule);
+		myModule.addCours(this);
+	}
 
-    public void setEvaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
+	public void unsetCDate() {
+		this.cDate = null;
+	}
 
-    public Set<Salle> getSalles() {
-        return salles;
-    }
+	public void unsetDescription() {
+		this.description = null;
+	}
 
-    public Cours salles(Set<Salle> salles) {
-        this.salles = salles;
-        return this;
-    }
+	public void removeEvaluation(Evaluation oldEvaluation) {
+		if(this.evaluation == null)
+			return;
+		
+		if (this.evaluation.remove(oldEvaluation))
+			oldEvaluation.unsetCours();
+		
+	}
 
-    public Cours addSalle(Salle salle) {
-        this.salles.add(salle);
-        salle.setCours(this);
-        return this;
-    }
+	public void removeSalle(Salle oldSalle) {
+		if(this.salle == null)
+			return;
+		
+		if (this.salle.remove(oldSalle))
+			oldSalle.unsetCours();
+		
+	}
 
-    public Cours removeSalle(Salle salle) {
-        this.salles.remove(salle);
-        salle.setCours(null);
-        return this;
-    }
+	public void unsetModule() {
+		if (this.module == null)
+			return;
+		Module oldmodule = this.module;
+		this.module = null;
+		oldmodule.removeCours(this);
+	}
 
-    public void setSalles(Set<Salle> salles) {
-        this.salles = salles;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public Cours module(Module module) {
-        this.module = module;
-        return this;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Cours cours = (Cours) o;
-        if (cours.coursId == null || coursId == null) {
-            return false;
-        }
-        return Objects.equals(coursId, cours.coursId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(coursId);
-    }
-
-    @Override
-    public String toString() {
-        return "Cours{" +
-            "id=" + coursId +
-            ", coursId='" + coursId + "'" +
-            ", cDate='" + cDate + "'" +
-            ", numberOfCourses='" + numberOfCourses + "'" +
-            ", description='" + description + "'" +
-            '}';
-    }
 }
+

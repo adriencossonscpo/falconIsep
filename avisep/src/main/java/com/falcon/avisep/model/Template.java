@@ -2,161 +2,134 @@ package com.falcon.avisep.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+@javax.persistence.Entity 
+public class Template implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2666682561383526445L;
 
-/**
- * A Template.
- */
-@Entity
-@Table(name = "template")
-public class Template implements Serializable {
+	@javax.persistence.Column 
+	protected String name;
 
-    private static final long serialVersionUID = 1L;
+	@javax.persistence.ManyToMany 
+	protected Set<Form> form;
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long temId;
+	 
+	@javax.persistence.ManyToMany(cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Question> question;
 
-   
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long temId = 0L;
 
-	@Column(name = "name")
-    private String name;
-
-    @ManyToMany
-    @NotNull
-    @JoinTable(name = "template_question",
-               joinColumns = @JoinColumn(name="templates_temId", referencedColumnName="temId"),
-               inverseJoinColumns = @JoinColumn(name="questions_qId", referencedColumnName="qId"))
-    private Set<Question> questions = new HashSet<Question>();
-
-    @ManyToMany(mappedBy = "templates")
-    @JsonIgnore
-    private Set<Form> forms = new HashSet<Form>();
-
-    public Template(String name, Set<Question> questions, Set<Form> forms) {
+	public Template(){
 		super();
-		this.name = name;
-		this.questions = questions;
-		this.forms = forms;
 	}
 
-	public Template() {
-		super();
-		// TODO Auto-generated constructor stub
+	public String getName() {
+		return this.name;
 	}
 
-	public Long getTemId() {
-		return temId;
+	public Set<Form> getForm() {
+		if(this.form == null) {
+				this.form = new HashSet<Form>();
+		}
+		return (Set<Form>) this.form;
 	}
 
-	public void setTemId(Long temId) {
-		this.temId = temId;
+	public Set<Question> getQuestion() {
+		if(this.question == null) {
+				this.question = new HashSet<Question>();
+		}
+		return (Set<Question>) this.question;
 	}
 
-    public String getName() {
-        return name;
-    }
+	public long getTemId() {
+		return this.temId;
+	}
 
-    public Template name(String name) {
-        this.name = name;
-        return this;
-    }
+	public void addAllForm(Set<Form> newForm) {
+		if (this.form == null) {
+			this.form = new HashSet<Form>();
+		}
+		for (Form tmp : newForm)
+			tmp.addTemplate(this);
+		
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void addAllQuestion(Set<Question> newQuestion) {
+		if (this.question == null) {
+			this.question = new HashSet<Question>();
+		}
+		for (Question tmp : newQuestion)
+			tmp.addTemplate(this);
+		
+	}
 
-    public Set<Question> getQuestions() {
-        return questions;
-    }
+	public void removeAllForm(Set<Form> newForm) {
+		if(this.form == null) {
+			return;
+		}
+		
+		this.form.removeAll(newForm);
+	}
 
-    public Template questions(Set<Question> questions) {
-        this.questions = questions;
-        return this;
-    }
+	public void removeAllQuestion(Set<Question> newQuestion) {
+		if(this.question == null) {
+			return;
+		}
+		
+		this.question.removeAll(newQuestion);
+	}
 
-    public Template addQuestion(Question question) {
-        this.questions.add(question);
-        question.getTemplates().add(this);
-        return this;
-    }
+	public void setName(String myName) {
+		this.name = myName;
+	}
 
-    public Template removeQuestion(Question question) {
-        this.questions.remove(question);
-        question.getTemplates().remove(this);
-        return this;
-    }
+	public void addForm(Form newForm) {
+		if(this.form == null) {
+			this.form = new HashSet<Form>();
+		}
+		
+		if (this.form.add(newForm))
+			newForm.addTemplate(this);
+	}
 
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
-    }
+	public void addQuestion(Question newQuestion) {
+		if(this.question == null) {
+			this.question = new HashSet<Question>();
+		}
+		
+		if (this.question.add(newQuestion))
+			newQuestion.addTemplate(this);
+	}
 
-    public Set<Form> getForms() {
-        return forms;
-    }
+	public void unsetName() {
+		this.name = null;
+	}
 
-    public Template forms(Set<Form> forms) {
-        this.forms = forms;
-        return this;
-    }
+	public void removeForm(Form oldForm) {
+		if(this.form == null)
+			return;
+		
+		if (this.form.remove(oldForm))
+			oldForm.removeTemplate(this);
+		
+	}
 
-    public Template addForm(Form form) {
-        this.forms.add(form);
-        form.getTemplates().add(this);
-        return this;
-    }
+	public void removeQuestion(Question oldQuestion) {
+		if(this.question == null)
+			return;
+		
+		if (this.question.remove(oldQuestion))
+			oldQuestion.removeTemplate(this);
+		
+	}
 
-    public Template removeForm(Form form) {
-        this.forms.remove(form);
-        form.getTemplates().remove(this);
-        return this;
-    }
-
-    public void setForms(Set<Form> forms) {
-        this.forms = forms;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Template template = (Template) o;
-        if (template.temId == null || temId == null) {
-            return false;
-        }
-        return Objects.equals(temId, template.temId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(temId);
-    }
-
-    @Override
-    public String toString() {
-        return "Template{" +
-            "id=" + temId +
-            ", temId='" + temId + "'" +
-            ", name='" + name + "'" +
-            '}';
-    }
 }
+

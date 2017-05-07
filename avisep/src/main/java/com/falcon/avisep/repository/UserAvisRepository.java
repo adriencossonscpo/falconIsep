@@ -15,10 +15,10 @@ import com.falcon.avisep.model.UserAvis;
 @SuppressWarnings("unused")
 public interface UserAvisRepository extends JpaRepository<UserAvis,Long> {
 
-    @Query("select distinct userAvis from UserAvis userAvis left join fetch userAvis.classes")
-    List<UserAvis> findAllWithEagerRelationships();
+//    @Query("select distinct userAvis from UserAvis userAvis left join fetch userAvis.classes")
+//    List<UserAvis> findAllWithEagerRelationships();
 
-    @Query("select userAvis from UserAvis userAvis left join fetch userAvis.classes where userAvis.userId =:id")
-    UserAvis findOneWithEagerRelationships(@Param("id") Long id);
+//    @Query("select userAvis from UserAvis userAvis left join fetch userAvis.classes where userAvis.userId =:id")
+//    UserAvis findOneWithEagerRelationships(@Param("id") Long id);
 
 }

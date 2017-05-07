@@ -1,8 +1,6 @@
 package com.falcon.avisep.controllers;
 
 
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.falcon.avisep.enumeration.RoleAvis;
 import com.falcon.avisep.model.UserAvis;
 import com.falcon.avisep.repository.UserAvisRepository;
 /**
@@ -105,30 +102,24 @@ public class UserAvisResource {
 		
 		return "displayUser";
 	}
-    // Create and display new users
-    @RequestMapping("displayModules")
-	public String consultUsers6(Model model){
-    	Iterable<UserAvis> userAvis = null;
-		if(userAvisRepository.findAll()!=null){
-			userAvis = userAvisRepository.findAll();
-			model.addAttribute("userAvis", userAvis);
-		}else {model.addAttribute("userAvis", null);}
-		
-		return "displayModules";
-	}
     
 	// Creating some users
 	@RequestMapping(value = "saveUserAvis", method = RequestMethod.POST )
 	public String saveUser(@RequestParam("firstN") String firstN, @RequestParam("lastN")String lastN, 
 			@RequestParam("login") String login,@RequestParam("email") String email,@RequestParam("password") String password, Model model){
 		
-		RoleAvis roleAvis=RoleAvis.ADMINAVIS;
-		UserAvis userAvis =new UserAvis(null,login,firstN,email, password,roleAvis,null, null);
+		com.falcon.avisep.model.RoleAvis roleAvis=com.falcon.avisep.model.RoleAvis.AdminAvis;
+		UserAvis userAvis =new UserAvis();
+		//login,firstN,email, password,roleAvis,
+		userAvis.setLogin(login);
+		userAvis.setFirstName(firstN);
+		userAvis.setEmail(email);
+		userAvis.setPasswd(password);
+		userAvis.addRoleAvis(roleAvis);
 		userAvisRepository.saveAndFlush(userAvis);
 		//new EmailService().enviar(nome, email);
 		
 		Iterable<UserAvis> userAvis1 = userAvisRepository.findAll();
-		
 		
 		model.addAttribute("userAvis", userAvis1);
 		

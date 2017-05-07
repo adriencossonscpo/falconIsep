@@ -2,160 +2,135 @@ package com.falcon.avisep.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-/**
- * A Salle.
- */
-@Entity
-@Table(name = "salle")
-public class Salle implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long salleId;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "location")
-    private String location;
-
-    @OneToMany(mappedBy = "salle")
-    @JsonIgnore
-    private Set<Evaluation> evaluations = new HashSet<Evaluation>();
-
-    @ManyToOne
-    private Cours cours;
 
 
-    public Salle(String name, String location, Set<Evaluation> evaluations, Cours cours) {
+@javax.persistence.Entity 
+public class Salle implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8828244291063532926L;
+	@javax.persistence.Column 
+	protected String name;
+	@javax.persistence.Column 
+	protected String location;
+
+	@javax.persistence.OneToMany(mappedBy = "salle", cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Evaluation> evaluation;
+
+	 
+	@javax.persistence.ManyToOne 
+	@javax.persistence.JoinColumn(nullable = false) 
+	protected Cours cours;
+	
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long salleId = 0L;
+
+	public Salle(){
 		super();
-		this.name = name;
-		this.location = location;
-		this.evaluations = evaluations;
-		this.cours = cours;
 	}
 
-	public Salle() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getSalleId() {
-		return salleId;
-	}
-
-	public void setSalleId(Long salleId) {
-		this.salleId = salleId;
+	public void basicSetCours(Cours myCours) {
+		if (this.cours != myCours) {
+			if (myCours != null){
+				if (this.cours != myCours) {
+					Cours oldcours = this.cours;
+					this.cours = myCours;
+					if (oldcours != null)
+						oldcours.removeSalle(this);
+				}
+			}
+		}
 	}
 
 	public String getName() {
-        return name;
-    }
+		return this.name;
+	}
 
-    public Salle name(String name) {
-        this.name = name;
-        return this;
-    }
+	public String getLocation() {
+		return this.location;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public Set<Evaluation> getEvaluation() {
+		if(this.evaluation == null) {
+				this.evaluation = new HashSet<Evaluation>();
+		}
+		return (Set<Evaluation>) this.evaluation;
+	}
 
-    public String getLocation() {
-        return location;
-    }
+	public Cours getCours() {
+		return this.cours;
+	}
+	public long getSalleId() {
+		return this.salleId;
+	}
 
-    public Salle location(String location) {
-        this.location = location;
-        return this;
-    }
+	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
+		if (this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		for (Evaluation tmp : newEvaluation)
+			tmp.setSalle(this);
+		
+	}
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
+		if(this.evaluation == null) {
+			return;
+		}
+		
+		this.evaluation.removeAll(newEvaluation);
+	}
 
-    public Set<Evaluation> getEvaluations() {
-        return evaluations;
-    }
+	public void setName(String myName) {
+		this.name = myName;
+	}
 
-    public Salle evaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-        return this;
-    }
+	public void setLocation(String myLocation) {
+		this.location = myLocation;
+	}
+	public void addEvaluation(Evaluation newEvaluation) {
+		if(this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		
+		if (this.evaluation.add(newEvaluation))
+			newEvaluation.basicSetSalle(this);
+	}
 
-    public Salle addEvaluation(Evaluation evaluation) {
-        this.evaluations.add(evaluation);
-        evaluation.setSalle(this);
-        return this;
-    }
+	public void setCours(Cours myCours) {
+		this.basicSetCours(myCours);
+		myCours.addSalle(this);
+	}
 
-    public Salle removeEvaluation(Evaluation evaluation) {
-        this.evaluations.remove(evaluation);
-        evaluation.setSalle(null);
-        return this;
-    }
+	public void unsetName() {
+		this.name = null;
+	}
 
-    public void setEvaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
+	public void unsetLocation() {
+		this.location = null;
+	}
 
-    public Cours getCours() {
-        return cours;
-    }
+	public void removeEvaluation(Evaluation oldEvaluation) {
+		if(this.evaluation == null)
+			return;
+		
+		if (this.evaluation.remove(oldEvaluation))
+			oldEvaluation.unsetSalle();
+		
+	}
 
-    public Salle cours(Cours cours) {
-        this.cours = cours;
-        return this;
-    }
+	public void unsetCours() {
+		if (this.cours == null)
+			return;
+		Cours oldcours = this.cours;
+		this.cours = null;
+		oldcours.removeSalle(this);
+	}
 
-    public void setCours(Cours cours) {
-        this.cours = cours;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Salle salle = (Salle) o;
-        if (salle.salleId == null || salleId == null) {
-            return false;
-        }
-        return Objects.equals(salleId, salle.salleId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(salleId);
-    }
-
-    @Override
-    public String toString() {
-        return "Salle{" +
-            "id=" + salleId +
-            ", salleId='" + salleId + "'" +
-            ", name='" + name + "'" +
-            ", location='" + location + "'" +
-            '}';
-    }
 }
+

@@ -1,196 +1,239 @@
 package com.falcon.avisep.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+@javax.persistence.Entity 
+public class Evaluation implements Serializable
+{
 
-/**
- * A Evaluation.
- */
-@Entity
-@Table(name = "evaluation")
-public class Evaluation implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1949302278528590272L;
 
-    private static final long serialVersionUID = 1L;
+	@javax.persistence.Column(nullable = false) 
+	protected String eData;
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long evaluationId;
+	@javax.persistence.ManyToOne 
+	protected Salle salle;
 
-    @Column(name = "e_data")
-    private String eData;
+	@javax.persistence.ManyToOne 
+	protected Cours cours;
 
-    @ManyToOne
-    private Salle salle;
+	@javax.persistence.ManyToOne 
+	protected Module module;
 
-    @ManyToOne
-    private Cours cours;
+	@javax.persistence.ManyToOne 
+	protected Classe classe;
 
-    @ManyToOne
-    private Module module;
+	@javax.persistence.ManyToOne 
+	@javax.persistence.JoinColumn(nullable = false) 
+	protected UserAvis user;
 
-    @ManyToOne
-    private Classe classe;
+	@javax.persistence.ManyToOne 
+	protected Question question;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    private UserAvis user;
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long evaluationId = 0L;
 
-    @ManyToOne
-    private Question question;
-
-
-    public Evaluation(String eData, Salle salle, Cours cours, Module module, Classe classe, UserAvis user,
-			Question question) {
+	public Evaluation(){
 		super();
-		this.eData = eData;
-		this.salle = salle;
-		this.cours = cours;
-		this.module = module;
-		this.classe = classe;
-		this.user = user;
-		this.question = question;
 	}
 
-	public Evaluation() {
-		super();
-		// TODO Auto-generated constructor stub
+	public void basicSetSalle(Salle mySalle) {
+		if (this.salle != mySalle) {
+			if (mySalle != null){
+				if (this.salle != mySalle) {
+					Salle oldsalle = this.salle;
+					this.salle = mySalle;
+					if (oldsalle != null)
+						oldsalle.removeEvaluation(this);
+				}
+			}
+		}
 	}
 
-	public Long getEvaluationId() {
-		return evaluationId;
+	public void basicSetCours(Cours myCours) {
+		if (this.cours != myCours) {
+			if (myCours != null){
+				if (this.cours != myCours) {
+					Cours oldcours = this.cours;
+					this.cours = myCours;
+					if (oldcours != null)
+						oldcours.removeEvaluation(this);
+				}
+			}
+		}
 	}
 
-	public void setEvaluationId(Long evaluationId) {
-		this.evaluationId = evaluationId;
+	public void basicSetModule(Module myModule) {
+		if (this.module != myModule) {
+			if (myModule != null){
+				if (this.module != myModule) {
+					Module oldmodule = this.module;
+					this.module = myModule;
+					if (oldmodule != null)
+						oldmodule.removeEvaluation(this);
+				}
+			}
+		}
 	}
 
-	public String geteData() {
-        return eData;
-    }
+	public void basicSetClasse(Classe myClasse) {
+		if (this.classe != myClasse) {
+			if (myClasse != null){
+				if (this.classe != myClasse) {
+					Classe oldclasse = this.classe;
+					this.classe = myClasse;
+					if (oldclasse != null)
+						oldclasse.removeEvaluation(this);
+				}
+			}
+		}
+	}
 
-    public Evaluation eData(String eData) {
-        this.eData = eData;
-        return this;
-    }
+	public void basicSetUser(UserAvis myUser) {
+		if (this.user != myUser) {
+			if (myUser != null){
+				if (this.user != myUser) {
+					UserAvis olduser = this.user;
+					this.user = myUser;
+					if (olduser != null)
+						olduser.removeEvaluation(this);
+				}
+			}
+		}
+	}
 
-    public void seteData(String eData) {
-        this.eData = eData;
-    }
+	public void basicSetQuestion(Question myQuestion) {
+		if (this.question != myQuestion) {
+			if (myQuestion != null){
+				if (this.question != myQuestion) {
+					Question oldquestion = this.question;
+					this.question = myQuestion;
+					if (oldquestion != null)
+						oldquestion.removeEvaluation(this);
+				}
+			}
+		}
+	}
 
-    public Salle getSalle() {
-        return salle;
-    }
+	public String getEData() {
+		return this.eData;
+	}
 
-    public Evaluation salle(Salle salle) {
-        this.salle = salle;
-        return this;
-    }
+	public Salle getSalle() {
+		return this.salle;
+	}
 
-    public void setSalle(Salle salle) {
-        this.salle = salle;
-    }
+	public Cours getCours() {
+		return this.cours;
+	}
 
-    public Cours getCours() {
-        return cours;
-    }
+	public Module getModule() {
+		return this.module;
+	}
 
-    public Evaluation cours(Cours cours) {
-        this.cours = cours;
-        return this;
-    }
+	public Classe getClasse() {
+		return this.classe;
+	}
 
-    public void setCours(Cours cours) {
-        this.cours = cours;
-    }
+	public UserAvis getUser() {
+		return this.user;
+	}
 
-    public Module getModule() {
-        return module;
-    }
+	public Question getQuestion() {
+		return this.question;
+	}
 
-    public Evaluation module(Module module) {
-        this.module = module;
-        return this;
-    }
+	public long getEvaluationId() {
+		return this.evaluationId;
+	}
 
-    public void setModule(Module module) {
-        this.module = module;
-    }
 
-    public Classe getClasse() {
-        return classe;
-    }
+	public void setEData(String myEData) {
+		this.eData = myEData;
+	}
 
-    public Evaluation classe(Classe classe) {
-        this.classe = classe;
-        return this;
-    }
+	public void setSalle(Salle mySalle) {
+		this.basicSetSalle(mySalle);
+		mySalle.addEvaluation(this);
+	}
 
-    public void setClasse(Classe classe) {
-        this.classe = classe;
-    }
+	public void setCours(Cours myCours) {
+		this.basicSetCours(myCours);
+		myCours.addEvaluation(this);
+	}
+	public void setModule(Module myModule) {
+		this.basicSetModule(myModule);
+		myModule.addEvaluation(this);
+	}
 
-    public UserAvis getUser() {
-        return user;
-    }
+	public void setClasse(Classe myClasse) {
+		this.basicSetClasse(myClasse);
+		myClasse.addEvaluation(this);
+	}
 
-    public Evaluation user(UserAvis userAvis) {
-        this.user = userAvis;
-        return this;
-    }
+	public void setUser(UserAvis myUser) {
+		this.basicSetUser(myUser);
+		myUser.addEvaluation(this);
+	}
 
-    public void setUser(UserAvis userAvis) {
-        this.user = userAvis;
-    }
+	public void setQuestion(Question myQuestion) {
+		this.basicSetQuestion(myQuestion);
+		myQuestion.addEvaluation(this);
+	}
 
-    public Question getQuestion() {
-        return question;
-    }
+	public void unsetEData() {
+		this.eData = "";
+	}
 
-    public Evaluation question(Question question) {
-        this.question = question;
-        return this;
-    }
+	public void unsetSalle() {
+		if (this.salle == null)
+			return;
+		Salle oldsalle = this.salle;
+		this.salle = null;
+		oldsalle.removeEvaluation(this);
+	}
+	public void unsetCours() {
+		if (this.cours == null)
+			return;
+		Cours oldcours = this.cours;
+		this.cours = null;
+		oldcours.removeEvaluation(this);
+	}
 
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
+	public void unsetModule() {
+		if (this.module == null)
+			return;
+		Module oldmodule = this.module;
+		this.module = null;
+		oldmodule.removeEvaluation(this);
+	}
+	public void unsetClasse() {
+		if (this.classe == null)
+			return;
+		Classe oldclasse = this.classe;
+		this.classe = null;
+		oldclasse.removeEvaluation(this);
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Evaluation evaluation = (Evaluation) o;
-        if (evaluation.evaluationId == null || evaluationId == null) {
-            return false;
-        }
-        return Objects.equals(evaluationId, evaluation.evaluationId);
-    }
+	public void unsetUser() {
+		if (this.user == null)
+			return;
+		UserAvis olduser = this.user;
+		this.user = null;
+		olduser.removeEvaluation(this);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(evaluationId);
-    }
+	public void unsetQuestion() {
+		if (this.question == null)
+			return;
+		Question oldquestion = this.question;
+		this.question = null;
+		oldquestion.removeEvaluation(this);
+	}
 
-    @Override
-    public String toString() {
-        return "Evaluation{" +
-            "id=" + evaluationId +
-            ", evaluationId='" + evaluationId + "'" +
-            ", eData='" + eData + "'" +
-            '}';
-    }
 }
+
