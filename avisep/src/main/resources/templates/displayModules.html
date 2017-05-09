@@ -12,16 +12,20 @@
 <body>
 <div layout:fragment="page-content">
 		<div class="container" >
-			<div class="jumbotron" align="center" style="margin-top: 50px;">
-				<h2>Welcome to AVISEP, the new evaluation system for courses, dedicated to ISEP</h2>
-				<div align="center">
-					<a href="welcomeS" class="btn btn-primary">Welcome Student</a>
-					<a href="welcomeT" class="btn btn-primary">Welcome Teacher</a>
-					<a href="welcomeA" class="btn btn-primary">Welcome Admin</a>
-					<a href="createF" class="btn btn-primary">Create Form</a>
-					<a href="displayU" class="btn btn-primary">Display User</a>
-					<a href="displayM" class="btn btn-primary">Display Module</a>
-				</div>
+			<div id="userModule">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Module Name</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tr th:each="userModule : ${module}">
+						<td><span th:text="${userModule.name}"></span></td>
+						<td><span th:text="${userModule.description}"></span></td>
+					</tr>
+
+				</table>
 			</div>
 		</div>
 </div>
