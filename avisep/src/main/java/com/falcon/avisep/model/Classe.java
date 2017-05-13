@@ -2,158 +2,135 @@ package com.falcon.avisep.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+@javax.persistence.Entity 
+public class Classe implements Serializable
+{
+	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4699818195888239199L;
 
-/**
- * A Classe.
- */
-@Entity
-@Table(name = "classe")
-public class Classe implements Serializable {
+	@javax.persistence.Column 
+	protected String name;
 
-    private static final long serialVersionUID = 1L;
+	@javax.persistence.OneToMany(mappedBy = "classe") 
+	protected Set<Evaluation> evaluation;
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long classeId;
+	@javax.persistence.ManyToMany(mappedBy = "classe") 
+	protected Set<UserAvis> userAvis;
 
-    
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long classeId = 0L;
 
-    @Column(name = "name")
-    private String name;
-
-    @OneToMany(mappedBy = "classe")
-    @JsonIgnore
-    private Set<Evaluation> evaluations = new HashSet<Evaluation>();
-
-    @ManyToMany(mappedBy = "classes")
-    @JsonIgnore
-    private Set<UserAvis> userAvis = new HashSet<UserAvis>();
-
-    
-
-    public Classe(String name, Set<Evaluation> evaluations, Set<UserAvis> userAvis) {
+	public Classe(){
 		super();
-		this.name = name;
-		this.evaluations = evaluations;
-		this.userAvis = userAvis;
-	}
-
-	public Classe() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getClasseId() {
-		return classeId;
-	}
-
-	public void setClasseId(Long classeId) {
-		this.classeId = classeId;
 	}
 
 	public String getName() {
-        return name;
-    }
+		return this.name;
+	}
 
-    public Classe name(String name) {
-        this.name = name;
-        return this;
-    }
+	public Set<Evaluation> getEvaluation() {
+		if(this.evaluation == null) {
+				this.evaluation = new HashSet<Evaluation>();
+		}
+		return (Set<Evaluation>) this.evaluation;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public Set<UserAvis> getUserAvis() {
+		if(this.userAvis == null) {
+				this.userAvis = new HashSet<UserAvis>();
+		}
+		return (Set<UserAvis>) this.userAvis;
+	}
 
-    public Set<Evaluation> getEvaluations() {
-        return evaluations;
-    }
+	public long getClasseId() {
+		return this.classeId;
+	}
 
-    public Classe evaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-        return this;
-    }
+	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
+		if (this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		for (Evaluation tmp : newEvaluation)
+			tmp.setClasse(this);
+		
+	}
 
-    public Classe addEvaluation(Evaluation evaluation) {
-        this.evaluations.add(evaluation);
-        evaluation.setClasse(this);
-        return this;
-    }
+	public void addAllUserAvis(Set<UserAvis> newUserAvis) {
+		if (this.userAvis == null) {
+			this.userAvis = new HashSet<UserAvis>();
+		}
+		for (UserAvis tmp : newUserAvis)
+			tmp.addClasse(this);
+		
+	}
 
-    public Classe removeEvaluation(Evaluation evaluation) {
-        this.evaluations.remove(evaluation);
-        evaluation.setClasse(null);
-        return this;
-    }
+	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
+		if(this.evaluation == null) {
+			return;
+		}
+		
+		this.evaluation.removeAll(newEvaluation);
+	}
 
-    public void setEvaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
+	public void removeAllUserAvis(Set<UserAvis> newUserAvis) {
+		if(this.userAvis == null) {
+			return;
+		}
+		
+		this.userAvis.removeAll(newUserAvis);
+	}
 
-    public Set<UserAvis> getUserAvis() {
-        return userAvis;
-    }
 
-    public Classe userAvis(Set<UserAvis> userAvis) {
-        this.userAvis = userAvis;
-        return this;
-    }
+	public void setName(String myName) {
+		this.name = myName;
+	}
 
-    public Classe addUserAvis(UserAvis userAvis) {
-        this.userAvis.add(userAvis);
-        userAvis.getClasses().add(this);
-        return this;
-    }
+	public void addEvaluation(Evaluation newEvaluation) {
+		if(this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		
+		if (this.evaluation.add(newEvaluation))
+			newEvaluation.basicSetClasse(this);
+	}
 
-    public Classe removeUserAvis(UserAvis userAvis) {
-        this.userAvis.remove(userAvis);
-        userAvis.getClasses().remove(this);
-        return this;
-    }
+	public void addUserAvis(UserAvis newUserAvis) {
+		if(this.userAvis == null) {
+			this.userAvis = new HashSet<UserAvis>();
+		}
+		
+		if (this.userAvis.add(newUserAvis))
+			newUserAvis.addClasse(this);
+	}
 
-    public void setUserAvis(Set<UserAvis> userAvis) {
-        this.userAvis = userAvis;
-    }
+	public void unsetName() {
+		this.name = null;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Classe classe = (Classe) o;
-        if (classe.classeId == null || classeId == null) {
-            return false;
-        }
-        return Objects.equals(classeId, classe.classeId);
-    }
+	public void removeEvaluation(Evaluation oldEvaluation) {
+		if(this.evaluation == null)
+			return;
+		
+		if (this.evaluation.remove(oldEvaluation))
+			oldEvaluation.unsetClasse();
+		
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(classeId);
-    }
+	public void removeUserAvis(UserAvis oldUserAvis) {
+		if(this.userAvis == null)
+			return;
+		
+		if (this.userAvis.remove(oldUserAvis))
+			oldUserAvis.removeClasse(this);
+		
+	}
 
-    @Override
-    public String toString() {
-        return "Classe{" +
-            "id=" + classeId +
-            ", classeId='" + classeId + "'" +
-            ", name='" + name + "'" +
-            '}';
-    }
 }
+

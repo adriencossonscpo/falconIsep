@@ -1,24 +1,18 @@
 package com.falcon.avisep.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+import com.falcon.avisep.model.RoleAvis;
+import com.falcon.avisep.model.Student;
 import com.falcon.avisep.model.UserAvis;
 
 /**
  * Spring Data JPA repository for the UserAvis entity.
  */
-@SuppressWarnings("unused")
+@Repository
 public interface UserAvisRepository extends JpaRepository<UserAvis,Long> {
-
-    @Query("select distinct userAvis from UserAvis userAvis left join fetch userAvis.classes")
-    List<UserAvis> findAllWithEagerRelationships();
-
-    @Query("select userAvis from UserAvis userAvis left join fetch userAvis.classes where userAvis.userId =:id")
-    UserAvis findOneWithEagerRelationships(@Param("id") Long id);
-
+	Student findByLogin(String login,String passwd,RoleAvis role);
+	Student findByLogin(String login,String passwd);
+	Student findByLogin(String login);
 }

@@ -1,252 +1,268 @@
 package com.falcon.avisep.model;
 
-import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+@javax.persistence.Entity
+@javax.persistence.Inheritance(strategy=javax.persistence.InheritanceType.JOINED)
+@javax.persistence.DiscriminatorColumn(name="UserType", discriminatorType=javax.persistence.DiscriminatorType.STRING)
+public abstract class UserAvis {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+	@javax.persistence.Column 
+	protected String lastName;
+	 
+	@javax.persistence.Column 
+	protected String login;
 
-import com.falcon.avisep.enumeration.RoleAvis;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+	@javax.persistence.Column 
+	protected String firstName;
 
-/**
- * A UserAvis.
- */
-@Entity
-@Table(name = "user_avis")
-public class UserAvis implements Serializable {
+	@javax.persistence.Column 
+	protected String email;
 
-    private static final long serialVersionUID = 1L;
+	 
+	@javax.persistence.Column 
+	protected String passwd;
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userId;
+	@javax.persistence.Enumerated(javax.persistence.EnumType.STRING) 
+	@javax.persistence.ElementCollection(targetClass = RoleAvis.class) 
+	protected Set<RoleAvis> roleAvis;
 
-    @Column(name = "last_name")
-    private String lastName;
+	 
+	@javax.persistence.OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Evaluation> evaluation;
 
-    @Column(name = "login")
-    private String login;
+	 
+	@javax.persistence.ManyToMany(cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Classe> classe;
 
-    @Column(name = "first_name")
-    private String firstName;
+	 
+	@javax.persistence.ManyToMany(cascade = javax.persistence.CascadeType.ALL) 
+	protected Set<Module> module;
 
-    @Column(name = "email")
-    private String email;
+	@javax.persistence.Id 
+	@javax.persistence.Column(nullable = false) 
+	protected final Long id = 0L;
 
-    @Column(name = "passwd")
-    private String passwd;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role_avis")
-    private RoleAvis roleAvis;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Evaluation> evaluations = new HashSet<Evaluation>();
-
-    @ManyToMany
-    @JoinTable(name = "user_avis_classe",
-               joinColumns = @JoinColumn(name="user_avis_userId", referencedColumnName="userId"),
-               inverseJoinColumns = @JoinColumn(name="classes_classeId", referencedColumnName="classeId"))
-    private Set<Classe> classes = new HashSet<Classe>();
-
-    
-    public UserAvis() {
+	public UserAvis(){
 		super();
-		// TODO Auto-generated constructor stub
-	}
-    public UserAvis(String lastName, String login, String firstName, String email, String passwd, RoleAvis roleAvis,
-			Set<Evaluation> evaluations, Set<Classe> classes) {
-		super();
-		this.lastName = lastName;
-		this.login = login;
-		this.firstName = firstName;
-		this.email = email;
-		this.passwd = passwd;
-		this.roleAvis = roleAvis;
-		this.evaluations = evaluations;
-		this.classes = classes;
-	}
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public String getLastName() {
-        return lastName;
-    }
+		return this.lastName;
+	}
 
-    public UserAvis lastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
+	public String getLogin() {
+		return this.login;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getFirstName() {
+		return this.firstName;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getEmail() {
+		return this.email;
+	}
 
-    public UserAvis login(String login) {
-        this.login = login;
-        return this;
-    }
+	public String getPasswd() {
+		return this.passwd;
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public Set<RoleAvis> getRoleAvis() {
+		if(this.roleAvis == null) {
+				this.roleAvis = new HashSet<RoleAvis>();
+		}
+		return (Set<RoleAvis>) this.roleAvis;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public Set<Evaluation> getEvaluation() {
+		if(this.evaluation == null) {
+				this.evaluation = new HashSet<Evaluation>();
+		}
+		return (Set<Evaluation>) this.evaluation;
+	}
+	public Set<Classe> getClasse() {
+		if(this.classe == null) {
+				this.classe = new HashSet<Classe>();
+		}
+		return (Set<Classe>) this.classe;
+	}
 
-    public UserAvis firstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
+	public Set<Module> getModule() {
+		if(this.module == null) {
+				this.module = new HashSet<Module>();
+		}
+		return (Set<Module>) this.module;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public long getId() {
+		return this.id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void addAllRoleAvis(Set<RoleAvis> newRoleAvis) {
+		if (this.roleAvis == null) {
+			this.roleAvis = new HashSet<RoleAvis>();
+		}
+		this.roleAvis.addAll(newRoleAvis);
+	}
 
-    public UserAvis email(String email) {
-        this.email = email;
-        return this;
-    }
+	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
+		if (this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		for (Evaluation tmp : newEvaluation)
+			tmp.setUser(this);
+		
+	}
+	public void addAllClasse(Set<Classe> newClasse) {
+		if (this.classe == null) {
+			this.classe = new HashSet<Classe>();
+		}
+		for (Classe tmp : newClasse)
+			tmp.addUserAvis(this);
+		
+	}
+	public void addAllModule(Set<Module> newModule) {
+		if (this.module == null) {
+			this.module = new HashSet<Module>();
+		}
+		for (Module tmp : newModule)
+			tmp.addUserAvis(this);
+		
+	}
+	public void removeAllRoleAvis(Set<RoleAvis> newRoleAvis) {
+		if(this.roleAvis == null) {
+			return;
+		}
+		
+		this.roleAvis.removeAll(newRoleAvis);
+	}
+	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
+		if(this.evaluation == null) {
+			return;
+		}
+		
+		this.evaluation.removeAll(newEvaluation);
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void removeAllClasse(Set<Classe> newClasse) {
+		if(this.classe == null) {
+			return;
+		}
+		
+		this.classe.removeAll(newClasse);
+	}
 
-    public String getPasswd() {
-        return passwd;
-    }
+	public void removeAllModule(Set<Module> newModule) {
+		if(this.module == null) {
+			return;
+		}
+		
+		this.module.removeAll(newModule);
+	}
 
-    public UserAvis passwd(String passwd) {
-        this.passwd = passwd;
-        return this;
-    }
+	public void setLastName(String myLastName) {
+		this.lastName = myLastName;
+	}
 
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
+	public void setLogin(String myLogin) {
+		this.login = myLogin;
+	}
 
-    public RoleAvis getRoleAvis() {
-        return roleAvis;
-    }
+	public void setFirstName(String myFirstName) {
+		this.firstName = myFirstName;
+	}
 
-    public UserAvis roleAvis(RoleAvis roleAvis) {
-        this.roleAvis = roleAvis;
-        return this;
-    }
+	public void setEmail(String myEmail) {
+		this.email = myEmail;
+	}
 
-    public void setRoleAvis(RoleAvis roleAvis) {
-        this.roleAvis = roleAvis;
-    }
+	public void setPasswd(String myPasswd) {
+		this.passwd = myPasswd;
+	}
+	public void addRoleAvis(RoleAvis newRoleAvis) {
+		if(this.roleAvis == null) {
+			this.roleAvis = new HashSet<RoleAvis>();
+		}
+		
+		this.roleAvis.add(newRoleAvis);
+	}
 
-    public Set<Evaluation> getEvaluations() {
-        return evaluations;
-    }
+	public void addEvaluation(Evaluation newEvaluation) {
+		if(this.evaluation == null) {
+			this.evaluation = new HashSet<Evaluation>();
+		}
+		
+		if (this.evaluation.add(newEvaluation))
+			newEvaluation.basicSetUser(this);
+	}
+	public void addClasse(Classe newClasse) {
+		if(this.classe == null) {
+			this.classe = new HashSet<Classe>();
+		}
+		
+		if (this.classe.add(newClasse))
+			newClasse.addUserAvis(this);
+	}
 
-    public UserAvis evaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-        return this;
-    }
+	public void addModule(Module newModule) {
+		if(this.module == null) {
+			this.module = new HashSet<Module>();
+		}
+		
+		if (this.module.add(newModule))
+			newModule.addUserAvis(this);
+	}
 
-    public UserAvis addEvaluation(Evaluation evaluation) {
-        this.evaluations.add(evaluation);
-        evaluation.setUser(this);
-        return this;
-    }
+	public void unsetLastName() {
+		this.lastName = null;
+	}
 
-    public UserAvis removeEvaluation(Evaluation evaluation) {
-        this.evaluations.remove(evaluation);
-        evaluation.setUser(null);
-        return this;
-    }
+	public void unsetLogin() {
+		this.login = null;
+	}
 
-    public void setEvaluations(Set<Evaluation> evaluations) {
-        this.evaluations = evaluations;
-    }
+	public void unsetFirstName() {
+		this.firstName = null;
+	}
 
-    public Set<Classe> getClasses() {
-        return classes;
-    }
+	public void unsetEmail() {
+		this.email = null;
+	}
+	public void unsetPasswd() {
+		this.passwd = null;
+	}
 
-    public UserAvis classes(Set<Classe> classes) {
-        this.classes = classes;
-        return this;
-    }
+	public void removeRoleAvis(RoleAvis oldRoleAvis) {
+		if(this.roleAvis == null)
+			return;
+		
+		this.roleAvis.remove(oldRoleAvis);
+	}
 
-    public UserAvis addClasse(Classe classe) {
-        this.classes.add(classe);
-        classe.getUserAvis().add(this);
-        return this;
-    }
+	public void removeEvaluation(Evaluation oldEvaluation) {
+		if(this.evaluation == null)
+			return;
+		
+		if (this.evaluation.remove(oldEvaluation))
+			oldEvaluation.unsetUser();
+		
+	}
+	public void removeClasse(Classe oldClasse) {
+		if(this.classe == null)
+			return;
+		
+		if (this.classe.remove(oldClasse))
+			oldClasse.removeUserAvis(this);
+		
+	}
+	public void removeModule(Module oldModule) {
+		if(this.module == null)
+			return;
+		
+		if (this.module.remove(oldModule))
+			oldModule.removeUserAvis(this);
+		
+	}
 
-    public UserAvis removeClasse(Classe classe) {
-        this.classes.remove(classe);
-        classe.getUserAvis().remove(this);
-        return this;
-    }
-
-    public void setClasses(Set<Classe> classes) {
-        this.classes = classes;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        UserAvis userAvis = (UserAvis) o;
-        if (userAvis.userId == null || userId == null) {
-            return false;
-        }
-        return Objects.equals(userId, userAvis.userId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(userId);
-    }
-
-    @Override
-    public String toString() {
-        return "UserAvis{" +
-            "id=" + userId +
-            ", lastName='" + lastName + "'" +
-            ", login='" + login + "'" +
-            ", firstName='" + firstName + "'" +
-            ", email='" + email + "'" +
-            ", passwd='" + passwd + "'" +
-            ", roleAvis='" + roleAvis + "'" +
-            '}';
-    }
 }
+

@@ -15,10 +15,10 @@ import com.falcon.avisep.model.Template;
 @SuppressWarnings("unused")
 public interface TemplateRepository extends JpaRepository<Template,Long> {
 
-    @Query("select distinct template from Template template left join fetch template.questions")
-    List<Template> findAllWithEagerRelationships();
-
-    @Query("select template from Template template left join fetch template.questions where template.id =:id")
-    Template findOneWithEagerRelationships(@Param("id") Long id);
+//    @Query("select distinct template from Template template left join fetch template.questions")
+//    List<Template> findAllWithEagerRelationships();
+//
+//    @Query("select template from Template template left join fetch template.questions where template.id =:id")
+//    Template findOneWithEagerRelationships(@Param("id") Long id);
 
 }

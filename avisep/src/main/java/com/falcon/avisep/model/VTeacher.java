@@ -1,93 +1,64 @@
 package com.falcon.avisep.model;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+@javax.persistence.Entity 
+@javax.persistence.DiscriminatorValue("ROLE_VTEACHER")
+public class VTeacher extends UserAvis implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3067304248397921682L;
+	@javax.persistence.OneToMany (mappedBy = "vTeacher")
+	protected Set<Form> form;
 
-/**
- * A VTeacher.
- */
-@Entity
-@Table(name = "v_teacher")
-public class VTeacher implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    private Long vtId;
-
-    @OneToOne(optional = false)
-    @NotNull
-    @JoinColumn(unique = true)
-    private Form form;
-
-
-    public VTeacher() {
+	public VTeacher(){
 		super();
-		// TODO Auto-generated constructor stub
+	}
+	public Set<Form> getForm() {
+		if(this.form == null) {
+				this.form = new HashSet<Form>();
+		}
+		return (Set<Form>) this.form;
 	}
 
-	public VTeacher(Form form) {
-		super();
-		this.form = form;
+	public void addAllForm(Set<Form> newForm) {
+		if (this.form == null) {
+			this.form = new HashSet<Form>();
+		}
+		for (Form tmp : newForm)
+			tmp.setVTeacher(this);
+		
 	}
 
-	public Long getVtId() {
-		return vtId;
+	public void removeAllForm(Set<Form> newForm) {
+		if(this.form == null) {
+			return;
+		}
+		
+		this.form.removeAll(newForm);
 	}
 
-	public void setVtId(Long vtId) {
-		this.vtId = vtId;
+	public void addForm(Form newForm) {
+		if(this.form == null) {
+			this.form = new HashSet<Form>();
+		}
+		
+		if (this.form.add(newForm))
+			newForm.basicSetVTeacher(this);
 	}
 
-	public Form getForm() {
-        return form;
-    }
+	public void removeForm(Form oldForm) {
+		if(this.form == null)
+			return;
+		
+		if (this.form.remove(oldForm))
+			oldForm.unsetVTeacher();
+		
+	}
 
-    public VTeacher form(Form form) {
-        this.form = form;
-        return this;
-    }
-
-    public void setForm(Form form) {
-        this.form = form;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        VTeacher vTeacher = (VTeacher) o;
-        if (vTeacher.vtId == null || vtId == null) {
-            return false;
-        }
-        return Objects.equals(vtId, vTeacher.vtId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(vtId);
-    }
-
-    @Override
-    public String toString() {
-        return "VTeacher{" +
-            "id=" + vtId +
-            ", vtId='" + vtId + "'" +
-            '}';
-    }
 }
+

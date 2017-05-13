@@ -15,10 +15,10 @@ import com.falcon.avisep.model.Form;
 @SuppressWarnings("unused")
 public interface FormRepository extends JpaRepository<Form,Long> {
 
-    @Query("select distinct form from Form form left join fetch form.templates")
-    List<Form> findAllWithEagerRelationships();
-
-    @Query("select form from Form form left join fetch form.templates where form.id =:id")
-    Form findOneWithEagerRelationships(@Param("id") Long id);
+//    @Query("select distinct form from Form form left join fetch form.templates")
+//    List<Form> findAllWithEagerRelationships();
+//
+//    @Query("select form from Form form left join fetch form.templates where form.id =:id")
+//    Form findOneWithEagerRelationships(@Param("id") Long id);
 
 }
