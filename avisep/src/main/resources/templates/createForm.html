@@ -4,6 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Create Form !</title>
 <script type="text/javascript" src="jquery/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="js/Core.js"></script>
 <link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 <link href="css/avisep.css" type="text/css" rel="stylesheet" />
 </head>
@@ -66,7 +68,7 @@
 	</div>
 </div>
 
-<!-- Create form tab -->		
+<!-- Create form tab -->
 <div class="container col-xs-12 col-sm-10 col-md-10 col-lg-10">
 	<ul class="nav nav-tabs">
     	<li class="active"><a data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span>Your Form</a></li>
@@ -76,11 +78,22 @@
     	<div id="home" class="tab-pane fade in active">
     		<div class="panel panel-default" align="center" style="padding:20px">
 			   <form method="post" action="">
-			   
+			   		<div class="well">
+					   	<div class="form-group row form-title">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+							<label class="question-type">Form title :</label>
+						</div>
+							<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+								<textarea class="form-control" id="form-title" placeholder="Type the form title" rows="1"></textarea>
+							</div>
+						</div>
+					</div>
+					<hr/>
+					<p id="add-question-hint">Add question to your form by choosing its type</p>
 			   		<!-- Questions -->
 			   
-      				<div align="right" id="create-form">
-      					<button type="submit" class="btn btn-primary">Create Form</button>
+      				<div align="right">
+      					<button type="button" data-toggle="tooltip" data-placement="left" data-original-title="test" class="btn btn-primary" id="create-form"><span class="glyphicon glyphicon-send glyphicon-left"></span>Create Form</button>
       				</div>
       			</form>
       		</div>
