@@ -1,0 +1,89 @@
+@CHARSET "ISO-8859-1";
+
+/* {
+	outline: 1px solid red;
+}*/
+
+textarea {
+	resize: vertical;
+}
+
+hr {
+	border-top: 1px solid #CCCCCC;
+	width: 90%;
+}
+
+.glyphicon-list-alt {
+	font-size: 18px;
+	margin-right: 10px;
+}
+
+.glyphicon-left {
+	float: left;
+	font-size: 17px;
+	margin-right: 10px;
+}
+
+.questions-types {
+}
+
+.question-type {
+	padding-top: 6px;
+	white-space: nowrap;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+}
+
+.btn-type {
+	width: 90%;
+	margin-bottom: 10px;
+}
+
+#add-question-hint {
+	color: #BBBBBB;
+	text-shadow: 1px 1px 3px #DFDFDF;
+	font-style: italic;
+}
+
+.form-title {
+	background: url("../img/form-title-background.png");
+}
+
+.btn-delete-question {
+	float: left;
+}
+
+.btn-add-option {
+	float: left;
+}
+
+.question-option {
+	margin-bottom: 8px;
+}
+
+.question-form, .form-group-title {
+	margin-bottom: 0; /* Avoid bootstrap form css property */
+}
+
+.question-options {
+	margin-top: 15px;
+}
+
+.delete-button
+{
+    color: #d43f3a;
+    height: 21px;
+    width: 21px;
+    font-size: 20px;
+    cursor: pointer;
+	padding: 0;
+}
+
+.delete-button-parent {
+	padding: 5px 0;
+}
+
+.delete-button:active
+{
+    text-shadow: -1px 0 1px #777777, 0 1px 1px #777777, 1px 0 1px #777777, 0 -1px 1px #777777;
+}
