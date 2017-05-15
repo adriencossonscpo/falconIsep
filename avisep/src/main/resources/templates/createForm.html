@@ -58,11 +58,11 @@
     	<div class="tab-pane fade in active">
     		<div class="panel panel-default questions-types" align="center">
     			<h4>Type of questions :</h4>
-   				<button class="btn btn-success btn-type" name="text" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Text</button>
-   				<button class="btn btn-success btn-type" name="checkbox" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Checkbox</button>
-   				<button class="btn btn-success btn-type" name="yn" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Yes/No</button>
-   				<button class="btn btn-success btn-type" name="radio" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Radio</button>
-   				<button class="btn btn-success btn-type" name="slider" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Slider</button>
+   				<button class="btn btn-success btn-type" title="Add a text question" name="text" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Text</button>
+   				<button class="btn btn-success btn-type" title="Add a checkbox question" name="checkbox" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Checkbox</button>
+   				<button class="btn btn-success btn-type" title="Add a Yes/No question" name="yn" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Yes/No</button>
+   				<button class="btn btn-success btn-type" title="Add a radio question" name="radio" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Radio</button>
+   				<button class="btn btn-success btn-type" title="Add a slider question" name="slider" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Slider</button>
     		</div>
     	</div>
 	</div>
@@ -78,8 +78,8 @@
     	<div id="home" class="tab-pane fade in active">
     		<div class="panel panel-default" align="center" style="padding:20px">
 			   <form method="post" action="">
-			   		<div class="well">
-					   	<div class="form-group row form-title">
+			   		<div class="well form-title">
+					   	<div class="form-group row form-group-title">
 						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 							<label class="question-type">Form title :</label>
 						</div>
@@ -93,7 +93,7 @@
 			   		<!-- Questions -->
 			   
       				<div align="right">
-      					<button type="button" data-toggle="tooltip" data-placement="left" data-original-title="test" class="btn btn-primary" id="create-form"><span class="glyphicon glyphicon-send glyphicon-left"></span>Create Form</button>
+      					<button type="button" title="Create your form !" class="btn btn-primary" id="create-form"><span class="glyphicon glyphicon-send glyphicon-left"></span>Create Form</button>
       				</div>
       			</form>
       		</div>

@@ -4,6 +4,10 @@
  * 
  */
 
+$(document).ready(function() {
+	
+})
+
 
 function addOption(item) {
 	$(item).parent().next().append(
@@ -31,7 +35,7 @@ function addQuestion(type) {
 			'<div class="well question text-question" data-type="text">' +
 			   	'<div class="form-group row question-form">' +
 				'<div class="col-xs-3 col-sm-1 col-md-1 col-lg-1">' +
-						'<button class="btn btn-danger btn-delete-question" type="button" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
+						'<button class="btn btn-danger btn-delete-question" type="button" title="Delete question" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
 				'</div>' +
 				'<div class="col-xs-9 col-sm-3 col-md-3 col-lg-3">' +
 					'<label class="question-type">Text Question :</label>' +
@@ -47,7 +51,7 @@ function addQuestion(type) {
 			'<div class="well question checkbox-question" data-type="checkbox">' +
 		   		'<div class="form-group row question-form">' +
 		   			'<div class="col-xs-3 col-sm-1 col-md-1 col-lg-1">' +
-						'<button class="btn btn-danger btn-delete-question" type="button" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
+						'<button class="btn btn-danger btn-delete-question" type="button" title="Delete question" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
 					'</div>' +
 					'<div class="col-xs-9 col-sm-3 col-md-3 col-lg-3">' +
 						'<label class="question-type">Checkbox Question :</label>' +
@@ -62,7 +66,7 @@ function addQuestion(type) {
 						'<label class="question-type">Options :</label>' +
 						'</div>' +
 					'<div class="col-xs-6 col-sm-1 col-md-1 col-lg-1">' +
-						'<button class="btn btn-success btn-add-option" type="button" onclick="addOption(this)"><span class="glyphicon glyphicon-plus"></span></button>' +
+						'<button class="btn btn-success btn-add-option" type="button" title="Add an option" onclick="addOption(this)"><span class="glyphicon glyphicon-plus"></span></button>' +
 					'</div>' +
 					'<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">' +
 						'<!-- Les options sont ajoutées en cliquant sur le bouton ci-dessus @Form.js -->' +
@@ -75,7 +79,7 @@ function addQuestion(type) {
 			'<div class="well question radio-question" data-type="radio">' +
 		   		'<div class="form-group row question-form">' +
 		   			'<div class="col-xs-3 col-sm-1 col-md-1 col-lg-1">' +
-						'<button class="btn btn-danger btn-delete-question" type="button" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
+						'<button class="btn btn-danger btn-delete-question" type="button" title="Delete question" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
 					'</div>' +
 					'<div class="col-xs-9 col-sm-3 col-md-3 col-lg-3">' +
 						'<label class="question-type">Radio Question :</label>' +
@@ -90,7 +94,7 @@ function addQuestion(type) {
 						'<label class="question-type">Options :</label>' +
 						'</div>' +
 					'<div class="col-xs-6 col-sm-1 col-md-1 col-lg-1">' +
-						'<button class="btn btn-success btn-add-option" type="button" onclick="addOption(this)"><span class="glyphicon glyphicon-plus"></span></button>' +
+						'<button class="btn btn-success btn-add-option" type="button" title="Add an option" onclick="addOption(this)"><span class="glyphicon glyphicon-plus"></span></button>' +
 					'</div>' +
 					'<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">' +
 						'<!-- Les options sont ajoutées en cliquant sur le bouton ci-dessus @Form.js -->' +
@@ -103,7 +107,7 @@ function addQuestion(type) {
 			'<div class="well question yn-question" data-type="yn">' +
 			   	'<div class="form-group row question-form">' +
 			   		'<div class="col-xs-3 col-sm-1 col-md-1 col-lg-1">' +
-						'<button class="btn btn-danger btn-delete-question" type="button" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
+						'<button class="btn btn-danger btn-delete-question" type="button" title="Delete question" onclick="deleteQuestion(this)"><span class="glyphicon glyphicon-minus"></span></button>' +
 					'</div>' +
 					'<div class="col-xs-9 col-sm-3 col-md-3 col-lg-3">' +
 						'<label class="question-type">Yes/No Question :</label>' +
@@ -127,40 +131,28 @@ function deleteQuestion(item) {
 }
 
 
-function getData() {
-	alert($(".question").length)
-}
-
-/*
- * 
-		$("#create-form").attr({
-			"data-toggle" : "tooltip",
-			"data-placement" : "left",
-			"title" : "Vous devez ajouter au moins une question à votre formulaire"
-		});
- */
-
 $("#create-form").click(function() {
 	var form;
 	var form_title = $("#form-title").val();
 	var questions = [];
 	var n = $(".question").length;
 	if (n == 0) {
-		/*
-		 * Alert via tooltip à faire marcher
-		 * 
+		var windowWidth = $(window).width();
+		alert(windowWidth);
+		var placement = (windowWidth > 420) ? "left" : "top";
 		$("#create-form").attr({
 			"data-toggle" : "tooltip",
-			"data-placement" : "left",
+			"data-placement" : placement || "top",
 			"title" : "Vous devez ajouter au moins une question à votre formulaire"
 		});
-		$('[data-toggle="tooltip"]').tooltip();
 		$("#create-form").tooltip("show");
 		setTimeout(function() {
-			$("#create-form").tooltip("hide");
-		}, 2000)
-		*/
-		alert("Vous devez ajouter au moins une question à votre formulaire")
+			$("#create-form")
+				.tooltip("destroy")
+				.attr({
+				"title" : "Create your form !"
+			});
+		}, 5000);
 		return;
 	} else {
 		$(".question").each(function() {
@@ -180,6 +172,7 @@ $("#create-form").click(function() {
 	}
 	//alert(JSON.stringify(new Core.form(form_title, questions)));
 	form = new Core.form(form_title, questions);
+	alert(JSON.stringify(form));
 	return form;
 })
 

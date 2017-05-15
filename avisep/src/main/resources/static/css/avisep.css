@@ -45,6 +45,10 @@ hr {
 	font-style: italic;
 }
 
+.form-title {
+	background: url("../img/form-title-background.png");
+}
+
 .btn-delete-question {
 	float: left;
 }
@@ -57,7 +61,7 @@ hr {
 	margin-bottom: 8px;
 }
 
-.question-form, .form-title {
+.question-form, .form-group-title {
 	margin-bottom: 0; /* Avoid bootstrap form css property */
 }
 
@@ -73,7 +77,6 @@ hr {
     font-size: 20px;
     cursor: pointer;
 	padding: 0;
-    transition: 0.1s;
 }
 
 .delete-button-parent {
@@ -82,5 +85,5 @@ hr {
 
 .delete-button:active
 {
-    text-shadow: -1px 0 1px #555555, 0 1px 1px #555555, 1px 0 1px #555555, 0 -1px 1px #555555;
+    text-shadow: -1px 0 1px #777777, 0 1px 1px #777777, 1px 0 1px #777777, 0 -1px 1px #777777;
 }
