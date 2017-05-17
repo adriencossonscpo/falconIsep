@@ -1,135 +1,104 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/navbar">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Create Form !</title>
-<script type="text/javascript" src="jquery/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript" src="js/Core.js"></script>
-<link href="bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<link href="css/avisep.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+	<div layout:fragment="page-content">
+		<div class="container col-xs-12 col-sm-2 col-md-2 col-lg-2">
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab">Add Question</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade in active">
+					<div class="panel panel-default questions-types" align="center">
+						<h4>Type of questions :</h4>
+						<button class="btn btn-success btn-type" name="text"
+							onclick="addQuestion($(this).attr('name'))">
+							<span class="glyphicon glyphicon-plus glyphicon-left"></span>Text
+						</button>
+						<button class="btn btn-success btn-type" name="checkbox"
+							onclick="addQuestion($(this).attr('name'))">
+							<span class="glyphicon glyphicon-plus glyphicon-left"></span>Checkbox
+						</button>
+						<button class="btn btn-success btn-type" name="yn"
+							onclick="addQuestion($(this).attr('name'))">
+							<span class="glyphicon glyphicon-plus glyphicon-left"></span>Yes/No
+						</button>
+						<button class="btn btn-success btn-type" name="radio"
+							onclick="addQuestion($(this).attr('name'))">
+							<span class="glyphicon glyphicon-plus glyphicon-left"></span>Radio
+						</button>
+						<button class="btn btn-success btn-type" name="slider"
+							onclick="addQuestion($(this).attr('name'))">
+							<span class="glyphicon glyphicon-plus glyphicon-left"></span>ROTI
+						</button>
+						<button class="btn btn-success btn-type" name="slider"
+							onclick="checkIndex(0)">
+							<span class="glyphicon glyphicon-plus glyphicon-left"></span>check
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	
-<nav class="navbar navbar-default navabar-static-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="/">
-          <span class=" navbar-brand glyphicon glyphicon-pencil"></span>
-      </a>
-      <a class="navbar-brand" href="/">AVISEP</a>
-    </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Switch to English</a></li>
-        <li><a href="#">Switch to French</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Name <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li align="center"><a href="#">My Courses <span class="badge">12</span></a></li>
-            <li align="center"><a href="#">Available Surveys <span class="badge">4</span></a></li>
-            <li role="separator" class="divider"></li>
-            <li align="center"><a href="#">Log Out</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-
-<!-- Add Question -->		
-<div class="container col-xs-12 col-sm-2 col-md-2 col-lg-2">
-	<ul class="nav nav-tabs">
-    	<li class="active"><a data-toggle="tab">Add Question</a></li>
-	</ul>
-
-	<div class="tab-content">
-    	<div class="tab-pane fade in active">
-    		<div class="panel panel-default questions-types" align="center">
-    			<h4>Type of questions :</h4>
-   				<button class="btn btn-success btn-type" title="Add a text question" name="text" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Text</button>
-   				<button class="btn btn-success btn-type" title="Add a checkbox question" name="checkbox" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Checkbox</button>
-   				<button class="btn btn-success btn-type" title="Add a Yes/No question" name="yn" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Yes/No</button>
-   				<button class="btn btn-success btn-type" title="Add a radio question" name="radio" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Radio</button>
-   				<button class="btn btn-success btn-type" title="Add a slider question" name="slider" onclick="addQuestion($(this).attr('name'))"><span class="glyphicon glyphicon-plus glyphicon-left"></span>Slider</button>
-    		</div>
-    	</div>
-	</div>
-</div>
-
-<!-- Create form tab -->
-<div class="container col-xs-12 col-sm-10 col-md-10 col-lg-10">
-	<ul class="nav nav-tabs">
-    	<li class="active"><a data-toggle="tab" href="#form"><span class="glyphicon glyphicon-list-alt"></span>Your Form</a></li>
-    	<li><a data-toggle="tab" href="#preview">Preview</a></li>
-	</ul>
-
-	<div class="tab-content">
-    	<div id="form" class="tab-pane fade in active">
-    		<div class="panel panel-default" align="center" style="padding:20px">
-			   <form method="post" action="">
-			   		<div class="well form-title">
-					   	<div class="form-group row form-group-title">
-						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-							<label class="question-type">Form title :</label>
-						</div>
-							<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-								<textarea class="form-control" id="form-title" placeholder="Type the form title" rows="1"></textarea>
+		<!-- Create form tab -->
+		<div class="container col-xs-12 col-sm-10 col-md-10 col-lg-10">
+			<ul class="nav nav-tabs" role="tablist" id="form-tab">
+				<li role="presentation" class="active">
+					<a role="tab" data-toggle="tab" href="#form">
+						<span class="glyphicon glyphicon-list-alt"></span>Your Form
+					</a>
+				</li>
+				<li role="presentation">
+					<a role="tab" data-toggle="tab" href="#form-preview">Preview</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="form">
+					<div class="panel panel-default" align="center"
+						style="padding: 20px">
+						<form method="post" action="">
+							<div class="well form-title">
+								<div class="form-group row form-group-title">
+									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+										<label class="question-type">Form title :</label>
+									</div>
+									<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+										<textarea class="form-control" id="form-title"
+											placeholder="Type the form title" rows="1"></textarea>
+									</div>
+								</div>
 							</div>
+							<hr />
+							<p class="question-hint" id="add-question-hint">Add question to your form by choosing its type</p>
+							<!-- Questions -->
+							<div align="right">
+								<button type="button" title="Create your form !"
+									class="btn btn-primary" id="create-form">
+									<span class="glyphicon glyphicon-send glyphicon-left"></span>Create
+									Form
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- Display the form's preview -->
+				<div role="tabpanel" class="tab-pane fade in" id="form-preview">
+					<div class="panel panel-default" style="padding: 20px">
+						<h4><p class="form-hint" id="form-title-preview">Form title</p></h4>
+						<hr />
+						<div class="well" id="form-preview-group">
+							<p class="question-hint" id="add-question-hint">Add question to your form by choosing its type</p>
 						</div>
 					</div>
-					<hr/>
-					<p id="add-question-hint">Add question to your form by choosing its type</p>
-			   		<!-- Questions -->
-			   
-      				<div align="right">
-      					<button type="button" title="Create your form !" class="btn btn-primary" id="create-form"><span class="glyphicon glyphicon-send glyphicon-left"></span>Create Form</button>
-      				</div>
-      			</form>
-      		</div>
-    	</div>
-    	<!-- Display the form's preview -->
-    	<div id="preview" class="tab-pane fade in active">
-    		<div class="panel panel-default" style="padding:20px">
-			  	<form method="post" action="">
-			   		<div class="form-group ">
-      					<label for="text">
-       						Text
-      					</label>
-      					<input class="form-control" id="text" name="text" type="text" disabled="disabled" style="cursor:default" />
-     				</div>
-     					<div class="form-group ">
-      						<label class="control-label ">
-       						Checkbox
-      						</label>
-      					<div class="">
-       						<div class="checkbox">
-        						<label class="checkbox">
-         						<input name="checkbox" type="checkbox" value="First Choice"/>
-         							First Choice
-        						</label>
-       						</div>
-      					</div>
-     				</div>
-					
-					
-			   		<!-- Questions -->
-      			</form>
-      		</div>
-    	</div>
-    </div>
-</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
-<script type="text/javascript" src="js/Form.js"></script>
 </html>

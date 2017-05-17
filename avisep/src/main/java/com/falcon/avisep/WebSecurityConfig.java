@@ -2,6 +2,7 @@ package com.falcon.avisep;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,21 +22,15 @@ public class WebSecurityConfig  extends WebMvcConfigurerAdapter{
 	}
 
 	protected void configure(final HttpSecurity http) throws Exception {
-		http
-		.authorizeRequests().antMatchers("/login").permitAll()
-        .anyRequest().authenticated()
-        .and()
-        .formLogin().loginPage("/login").permitAll()
-        .and()
-        .logout().permitAll();
-		http.csrf().disable();
-		http.headers().frameOptions().disable();
-		//	        .formLogin()
-		//	        .loginPage("/login.html")
-		//	        .failureUrl("/login-error.html")
-		//	      .and()
-		//	        .logout()
-		//	        .logoutSuccessUrl("/index.html");
+		http.authorizeRequests()
+		.antMatchers("/createForm").hasRole("ADMIN")
+		.antMatchers("/index/**").permitAll()
+		.antMatchers(HttpMethod.POST,"/welcomeT")
+		.hasRole("ETeacher")
+		.antMatchers("/index/**").permitAll()
+		.anyRequest().authenticated()
+		.and()
+		.formLogin().loginPage("/login").permitAll();
 	}
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

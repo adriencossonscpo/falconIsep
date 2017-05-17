@@ -1,46 +1,54 @@
 package com.falcon.avisep.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
+
+ 
 @javax.persistence.Entity 
 public class Evaluation implements Serializable
 {
+	private static final long serialVersionUID = 5952622685135836725L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1949302278528590272L;
+	 
+	@javax.persistence.Column(nullable = false)
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	protected Date eData;
 
-	@javax.persistence.Column(nullable = false) 
-	protected String eData;
-
+	 
 	@javax.persistence.ManyToOne 
 	protected Salle salle;
 
+	 
 	@javax.persistence.ManyToOne 
 	protected Cours cours;
 
+	 
 	@javax.persistence.ManyToOne 
 	protected Module module;
 
+	 
 	@javax.persistence.ManyToOne 
 	protected Classe classe;
 
+	 
 	@javax.persistence.ManyToOne 
 	@javax.persistence.JoinColumn(nullable = false) 
 	protected UserAvis user;
 
+	 
 	@javax.persistence.ManyToOne 
 	protected Question question;
 
 	@javax.persistence.Id 
-	@javax.persistence.Column(nullable = false) 
-	protected final Long evaluationId = 0L;
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY) 
+	private Long id;
 
 	public Evaluation(){
 		super();
 	}
-
 	public void basicSetSalle(Salle mySalle) {
 		if (this.salle != mySalle) {
 			if (mySalle != null){
@@ -53,7 +61,6 @@ public class Evaluation implements Serializable
 			}
 		}
 	}
-
 	public void basicSetCours(Cours myCours) {
 		if (this.cours != myCours) {
 			if (myCours != null){
@@ -79,7 +86,6 @@ public class Evaluation implements Serializable
 			}
 		}
 	}
-
 	public void basicSetClasse(Classe myClasse) {
 		if (this.classe != myClasse) {
 			if (myClasse != null){
@@ -92,7 +98,6 @@ public class Evaluation implements Serializable
 			}
 		}
 	}
-
 	public void basicSetUser(UserAvis myUser) {
 		if (this.user != myUser) {
 			if (myUser != null){
@@ -119,7 +124,7 @@ public class Evaluation implements Serializable
 		}
 	}
 
-	public String getEData() {
+	public Date getEData() {
 		return this.eData;
 	}
 
@@ -134,25 +139,23 @@ public class Evaluation implements Serializable
 	public Module getModule() {
 		return this.module;
 	}
-
 	public Classe getClasse() {
 		return this.classe;
 	}
-
 	public UserAvis getUser() {
 		return this.user;
 	}
-
 	public Question getQuestion() {
 		return this.question;
 	}
 
-	public long getEvaluationId() {
-		return this.evaluationId;
+	public Long getId() {
+		return id;
 	}
-
-
-	public void setEData(String myEData) {
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public void setEData(Date myEData) {
 		this.eData = myEData;
 	}
 
@@ -174,7 +177,6 @@ public class Evaluation implements Serializable
 		this.basicSetClasse(myClasse);
 		myClasse.addEvaluation(this);
 	}
-
 	public void setUser(UserAvis myUser) {
 		this.basicSetUser(myUser);
 		myUser.addEvaluation(this);
@@ -186,9 +188,8 @@ public class Evaluation implements Serializable
 	}
 
 	public void unsetEData() {
-		this.eData = "";
+		this.eData = null;
 	}
-
 	public void unsetSalle() {
 		if (this.salle == null)
 			return;
@@ -196,6 +197,7 @@ public class Evaluation implements Serializable
 		this.salle = null;
 		oldsalle.removeEvaluation(this);
 	}
+
 	public void unsetCours() {
 		if (this.cours == null)
 			return;
@@ -203,7 +205,6 @@ public class Evaluation implements Serializable
 		this.cours = null;
 		oldcours.removeEvaluation(this);
 	}
-
 	public void unsetModule() {
 		if (this.module == null)
 			return;
@@ -211,6 +212,7 @@ public class Evaluation implements Serializable
 		this.module = null;
 		oldmodule.removeEvaluation(this);
 	}
+
 	public void unsetClasse() {
 		if (this.classe == null)
 			return;
@@ -226,7 +228,6 @@ public class Evaluation implements Serializable
 		this.user = null;
 		olduser.removeEvaluation(this);
 	}
-
 	public void unsetQuestion() {
 		if (this.question == null)
 			return;

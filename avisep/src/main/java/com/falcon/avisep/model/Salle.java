@@ -4,20 +4,22 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.GenerationType;
 
 
+ 
 @javax.persistence.Entity 
 public class Salle implements Serializable
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8828244291063532926L;
+	private static final long serialVersionUID = -557912940521481038L;
+	 
 	@javax.persistence.Column 
 	protected String name;
+
+	 
 	@javax.persistence.Column 
 	protected String location;
-
+	 
 	@javax.persistence.OneToMany(mappedBy = "salle", cascade = javax.persistence.CascadeType.ALL) 
 	protected Set<Evaluation> evaluation;
 
@@ -25,10 +27,10 @@ public class Salle implements Serializable
 	@javax.persistence.ManyToOne 
 	@javax.persistence.JoinColumn(nullable = false) 
 	protected Cours cours;
-	
+
 	@javax.persistence.Id 
-	@javax.persistence.Column(nullable = false) 
-	protected final Long salleId = 0L;
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY) 
+	private Long id;
 
 	public Salle(){
 		super();
@@ -46,7 +48,6 @@ public class Salle implements Serializable
 			}
 		}
 	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -65,8 +66,13 @@ public class Salle implements Serializable
 	public Cours getCours() {
 		return this.cours;
 	}
-	public long getSalleId() {
-		return this.salleId;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
@@ -85,7 +91,6 @@ public class Salle implements Serializable
 		
 		this.evaluation.removeAll(newEvaluation);
 	}
-
 	public void setName(String myName) {
 		this.name = myName;
 	}
@@ -93,6 +98,7 @@ public class Salle implements Serializable
 	public void setLocation(String myLocation) {
 		this.location = myLocation;
 	}
+
 	public void addEvaluation(Evaluation newEvaluation) {
 		if(this.evaluation == null) {
 			this.evaluation = new HashSet<Evaluation>();
@@ -101,7 +107,6 @@ public class Salle implements Serializable
 		if (this.evaluation.add(newEvaluation))
 			newEvaluation.basicSetSalle(this);
 	}
-
 	public void setCours(Cours myCours) {
 		this.basicSetCours(myCours);
 		myCours.addSalle(this);
@@ -114,7 +119,6 @@ public class Salle implements Serializable
 	public void unsetLocation() {
 		this.location = null;
 	}
-
 	public void removeEvaluation(Evaluation oldEvaluation) {
 		if(this.evaluation == null)
 			return;

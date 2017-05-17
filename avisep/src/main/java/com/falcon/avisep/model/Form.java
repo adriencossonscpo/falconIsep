@@ -1,220 +1,141 @@
 package com.falcon.avisep.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
 
 
- 
+
 @javax.persistence.Entity 
+@javax.persistence.Table(name = "form")
 public class Form implements Serializable
 {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1526199174259454089L;
+	private static final long serialVersionUID = -7863390379345194681L;
 
-	@javax.persistence.ManyToMany(mappedBy = "form") 
-	protected Set<Template> template;
-
-	@javax.persistence.OneToOne(mappedBy = "form") 
-	protected Question question;
-
-	@javax.persistence.ManyToOne 
-	@javax.persistence.JoinColumn(nullable = false) 
-	protected VTeacher vTeacher;
-
-	@javax.persistence.ManyToOne 
-	@javax.persistence.JoinColumn(nullable = false) 
-	protected AdminAvis admin;
-
-	@javax.persistence.ManyToOne 
-	@javax.persistence.JoinColumn(nullable = false) 
-	protected ETeacher eTeacher;
-
-	@javax.persistence.Id 
-	@javax.persistence.Column(nullable = false) 
-	protected final Long formId = 0L;
-
+	 
 	@javax.persistence.Column 
-	protected String formType;
+	protected String formTitle;
+	 
+	@javax.persistence.Column 
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	protected Date dateCreation;
+	 
+	@javax.persistence.ManyToMany(mappedBy = "form") 
+	protected Set<Question> question;
+
+	 
+	@javax.persistence.ManyToOne
+	protected UserAvis userAvis;
+	
+	@javax.persistence.Id 
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
 	public Form(){
 		super();
 	}
 
-	public void basicSetQuestion(Question myQuestion) {
-		if (this.question != myQuestion) {
-			if (myQuestion != null){
-				if (this.question != myQuestion) {
-					Question oldquestion = this.question;
-					this.question = myQuestion;
-					if (oldquestion != null)
-						oldquestion.unsetForm();
+	public void basicSetUserAvis(UserAvis myUserAvis) {
+		if (this.userAvis != myUserAvis) {
+			if (myUserAvis != null){
+				if (this.userAvis != myUserAvis) {
+					UserAvis olduserAvis = this.userAvis;
+					this.userAvis = myUserAvis;
+					if (olduserAvis != null)
+						olduserAvis.removeForm(this);
 				}
 			}
 		}
 	}
 
-	public void basicSetAdmin(AdminAvis myAdmin) {
-		if (this.admin != myAdmin) {
-			if (myAdmin != null){
-				if (this.admin != myAdmin) {
-					AdminAvis oldadmin = this.admin;
-					this.admin = myAdmin;
-					if (oldadmin != null)
-						oldadmin.removeForm(this);
-				}
-			}
+	public String getFormTitle() {
+		return this.formTitle;
+	}
+
+	public Date getDateCreation() {
+		return this.dateCreation;
+	}
+
+	public Set<Question> getQuestion() {
+		if(this.question == null) {
+				this.question = new HashSet<Question>();
 		}
+		return (Set<Question>) this.question;
+	}
+	public UserAvis getUserAvis() {
+		return this.userAvis;
 	}
 
-	public void basicSetETeacher(ETeacher myETeacher) {
-		if (this.eTeacher != myETeacher) {
-			if (myETeacher != null){
-				if (this.eTeacher != myETeacher) {
-					ETeacher oldeTeacher = this.eTeacher;
-					this.eTeacher = myETeacher;
-					if (oldeTeacher != null)
-						oldeTeacher.removeForm(this);
-				}
-			}
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public void addAllQuestion(Set<Question> newQuestion) {
+		if (this.question == null) {
+			this.question = new HashSet<Question>();
 		}
-	}
-	
-	public void basicSetVTeacher(VTeacher myVTeacher) {
-		if (this.vTeacher != myVTeacher) {
-			if (myVTeacher != null){
-				if (this.vTeacher != myVTeacher) {
-					VTeacher oldvTeacher = this.vTeacher;
-					this.vTeacher = myVTeacher;
-					if (oldvTeacher != null)
-						oldvTeacher.removeForm(this);
-				}
-			}
-		}
-	}
-	public Set<Template> getTemplate() {
-		if(this.template == null) {
-				this.template = new HashSet<Template>();
-		}
-		return (Set<Template>) this.template;
-	}
-	public String getFormType() {
-		return this.formType;
-	}
-	public Question getQuestion() {
-		return this.question;
-	}
-
-	public VTeacher getVTeacher() {
-		return this.vTeacher;
-	}
-
-	public AdminAvis getAdmin() {
-		return this.admin;
-	}
-
-	public ETeacher getETeacher() {
-		return this.eTeacher;
-	}
-
-	public long getFormId() {
-		return this.formId;
-	}
-
-	public void addAllTemplate(Set<Template> newTemplate) {
-		if (this.template == null) {
-			this.template = new HashSet<Template>();
-		}
-		for (Template tmp : newTemplate)
+		for (Question tmp : newQuestion)
 			tmp.addForm(this);
 		
 	}
-
-	public void removeAllTemplate(Set<Template> newTemplate) {
-		if(this.template == null) {
+	public void removeAllQuestion(Set<Question> newQuestion) {
+		if(this.question == null) {
 			return;
 		}
 		
-		this.template.removeAll(newTemplate);
+		this.question.removeAll(newQuestion);
 	}
 
-	public void addTemplate(Template newTemplate) {
-		if(this.template == null) {
-			this.template = new HashSet<Template>();
+	public void setFormTitle(String formTitle) {
+		this.formTitle = formTitle;
+	}
+
+	public void setDateCreation(Date myDateCreation) {
+		this.dateCreation = myDateCreation;
+	}
+
+	public void addQuestion(Question newQuestion) {
+		if(this.question == null) {
+			this.question = new HashSet<Question>();
 		}
 		
-		if (this.template.add(newTemplate))
-			newTemplate.addForm(this);
+		if (this.question.add(newQuestion))
+			newQuestion.addForm(this);
+	}
+	public void setUserAvis(UserAvis myUserAvis) {
+		this.basicSetUserAvis(myUserAvis);
+		myUserAvis.addForm(this);
 	}
 
-	public void setQuestion(Question myQuestion) {
-		this.basicSetQuestion(myQuestion);
-		myQuestion.basicSetForm(this);
-		
-	}
-	public void setFormType(String myformType) {
-		this.formType = myformType;
-	}
-	public void setVTeacher(VTeacher myVTeacher) {
-		this.basicSetVTeacher(myVTeacher);
-		myVTeacher.addForm(this);
-		
+	public void unsetFormTitle() {
+		this.formTitle = null;
 	}
 
-	public void setAdmin(AdminAvis myAdmin) {
-		this.basicSetAdmin(myAdmin);
-		myAdmin.addForm(this);
+	public void unsetDateCreation() {
+		this.dateCreation = null;
 	}
 
-	public void setETeacher(ETeacher myETeacher) {
-		this.basicSetETeacher(myETeacher);
-		myETeacher.addForm(this);
-	}
-	public void removeTemplate(Template oldTemplate) {
-		if(this.template == null)
+	public void removeQuestion(Question oldQuestion) {
+		if(this.question == null)
 			return;
 		
-		if (this.template.remove(oldTemplate))
-			oldTemplate.removeForm(this);
+		if (this.question.remove(oldQuestion))
+			oldQuestion.removeForm(this);
 		
 	}
-
-	public void unsetQuestion() {
-		if (this.question == null)
+	public void unsetUserAvis() {
+		if (this.userAvis == null)
 			return;
-		Question oldquestion = this.question;
-		this.question = null;
-		oldquestion.unsetForm();
-	}
-	public void unsetFormType() {
-		this.formType = null;
-	}
-	public void unsetVTeacher() {
-		if (this.vTeacher == null)
-			return;
-		VTeacher oldvTeacher = this.vTeacher;
-		this.vTeacher = null;
-		oldvTeacher.removeForm(this);
-	}
-
-	public void unsetAdmin() {
-		if (this.admin == null)
-			return;
-		AdminAvis oldadmin = this.admin;
-		this.admin = null;
-		oldadmin.removeForm(this);
-	}
-
-	public void unsetETeacher() {
-		if (this.eTeacher == null)
-			return;
-		ETeacher oldeTeacher = this.eTeacher;
-		this.eTeacher = null;
-		oldeTeacher.removeForm(this);
+		UserAvis olduserAvis = this.userAvis;
+		this.userAvis = null;
+		olduserAvis.removeForm(this);
 	}
 
 }

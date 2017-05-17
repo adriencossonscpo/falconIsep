@@ -4,91 +4,74 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.GenerationType;
+
 
 
  
 @javax.persistence.Entity 
 public class Question implements Serializable
 {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3980318607063807474L;
+	private static final long serialVersionUID = 9073731474395915309L;
 
 	@javax.persistence.Column 
-	protected String inTemplate;
-
-	@javax.persistence.Column 
-	protected String asPertinance;
-
+	protected String options;
+	 
 	@javax.persistence.Column 
 	protected Boolean isPertinent;
-
+	 
 	@javax.persistence.Column 
-	protected String content;
+	protected String qTitle;
 	 
 	@javax.persistence.Column 
 	protected String qType;
-
-	@javax.persistence.OneToOne 
-	protected Form form;
-
-	@javax.persistence.ManyToMany(mappedBy = "question") 
-	protected Set<Template> template;
+	 
+	@javax.persistence.ManyToMany 
+	protected Set<Form> form;
 
 	@javax.persistence.OneToMany(mappedBy = "question", cascade = javax.persistence.CascadeType.ALL) 
 	protected Set<Evaluation> evaluation;
 
 	@javax.persistence.Id 
-	@javax.persistence.Column(nullable = false) 
-	protected final Long qId = 0L;
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY) 
+	private Long id;
 
 	public Question(){
 		super();
-	}
-
-	public void basicSetForm(Form myForm) {
-		if (this.form != myForm) {
-			if (myForm != null){
-				if (this.form != myForm) {
-					Form oldform = this.form;
-					this.form = myForm;
-					if (oldform != null)
-						oldform.unsetQuestion();
-				}
-			}
-		}
-	}
-
-	public String getInTemplate() {
-		return this.inTemplate;
-	}
-
-	public String getAsPertinance() {
-		return this.asPertinance;
 	}
 
 	public Boolean getIsPertinent() {
 		return this.isPertinent;
 	}
 
-	public String getContent() {
-		return this.content;
+
+	public String getqTitle() {
+		return qTitle;
 	}
-	
+
+	public void setqTitle(String qTitle) {
+		this.qTitle = qTitle;
+	}
+
 	public String getQType() {
 		return this.qType;
 	}
 
-	public Form getForm() {
-		return this.form;
+	public String getOptions() {
+		return options;
 	}
-	public Set<Template> getTemplate() {
-		if(this.template == null) {
-				this.template = new HashSet<Template>();
+
+	public void setOptions(String options) {
+		this.options = options;
+	}
+
+	public Set<Form> getForm() {
+		if(this.form == null) {
+				this.form = new HashSet<Form>();
 		}
-		return (Set<Template>) this.template;
+		return (Set<Form>) this.form;
 	}
+
 	public Set<Evaluation> getEvaluation() {
 		if(this.evaluation == null) {
 				this.evaluation = new HashSet<Evaluation>();
@@ -96,15 +79,19 @@ public class Question implements Serializable
 		return (Set<Evaluation>) this.evaluation;
 	}
 
-	public long getQId() {
-		return this.qId;
+	public Long getId() {
+		return id;
 	}
 
-	public void addAllTemplate(Set<Template> newTemplate) {
-		if (this.template == null) {
-			this.template = new HashSet<Template>();
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void addAllForm(Set<Form> newForm) {
+		if (this.form == null) {
+			this.form = new HashSet<Form>();
 		}
-		for (Template tmp : newTemplate)
+		for (Form tmp : newForm)
 			tmp.addQuestion(this);
 		
 	}
@@ -116,13 +103,12 @@ public class Question implements Serializable
 			tmp.setQuestion(this);
 		
 	}
-
-	public void removeAllTemplate(Set<Template> newTemplate) {
-		if(this.template == null) {
+	public void removeAllForm(Set<Form> newForm) {
+		if(this.form == null) {
 			return;
 		}
 		
-		this.template.removeAll(newTemplate);
+		this.form.removeAll(newForm);
 	}
 
 	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
@@ -133,40 +119,23 @@ public class Question implements Serializable
 		this.evaluation.removeAll(newEvaluation);
 	}
 
-	public void setInTemplate(String myInTemplate) {
-		this.inTemplate = myInTemplate;
-	}
-	public void setAsPertinance(String myAsPertinance) {
-		this.asPertinance = myAsPertinance;
-	}
-
 	public void setIsPertinent(Boolean myIsPertinent) {
 		this.isPertinent = myIsPertinent;
 	}
 
-	public void setContent(String myContent) {
-		this.content = myContent;
-	}
 
 	public void setQType(String myQType) {
 		this.qType = myQType;
 	}
 
-	public void setForm(Form myForm) {
-		this.basicSetForm(myForm);
-		myForm.basicSetQuestion(this);
-		
-	}
-
-	public void addTemplate(Template newTemplate) {
-		if(this.template == null) {
-			this.template = new HashSet<Template>();
+	public void addForm(Form newForm) {
+		if(this.form == null) {
+			this.form = new HashSet<Form>();
 		}
 		
-		if (this.template.add(newTemplate))
-			newTemplate.addQuestion(this);
+		if (this.form.add(newForm))
+			newForm.addQuestion(this);
 	}
-
 	public void addEvaluation(Evaluation newEvaluation) {
 		if(this.evaluation == null) {
 			this.evaluation = new HashSet<Evaluation>();
@@ -176,43 +145,25 @@ public class Question implements Serializable
 			newEvaluation.basicSetQuestion(this);
 	}
 
-	public void unsetInTemplate() {
-		this.inTemplate = null;
-	}
-
-	public void unsetAsPertinance() {
-		this.asPertinance = null;
-	}
-
 	public void unsetIsPertinent() {
 		this.isPertinent = null;
 	}
-
-	public void unsetContent() {
-		this.content = null;
+	public void unsetQTitle() {
+		this.qTitle = null;
 	}
 
 	public void unsetQType() {
 		this.qType = null;
 	}
 
-	public void unsetForm() {
-		if (this.form == null)
-			return;
-		Form oldform = this.form;
-		this.form = null;
-		oldform.unsetQuestion();
-	}
-
-	public void removeTemplate(Template oldTemplate) {
-		if(this.template == null)
+	public void removeForm(Form oldForm) {
+		if(this.form == null)
 			return;
 		
-		if (this.template.remove(oldTemplate))
-			oldTemplate.removeQuestion(this);
+		if (this.form.remove(oldForm))
+			oldForm.removeQuestion(this);
 		
 	}
-
 	public void removeEvaluation(Evaluation oldEvaluation) {
 		if(this.evaluation == null)
 			return;

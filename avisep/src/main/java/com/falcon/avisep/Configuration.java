@@ -4,14 +4,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-public class Configuration {
+public class Configuration extends WebMvcConfigurerAdapter {
 	public static void main(String[] args) {
 		SpringApplication.run(Configuration.class, args);
 	}
+	@Override
+    public void addInterceptors(InterceptorRegistry registry){
+        registry.addInterceptor(new Interceptor());
+    }
 //	@Bean
 //	public DataSource dataSource(){
 //	    DriverManagerDataSource dataSource = new DriverManagerDataSource();

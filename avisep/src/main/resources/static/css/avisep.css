@@ -24,9 +24,6 @@ hr {
 	margin-right: 10px;
 }
 
-.questions-types {
-}
-
 .question-type {
 	padding-top: 6px;
 	white-space: nowrap;
@@ -39,14 +36,30 @@ hr {
 	margin-bottom: 10px;
 }
 
-#add-question-hint {
+.question-hint, #form-title-preview {
+	text-align: center;
 	color: #BBBBBB;
 	text-shadow: 1px 1px 3px #DFDFDF;
 	font-style: italic;
 }
 
+.form-hint {
+	color: #BBBBBB;
+	font-style: italic;
+}
+
 .form-title {
 	background: url("../img/form-title-background.png");
+}
+
+.form-title-preview {
+	text-align: center;
+	text-shadow: 1px 1px 3px #DFDFDF;
+	font-style: italic;
+}
+
+.form-preview {
+	background: url("../img/form-preview-background.png");
 }
 
 .btn-delete-question {
@@ -86,4 +99,12 @@ hr {
 .delete-button:active
 {
     text-shadow: -1px 0 1px #777777, 0 1px 1px #777777, 1px 0 1px #777777, 0 -1px 1px #777777;
+}
+
+.question-preview {
+	padding-top: 10px;
+}
+
+.question-answer-preview {
+	cursor: text;
 }

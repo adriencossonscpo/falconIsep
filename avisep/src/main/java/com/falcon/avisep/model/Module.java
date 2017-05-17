@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.GenerationType;
+
 
 
  
@@ -13,8 +15,9 @@ public class Module implements Serializable
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6322761009649610490L;
+	private static final long serialVersionUID = -4215320328503290356L;
 
+	 
 	@javax.persistence.Column 
 	protected String name;
 
@@ -28,25 +31,17 @@ public class Module implements Serializable
 	@javax.persistence.OneToMany(mappedBy = "module", cascade = javax.persistence.CascadeType.ALL) 
 	protected Set<Cours> cours;
 
-	 
 	@javax.persistence.ManyToMany(mappedBy = "module") 
 	protected Set<UserAvis> userAvis;
 
 	@javax.persistence.Id 
-	@javax.persistence.Column(nullable = false) 
-	protected final Long moduleId = 0L;
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY) 
+	private Long id;
 
 	public Module(){
 		super();
 	}
-	public void addUserAvis(UserAvis newUserAvis) {
-		if(this.userAvis == null) {
-			this.userAvis = new HashSet<UserAvis>();
-		}
-		
-		if (this.userAvis.add(newUserAvis))
-			newUserAvis.addModule(this);
-	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -54,6 +49,7 @@ public class Module implements Serializable
 	public String getDescription() {
 		return this.description;
 	}
+
 	public Set<Evaluation> getEvaluation() {
 		if(this.evaluation == null) {
 				this.evaluation = new HashSet<Evaluation>();
@@ -75,8 +71,12 @@ public class Module implements Serializable
 		return (Set<UserAvis>) this.userAvis;
 	}
 
-	public long getModuleId() {
-		return this.moduleId;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
@@ -97,6 +97,14 @@ public class Module implements Serializable
 		
 	}
 
+	public void addAllUserAvis(Set<UserAvis> newUserAvis) {
+		if (this.userAvis == null) {
+			this.userAvis = new HashSet<UserAvis>();
+		}
+		for (UserAvis tmp : newUserAvis)
+			tmp.addModule(this);
+		
+	}
 	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
 		if(this.evaluation == null) {
 			return;
@@ -113,6 +121,13 @@ public class Module implements Serializable
 		this.cours.removeAll(newCours);
 	}
 
+	public void removeAllUserAvis(Set<UserAvis> newUserAvis) {
+		if(this.userAvis == null) {
+			return;
+		}
+		
+		this.userAvis.removeAll(newUserAvis);
+	}
 	public void setName(String myName) {
 		this.name = myName;
 	}
@@ -139,13 +154,13 @@ public class Module implements Serializable
 			newCours.basicSetModule(this);
 	}
 
-	public void addAllUserAvis(Set<UserAvis> newUserAvis) {
-		if (this.userAvis == null) {
+	public void addUserAvis(UserAvis newUserAvis) {
+		if(this.userAvis == null) {
 			this.userAvis = new HashSet<UserAvis>();
 		}
-		for (UserAvis tmp : newUserAvis)
-			tmp.addModule(this);
 		
+		if (this.userAvis.add(newUserAvis))
+			newUserAvis.addModule(this);
 	}
 
 	public void unsetName() {
@@ -155,7 +170,6 @@ public class Module implements Serializable
 	public void unsetDescription() {
 		this.description = null;
 	}
-
 	public void removeEvaluation(Evaluation oldEvaluation) {
 		if(this.evaluation == null)
 			return;
@@ -173,6 +187,7 @@ public class Module implements Serializable
 			oldCours.unsetModule();
 		
 	}
+
 	public void removeUserAvis(UserAvis oldUserAvis) {
 		if(this.userAvis == null)
 			return;
@@ -180,13 +195,6 @@ public class Module implements Serializable
 		if (this.userAvis.remove(oldUserAvis))
 			oldUserAvis.removeModule(this);
 		
-	}
-	public void removeAllUserAvis(Set<UserAvis> newUserAvis) {
-		if(this.userAvis == null) {
-			return;
-		}
-		
-		this.userAvis.removeAll(newUserAvis);
 	}
 
 }

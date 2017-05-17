@@ -1,7 +1,6 @@
 package com.falcon.avisep.service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.falcon.avisep.model.RoleAvis;
+import com.falcon.avisep.model.Role;
 import com.falcon.avisep.model.UserAvis;
 import com.falcon.avisep.repository.UserAvisRepository;
 @Service
@@ -28,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		UserAvis user=userRepository.findByLogin(login);
-		for (RoleAvis role : user.getRoleAvis()){
+		for (Role role : user.getRole()){
 			grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
 		}
 

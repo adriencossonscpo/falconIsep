@@ -6,11 +6,8 @@ import java.io.Serializable;
 @javax.persistence.DiscriminatorValue("ROLE_STUDENT")
 public class Student extends UserAvis implements Serializable
 {
-	 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8823018571339295613L;
+	 
 	@javax.persistence.Column 
 	protected Integer promo;
 
@@ -25,7 +22,6 @@ public class Student extends UserAvis implements Serializable
 	public void setPromo(Integer myPromo) {
 		this.promo = myPromo;
 	}
-
 	public void unsetPromo() {
 		this.promo = null;
 	}

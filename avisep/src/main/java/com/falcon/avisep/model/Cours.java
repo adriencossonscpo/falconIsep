@@ -1,22 +1,23 @@
 package com.falcon.avisep.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.GenerationType;
+import javax.persistence.Temporal;
 
 
+ 
 @javax.persistence.Entity 
 public class Cours implements Serializable
 {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8172706585637545690L;
+	private static final long serialVersionUID = -5276290922499062222L;
 
 	@javax.persistence.Column 
-	protected String cDate;
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	protected Date cDate;
 
 	@javax.persistence.Column 
 	protected String description;
@@ -24,6 +25,7 @@ public class Cours implements Serializable
 	@javax.persistence.OneToMany(mappedBy = "cours") 
 	protected Set<Evaluation> evaluation;
 
+	 
 	@javax.persistence.OneToMany(mappedBy = "cours") 
 	protected Set<Salle> salle;
 
@@ -32,8 +34,8 @@ public class Cours implements Serializable
 	protected Module module;
 
 	@javax.persistence.Id 
-	@javax.persistence.Column(nullable = false) 
-	protected final Long coursId = 0L;
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)  
+	private Long id;
 
 	public Cours(){
 		super();
@@ -52,10 +54,10 @@ public class Cours implements Serializable
 		}
 	}
 
-	public String getCDate() {
+	public Date getCDate() {
 		return this.cDate;
 	}
-
+	
 	public String getDescription() {
 		return this.description;
 	}
@@ -78,8 +80,12 @@ public class Cours implements Serializable
 		return this.module;
 	}
 
-	public long getCoursId() {
-		return this.coursId;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
@@ -90,7 +96,6 @@ public class Cours implements Serializable
 			tmp.setCours(this);
 		
 	}
-
 	public void addAllSalle(Set<Salle> newSalle) {
 		if (this.salle == null) {
 			this.salle = new HashSet<Salle>();
@@ -107,7 +112,6 @@ public class Cours implements Serializable
 		
 		this.evaluation.removeAll(newEvaluation);
 	}
-
 	public void removeAllSalle(Set<Salle> newSalle) {
 		if(this.salle == null) {
 			return;
@@ -116,10 +120,9 @@ public class Cours implements Serializable
 		this.salle.removeAll(newSalle);
 	}
 
-	public void setCDate(String myCDate) {
+	public void setCDate(Date myCDate) {
 		this.cDate = myCDate;
 	}
-
 	public void setDescription(String myDescription) {
 		this.description = myDescription;
 	}
@@ -132,7 +135,6 @@ public class Cours implements Serializable
 		if (this.evaluation.add(newEvaluation))
 			newEvaluation.basicSetCours(this);
 	}
-
 	public void addSalle(Salle newSalle) {
 		if(this.salle == null) {
 			this.salle = new HashSet<Salle>();
@@ -141,20 +143,16 @@ public class Cours implements Serializable
 		if (this.salle.add(newSalle))
 			newSalle.basicSetCours(this);
 	}
-
 	public void setModule(Module myModule) {
 		this.basicSetModule(myModule);
 		myModule.addCours(this);
 	}
-
 	public void unsetCDate() {
 		this.cDate = null;
 	}
-
 	public void unsetDescription() {
 		this.description = null;
 	}
-
 	public void removeEvaluation(Evaluation oldEvaluation) {
 		if(this.evaluation == null)
 			return;
@@ -163,7 +161,6 @@ public class Cours implements Serializable
 			oldEvaluation.unsetCours();
 		
 	}
-
 	public void removeSalle(Salle oldSalle) {
 		if(this.salle == null)
 			return;
@@ -172,7 +169,6 @@ public class Cours implements Serializable
 			oldSalle.unsetCours();
 		
 	}
-
 	public void unsetModule() {
 		if (this.module == null)
 			return;

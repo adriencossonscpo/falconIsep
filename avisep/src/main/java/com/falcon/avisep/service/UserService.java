@@ -1,11 +1,12 @@
 package com.falcon.avisep.service;
 
-import com.falcon.avisep.model.RoleAvis;
+import com.falcon.avisep.model.Role;
 import com.falcon.avisep.model.Student;
+import com.falcon.avisep.model.UserAvis;
 
 public interface UserService {
 	void save(Student user);
-	Student findByLogin(String login, String passwd, RoleAvis role);
-	Student findByLogin(String login, String passwd);
-	Student findByLogin(String login);
+	UserAvis findByLogin(String login, String passwd, Role role);
+	UserAvis findByLogin(String login, String passwd);
+	UserAvis findByLogin(String login);
 }

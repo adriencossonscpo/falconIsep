@@ -4,28 +4,28 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.GenerationType;
+
+
 
 @javax.persistence.Entity 
 public class Classe implements Serializable
 {
-	 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4699818195888239199L;
+	private static final long serialVersionUID = -2848607714935263592L;
 
+	 
 	@javax.persistence.Column 
 	protected String name;
-
+	 
 	@javax.persistence.OneToMany(mappedBy = "classe") 
 	protected Set<Evaluation> evaluation;
-
+	 
 	@javax.persistence.ManyToMany(mappedBy = "classe") 
 	protected Set<UserAvis> userAvis;
 
 	@javax.persistence.Id 
-	@javax.persistence.Column(nullable = false) 
-	protected final Long classeId = 0L;
+	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY) 
+	private Long id;
 
 	public Classe(){
 		super();
@@ -41,7 +41,7 @@ public class Classe implements Serializable
 		}
 		return (Set<Evaluation>) this.evaluation;
 	}
-
+	
 	public Set<UserAvis> getUserAvis() {
 		if(this.userAvis == null) {
 				this.userAvis = new HashSet<UserAvis>();
@@ -49,8 +49,12 @@ public class Classe implements Serializable
 		return (Set<UserAvis>) this.userAvis;
 	}
 
-	public long getClasseId() {
-		return this.classeId;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
@@ -70,7 +74,6 @@ public class Classe implements Serializable
 			tmp.addClasse(this);
 		
 	}
-
 	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
 		if(this.evaluation == null) {
 			return;
@@ -86,7 +89,6 @@ public class Classe implements Serializable
 		
 		this.userAvis.removeAll(newUserAvis);
 	}
-
 
 	public void setName(String myName) {
 		this.name = myName;
@@ -113,7 +115,6 @@ public class Classe implements Serializable
 	public void unsetName() {
 		this.name = null;
 	}
-
 	public void removeEvaluation(Evaluation oldEvaluation) {
 		if(this.evaluation == null)
 			return;
@@ -122,7 +123,6 @@ public class Classe implements Serializable
 			oldEvaluation.unsetClasse();
 		
 	}
-
 	public void removeUserAvis(UserAvis oldUserAvis) {
 		if(this.userAvis == null)
 			return;
