@@ -2,6 +2,7 @@
 
 /* CSS FOR LOGIN */
 
+/* Background */
 
 body {
 	color:white;
@@ -22,6 +23,9 @@ body {
     background-size: cover;
     -
 }
+
+/* Background */
+
 .content {
     position: absolute;
     top: 0;
@@ -84,7 +88,7 @@ h2 {
     content: "\2713";
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     font-size: 20px;
-    color: Black;
+    color: rgba(76, 47, 39, 0.9);
     text-align: center;
     line-height: 20px;
 }
