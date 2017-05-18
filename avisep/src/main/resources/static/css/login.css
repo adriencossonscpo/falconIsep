@@ -30,7 +30,7 @@ body {
     right: 0;
     width: 480px;
     height: 350px;
-    background-color: rgba(10, 10, 10, 0.6);
+    background-color: rgba(76, 47, 39, 0.9);
     margin: auto auto;
     padding: 30px;
     -moz-border-radius: 4px;
@@ -62,7 +62,7 @@ h2 {
     cursor: pointer;
     position: relative;
     margin-right: 10px;
-    top: 5px;
+    top: 10px;
 }
 .content label:before {
     content: "";
@@ -92,12 +92,21 @@ h2 {
 .content button {
     width: 100%;
     padding: 10px;
-    margin: 30px 0px;
+    margin: 30px 0 20px 0;
     color: White;
     border: none;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+}
+
+.moodle {
+	text-align:center;
+	font-style:italic;
+}
+
+.line {
+	width:20%
 }
 
 /* CSS FOR LOGIN */
