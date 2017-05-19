@@ -11,8 +11,8 @@
 </head>
 <body>
 <div layout:fragment="page-content">
-		<div class="container">
-			<div class="jumbotron" align="center" style="margin-top: 50px;">
+		<div class="content">
+			<div class="container" align="center">
 				<h2>Welcome to AVISEP, the new evaluation system for courses, dedicated to ISEP</h2>
 				<div align="center">
 					<a href="welcomeS" class="btn btn-primary" th:if="${session.userLogged.getRole().iterator().next().name()=='ROLE_STUDENT'}">Welcome Student</a>

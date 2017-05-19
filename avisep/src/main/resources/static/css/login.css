@@ -4,27 +4,6 @@
 
 /* Background */
 
-body {
-	color:white;
-}
-
-.content:before {
-    content: "";
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: -1;
-    display: block;
-    background-image: url("http://commons.studyrama.com/data/bc2e/152/photo_806.jpg");
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    -
-}
-
-/* Background */
 
 .content {
     position: absolute;
@@ -34,7 +13,7 @@ body {
     right: 0;
     width: 480px;
     height: 350px;
-    background-color: rgba(76, 47, 39, 0.9);
+    background-color: rgba(255, 255, 255, 0.6);
     margin: auto auto;
     padding: 30px;
     -moz-border-radius: 4px;
@@ -88,7 +67,7 @@ h2 {
     content: "\2713";
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
     font-size: 20px;
-    color: rgba(76, 47, 39, 0.9);
+    color: black;
     text-align: center;
     line-height: 20px;
 }
