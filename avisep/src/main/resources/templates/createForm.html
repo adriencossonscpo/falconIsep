@@ -7,8 +7,10 @@
 <title>Create Form !</title>
 </head>
 <body>
-	<div layout:fragment="page-content">
-		<div class="container col-xs-12 col-sm-2 col-md-2 col-lg-2">
+<div layout:fragment="page-content">
+	<div class="content">
+	<div class="container container-create">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab">Add Question</a></li>
 			</ul>
@@ -47,11 +49,11 @@
 
 
 		<!-- Create form tab -->
-		<div class="container col-xs-12 col-sm-10 col-md-10 col-lg-10">
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<ul class="nav nav-tabs" role="tablist" id="form-tab">
 				<li role="presentation" class="active">
 					<a role="tab" data-toggle="tab" href="#form">
-						<span class="glyphicon glyphicon-list-alt"></span>Your Form
+						Your Form
 					</a>
 				</li>
 				<li role="presentation">
@@ -90,7 +92,7 @@
 				<!-- Display the form's preview -->
 				<div role="tabpanel" class="tab-pane fade in" id="form-preview">
 					<div class="panel panel-default" style="padding: 20px">
-						<h4><p class="form-hint" id="form-title-preview">Form title</p></h4>
+						<h4 class="form-hint" id="form-title-preview">Form title</h4>
 						<hr />
 						<div class="well" id="form-preview-group">
 							<p class="question-hint" id="add-question-hint">Add question to your form by choosing its type</p>
@@ -100,5 +102,7 @@
 			</div>
 		</div>
 	</div>
+	</div>
+</div>
 </body>
 </html>
