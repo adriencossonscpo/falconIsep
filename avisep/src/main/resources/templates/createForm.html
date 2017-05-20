@@ -7,7 +7,10 @@
 <title>Create Form !</title>
 </head>
 <body>
-	<div layout:fragment="page-content">
+<div layout:fragment="page-content">
+	<div class="content">
+	<div class="container container-create">
+	
 		<div class="container col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab">Add Question</a></li>
@@ -62,7 +65,7 @@
 							<div class="well form-title">
 								<div class="form-group row form-group-title">
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-										<label class="question-type">Form title :</label>
+										<label class="question-type">Title :</label>
 									</div>
 									<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
 										<textarea class="form-control" id="form-title"
@@ -85,7 +88,7 @@
 				<!-- Display the form's preview -->
 				<div role="tabpanel" class="tab-pane fade in" id="form-preview">
 					<div class="panel panel-default" style="padding: 20px">
-						<h4><p class="form-title-preview form-hint" id="form-title-preview">Form title</p></h4>
+						<h4 class="form-title-preview form-hint" id="form-title-preview">Form title</h4>
 						<hr />
 						<div class="well" id="form-preview-group">
 							<p class="question-hint" id="add-question-hint">Add question to your form by choosing its type</p>
@@ -94,6 +97,9 @@
 				</div>
 			</div>
 		</div>
+		
 	</div>
+	</div>
+</div>
 </body>
 </html>
