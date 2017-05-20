@@ -1,0 +1,163 @@
+@CHARSET "ISO-8859-1";
+
+/* Background */
+
+.content:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    display: block;
+    background-image: url("http://commons.studyrama.com/data/bc2e/152/photo_806.jpg");
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    
+}
+
+/* Background */
+
+
+/* CSS FOR ALL BOXES */
+
+.content {
+    
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 98%;
+    background-color: rgba(255, 255, 255, 0.6);
+    margin: auto auto;
+    padding: 30px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 10px black;
+    -webkit-box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px black;
+}
+
+/* CSS FOR ALL BOXES */
+
+
+
+/* {
+	outline: 1px solid red;
+}*/
+
+
+
+textarea {
+	resize: vertical;
+}
+
+hr {
+	border-top: 1px solid #CCCCCC;
+	width: 90%;
+}
+
+.glyphicon-list-alt {
+	font-size: 18px;
+	margin-right: 10px;
+}
+
+.glyphicon-left {
+	float: left;
+	font-size: 17px;
+	margin-right: 10px;
+}
+
+.question-type {
+	padding-top: 6px;
+	white-space: nowrap;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+}
+
+.btn-type {
+	width: 90%;
+	margin-bottom: 10px;
+}
+
+.question-hint, #form-title-preview {
+	text-align: center;
+	color: #BBBBBB;
+	text-shadow: 1px 1px 3px #DFDFDF;
+	font-style: italic;
+}
+
+.form-hint {
+	color: #BBBBBB;
+	font-style: italic;
+}
+
+.form-title {
+	background: url("../img/form-title-background.png");
+}
+
+.form-title-preview {
+	text-align: center;
+	text-shadow: 1px 1px 3px #DFDFDF;
+	font-style: italic;
+}
+
+.form-preview {
+	background: url("../img/form-preview-background.png");
+}
+
+.btn-delete-question {
+	float: left;
+}
+
+.btn-add-option {
+	float: left;
+}
+
+.question-option {
+	margin-bottom: 8px;
+}
+
+.question-form, .form-group-title {
+	margin-bottom: 0; /* Avoid bootstrap form css property */
+}
+
+.question-options {
+	margin-top: 15px;
+}
+
+.delete-button
+{
+    color: #d43f3a;
+    height: 21px;
+    width: 21px;
+    font-size: 20px;
+    cursor: pointer;
+	padding: 0;
+}
+
+.delete-button-parent {
+	padding: 5px 0;
+}
+
+.delete-button:active
+{
+    text-shadow: -1px 0 1px #777777, 0 1px 1px #777777, 1px 0 1px #777777, 0 -1px 1px #777777;
+}
+
+.question-preview {
+	padding-top: 10px;
+}
+
+.question-answer-preview {
+	cursor: text;
+}
+
+.container-create {
+	padding:0;
+	margin:0;
+	width:100%
+}
