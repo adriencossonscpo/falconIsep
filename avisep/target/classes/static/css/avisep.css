@@ -1,5 +1,9 @@
 @CHARSET "ISO-8859-1";
 
+/* {
+	outline: 1px solid red;
+}*/
+
 /* Background */
 
 .content:before {
@@ -18,7 +22,7 @@
     
 }
 
-/* Background */
+/**************/
 
 
 /* CSS FOR ALL BOXES */
@@ -41,15 +45,7 @@
     box-shadow: 0 0 10px black;
 }
 
-/* CSS FOR ALL BOXES */
-
-
-
-/* {
-	outline: 1px solid red;
-}*/
-
-
+/*********************/
 
 textarea {
 	resize: vertical;
@@ -75,7 +71,7 @@ hr {
 	padding-top: 6px;
 	white-space: nowrap;
 	overflow: hidden;
-  	text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 
 .btn-type {
@@ -83,7 +79,7 @@ hr {
 	margin-bottom: 10px;
 }
 
-.question-hint, #form-title-preview {
+.question-hint {
 	text-align: center;
 	color: #BBBBBB;
 	text-shadow: 1px 1px 3px #DFDFDF;
@@ -129,13 +125,12 @@ hr {
 	margin-top: 15px;
 }
 
-.delete-button
-{
-    color: #d43f3a;
-    height: 21px;
-    width: 21px;
-    font-size: 20px;
-    cursor: pointer;
+.delete-button {
+	color: #d43f3a;
+	height: 21px;
+	width: 21px;
+	font-size: 20px;
+	cursor: pointer;
 	padding: 0;
 }
 
@@ -143,17 +138,19 @@ hr {
 	padding: 5px 0;
 }
 
-.delete-button:active
-{
-    text-shadow: -1px 0 1px #777777, 0 1px 1px #777777, 1px 0 1px #777777, 0 -1px 1px #777777;
+.delete-button:active {
+	text-shadow: -1px 0 1px #777777, 0 1px 1px #777777, 1px 0 1px #777777, 0
+		-1px 1px #777777;
 }
 
 .question-preview {
 	padding-top: 10px;
 }
 
-.question-answer-preview {
-	cursor: text;
+.question-options-preview {
+	padding-left: 20px;
+	font-size: 14px;
+	font-weight: normal;
 }
 
 .container-create {
@@ -161,3 +158,120 @@ hr {
 	margin:0;
 	width:100%
 }
+
+.roti-preview, .roti-preview-selected {
+	width: 60px;
+	height: 60px;
+	cursor: pointer;
+	background-size: 100%;
+	margin: 10px 20px;
+	border-radius: 50%;
+	transition: 0.4s;
+	opacity: 0.6;
+}
+
+.roti-preview:hover {
+    -webkit-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+	opacity: 1;
+	border: 4px solid #5cb85c;
+}
+
+.roti-preview-selected {
+	opacity: 1;
+	border: 4px solid #5cb85c;
+	-webkit-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+#roti-preview-5 {
+	background-image: url("../img/roti/5.png");
+}
+
+#roti-preview-4 {
+	background-image: url("../img/roti/4.png");
+}
+
+#roti-preview-3 {
+	background-image: url("../img/roti/3.png");
+}
+
+#roti-preview-2 {
+	background-image: url("../img/roti/2.png");
+}
+
+#roti-preview-1 {
+	background-image: url("../img/roti/1.png");
+}
+
+
+
+/* YES/NO SWITCH */
+
+.yn_switch {
+	margin: 6px 45px;
+}
+
+.yn_switch_label {
+	position: absolute;
+	font-size: 18px;
+	color: #BDBDBD;
+	margin-top: 8px;
+}
+
+#yn_switch_oui {
+	margin-left: 118px;
+}
+
+.cmn-toggle {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+input.cmn-toggle-round + label {
+  padding: 2px;
+  width: 60px;
+  height: 30px;
+  background-color: #dddddd;
+  border-radius: 30px;
+}
+input.cmn-toggle-round + label:before,
+input.cmn-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+input.cmn-toggle-round + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 30px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round + label:after {
+  width: 29px;
+  background-color: #fff;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: margin 0.4s;
+}
+input.cmn-toggle-round:checked + label:before {
+  background-color: #75d681;
+}
+input.cmn-toggle-round:checked + label:after {
+  margin-left: 30px;
+}
+
+/*****************/

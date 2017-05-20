@@ -7,10 +7,8 @@
 <title>Create Form !</title>
 </head>
 <body>
-<div layout:fragment="page-content">
-	<div class="content">
-	<div class="container container-create">
-		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+	<div layout:fragment="page-content">
+		<div class="container col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab">Add Question</a></li>
 			</ul>
@@ -34,13 +32,9 @@
 							onclick="addQuestion($(this).attr('name'))">
 							<span class="glyphicon glyphicon-plus glyphicon-left"></span>Radio
 						</button>
-						<button class="btn btn-success btn-type" name="slider"
+						<button class="btn btn-success btn-type" name="roti"
 							onclick="addQuestion($(this).attr('name'))">
 							<span class="glyphicon glyphicon-plus glyphicon-left"></span>ROTI
-						</button>
-						<button class="btn btn-success btn-type" name="slider"
-							onclick="checkIndex(0)">
-							<span class="glyphicon glyphicon-plus glyphicon-left"></span>check
 						</button>
 					</div>
 				</div>
@@ -49,11 +43,11 @@
 
 
 		<!-- Create form tab -->
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+		<div class="container col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<ul class="nav nav-tabs" role="tablist" id="form-tab">
 				<li role="presentation" class="active">
 					<a role="tab" data-toggle="tab" href="#form">
-						Your Form
+						<span class="glyphicon glyphicon-list-alt"></span>Your Form
 					</a>
 				</li>
 				<li role="presentation">
@@ -82,8 +76,7 @@
 							<div align="right">
 								<button type="button" title="Create your form !"
 									class="btn btn-primary" id="create-form">
-									<span class="glyphicon glyphicon-send glyphicon-left"></span>Create
-									Form
+									<span class="glyphicon glyphicon-send glyphicon-left"></span>Create	Form
 								</button>
 							</div>
 						</form>
@@ -92,7 +85,7 @@
 				<!-- Display the form's preview -->
 				<div role="tabpanel" class="tab-pane fade in" id="form-preview">
 					<div class="panel panel-default" style="padding: 20px">
-						<h4 class="form-hint" id="form-title-preview">Form title</h4>
+						<h4><p class="form-title-preview form-hint" id="form-title-preview">Form title</p></h4>
 						<hr />
 						<div class="well" id="form-preview-group">
 							<p class="question-hint" id="add-question-hint">Add question to your form by choosing its type</p>
@@ -102,7 +95,5 @@
 			</div>
 		</div>
 	</div>
-	</div>
-</div>
 </body>
 </html>
