@@ -1,4 +1,4 @@
-INSERT INTO public.user_avis(
+INSERT INTO avisepdb.user_avis(
 	user_type,id, email, first_name, last_name, login, passwd)
 	VALUES ('ROLE_ADMIN', 0000000000, 'admin@avisep.fr', 'Mister', 'Admin', 'adminavisep', 'falconteamadmin'),
 	('ROLE_ETEACHER' , 0000000001, 'teacher1@avisep.fr', 'Miss', 'Teacher', 'teacheravisep1', 'falconteamteacher1'),
@@ -9,7 +9,7 @@ INSERT INTO public.user_avis(
 
 
 
-INSERT INTO public.user_avis_role(
+INSERT INTO avisepdb.user_avis_role(
 	user_avis_id, role)
 	VALUES (0000000000, 'ROLE_ADMIN'),
 	(0000000001, 'ROLE_ETEACHER'),
@@ -20,7 +20,7 @@ INSERT INTO public.user_avis_role(
 
 
 
-INSERT INTO public.module(
+INSERT INTO avisepdb.module(
 	id, description, name)
 	VALUES (5000000000, 'Scrum et Agile', 'Génie Logiciel'),
 	(5000000001, 'Théorie pour la sécurité informatique', 'Cybersécurité'),
@@ -31,7 +31,7 @@ INSERT INTO public.module(
 	(5000000006, 'Théorie Statistiques', 'Mathématiques');
 
 
-INSERT INTO public.user_avis_module(
+INSERT INTO avisepdb.user_avis_module(
 	user_avis_id, module_id)
 	VALUES (0000000002, 5000000000),
 	(0000000002, 5000000001),
@@ -49,13 +49,13 @@ INSERT INTO public.user_avis_module(
 	(0000000005, 5000000004),
 	(0000000005, 5000000005);
 	
-INSERT INTO public.classe(id, name)
+INSERT INTO avisepdb.classe(id, name)
 	VALUES (4000000000, 'Classe A'),
 (4000000001, 'Classe B'),
 (4000000002, 'Classe C'),
 (4000000003, 'Classe D');
 
-INSERT INTO public.user_avis_classe(
+INSERT INTO avisepdb.user_avis_classe(
 	user_avis_id, classe_id)
 	VALUES (0000000002, 4000000000),
 	(0000000002, 4000000001),
@@ -68,7 +68,7 @@ INSERT INTO public.user_avis_classe(
 	(0000000005, 4000000003);
 
 	
-	INSERT INTO public.cours(id, c_date, description, module_id)
+	INSERT INTO avisepdb.cours(id, c_date, description, module_id)
 	VALUES (-7000000000, '2017-03-16', 'Cours Agile 1', 5000000000),
 	(-7000000001, '2017-03-23', 'Cours Agile 2', 5000000000),
 	(-7000000002, '2017-03-30', 'Cours Agile 3', 5000000000),
@@ -89,7 +89,7 @@ INSERT INTO public.user_avis_classe(
 	(-7000000017, '2017-02-21', 'Théorèmes', 5000000006),
 	(-7000000018, '2017-04-05', 'Entrainement au partiel', 5000000006);
 	
-INSERT INTO public.salle(id, location, name, cours_id)
+INSERT INTO avisepdb.salle(id, location, name, cours_id)
 	VALUES (-6000000000, 'NDC', 'N16', -7000000005),
 	(-6000000001, 'NDC', 'N16', -7000000012),
 	(-6000000002, 'NDC', 'N28', -7000000002),
@@ -102,7 +102,7 @@ INSERT INTO public.salle(id, location, name, cours_id)
 	(-6000000009, 'NDC', 'L220', -7000000015),
 	(-6000000010, 'NDC', 'L416', -7000000011);
 	
-	INSERT INTO public.student(id,promo)
+	INSERT INTO avisepdb.student(id,promo)
 	VALUES (0000000002, 2018),
 	(0000000003, 2018),
 	(0000000004, 2019);
