@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.falcon.avisep.model.Role;
 import com.falcon.avisep.model.UserAvis;
 import com.falcon.avisep.repository.UserAvisRepository;
 @Service
@@ -27,9 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		UserAvis user=userRepository.findByLogin(login);
-		for (Role role : user.getRole()){
-			grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
-		}
+			grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().name()));
 
 		return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPasswd(), grantedAuthorities);
 	}

@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
-
-
  
 @javax.persistence.Entity 
 public class Cours implements Serializable
@@ -32,6 +32,10 @@ public class Cours implements Serializable
 	@javax.persistence.ManyToOne 
 	@javax.persistence.JoinColumn(nullable = false) 
 	protected Module module;
+	
+	@javax.persistence.OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="form_id")
+	protected Form form;
 
 	@javax.persistence.Id 
 	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY)  
@@ -54,6 +58,36 @@ public class Cours implements Serializable
 		}
 	}
 
+	
+	public void basicSetForm(Form myForm) {
+		if (this.form != myForm) {
+			if (myForm != null){
+				if (this.form != myForm) {
+					Form oldform = this.form;
+					this.form = myForm;
+					if (oldform != null)
+						oldform.unsetCours();
+				}
+			}
+		}
+	}
+	
+	public Form getForm() {
+		return this.form;
+	}
+	public void setForm(Form myForm) {
+		this.basicSetForm(myForm);
+		myForm.basicSetCours(this);
+		
+	}
+	public void unsetForm() {
+		if (this.form == null)
+			return;
+		Form oldform = this.form;
+		this.form = null;
+		oldform.unsetCours();
+	}
+	
 	public Date getCDate() {
 		return this.cDate;
 	}

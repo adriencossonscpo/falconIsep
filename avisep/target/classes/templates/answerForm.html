@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Welcome</title>
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -14,16 +14,15 @@
 
 <div class="content">
   <ul class="nav nav-tabs" style="border-color:">
-    <li class="active"><a data-toggle="tab" href="#answer">Answer to Form refered to Course 1</a></li>
+    <li class="active"><a data-toggle="tab" href="#answer">Answer to Form refered to <span th:text="*{description}"></span></a></li>
   </ul>
-
   <div class="tab-content">
     <div id="answer" class="tab-pane fade in active">
     	<div class="panel panel-default">
     		<h3 class="panel-body" align="center">Title Form</h3>
         	
         	<div class="panel-body">
-  				<form>
+  				<form th:action="@{'/welcomeS/sendEvaluation/'+${id}}" method="post" class="form-signin">
   				<!-- There will be displayed all the questions refering to Course -->
   				<div align="right">
 					<button type="submit" title="Send your answers!"

@@ -1,12 +1,16 @@
 package com.falcon.avisep.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import ch.qos.logback.classic.pattern.Util;
 
 public class utilMethod {
 	
@@ -72,6 +76,21 @@ public class utilMethod {
 		}
 		return listS;
 	}
+	public static String takeFromTitle(Map<String, Object> jsonObjectBuilderForm) {
+		int i=0;
+		List<String> listS=new ArrayList<String>();
+		Map<String, Object>  json=jsonObjectBuilderForm;
+		for (Entry<String, Object> entry : json.entrySet()) {
+//			System.out.println("entry key "+i+": "+entry.getKey());
+			System.out.println("Object value "+i+": "+entry.getValue());
+			String s=String.valueOf(entry.getValue());
+				if(i==0){
+					return String.valueOf(entry.getValue());
+				}
+			i++;
+		}
+		return null;
+	}
 	public static String getString(String s, int i){
 		//if (s.charAt(i)=='=') return s.substring(i+1, searchEnd(s,i));
 		if (s.charAt(i)=='=') return s.substring(i+1);
@@ -97,15 +116,26 @@ public class utilMethod {
 		}
 		return jsonData;
 	}
-	public int[] count(String s){
-		int val[]=new int[2];
-		for(int i1=0;i1<s.length();i1++){
-			if(s.charAt(i1)==','){
-				val[i1]=i1;
-			}
-		}
+	public static List<String> parseOptions(String s){
 		
-		return val;
+		s.replaceAll("\\[", "").replaceAll("\\]", "");
+		String[] chaine=s.split(", ");
+		List<String> options=Arrays.asList(chaine);
+		
+//		while(i<s.length()){
+//			if(s.charAt(i)!=',' && s.charAt(i)!='['){
+//				chaine=chaine+s.charAt(i);
+//			}
+//			if(s.charAt(i)==']'){
+//				options.add(chaine);
+//				break;
+//			}
+//			if(!(s.charAt(i)!=',' && s.charAt(i)!='[')){
+//				options.add(chaine);
+//			}
+//			i++;
+//		}
+		return options;
 		
 	}
 	public static List<String> getF(List<String> listS) {

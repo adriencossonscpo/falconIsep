@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller 
 public class WelcomeAdminController {
 
-    private final Logger log = LoggerFactory.getLogger(IndexController.class);
+    private final Logger log = LoggerFactory.getLogger(WelcomeAdminController.class);
     // Create and display forms
-    @RequestMapping("/welcomeA")
+    @RequestMapping(value={"/","welcomeA"})
 	public String welcomAd(Model model){
 		
 		return "welcomeAdmin";

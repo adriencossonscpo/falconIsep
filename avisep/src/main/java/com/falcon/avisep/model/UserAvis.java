@@ -31,8 +31,8 @@ public abstract class UserAvis
 	protected String passwd;
 
 	@javax.persistence.Enumerated(javax.persistence.EnumType.STRING) 
-	@javax.persistence.ElementCollection(targetClass = Role.class) 
-	protected Set<Role> role;
+//	@javax.persistence.ElementCollection(targetClass = Role.class) 
+	protected Role role;
 
 	@javax.persistence.OneToMany(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL) 
 	protected Set<Evaluation> evaluation;
@@ -53,7 +53,15 @@ public abstract class UserAvis
 	public UserAvis(){
 		super();
 	}
-
+	public Role getRole() {
+		return this.role;
+	}
+	public void setRole(Role myRole) {
+		this.role = myRole;
+	}
+	public void unsetRole() {
+		this.role = null;
+	}
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -73,12 +81,6 @@ public abstract class UserAvis
 		return this.passwd;
 	}
 
-	public Set<Role> getRole() {
-		if(this.role == null) {
-				this.role = new HashSet<Role>();
-		}
-		return (Set<Role>) this.role;
-	}
 
 	public Set<Evaluation> getEvaluation() {
 		if(this.evaluation == null) {
@@ -113,13 +115,6 @@ public abstract class UserAvis
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public void addAllRole(Set<Role> newRole) {
-		if (this.role == null) {
-			this.role = new HashSet<Role>();
-		}
-		this.role.addAll(newRole);
 	}
 
 	public void addAllEvaluation(Set<Evaluation> newEvaluation) {
@@ -157,13 +152,6 @@ public abstract class UserAvis
 		
 	}
 
-	public void removeAllRole(Set<Role> newRole) {
-		if(this.role == null) {
-			return;
-		}
-		
-		this.role.removeAll(newRole);
-	}
 	public void removeAllEvaluation(Set<Evaluation> newEvaluation) {
 		if(this.evaluation == null) {
 			return;
@@ -213,13 +201,6 @@ public abstract class UserAvis
 		this.passwd = myPasswd;
 	}
 
-	public void addRole(Role newRole) {
-		if(this.role == null) {
-			this.role = new HashSet<Role>();
-		}
-		
-		this.role.add(newRole);
-	}
 
 	public void addEvaluation(Evaluation newEvaluation) {
 		if(this.evaluation == null) {
@@ -276,12 +257,6 @@ public abstract class UserAvis
 		this.passwd = null;
 	}
 
-	public void removeRole(Role oldRole) {
-		if(this.role == null)
-			return;
-		
-		this.role.remove(oldRole);
-	}
 
 	public void removeEvaluation(Evaluation oldEvaluation) {
 		if(this.evaluation == null)

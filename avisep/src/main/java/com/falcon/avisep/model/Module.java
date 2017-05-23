@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.GenerationType;
-
-
+import javax.persistence.JoinColumn;
 
  
 @javax.persistence.Entity 
@@ -33,7 +33,11 @@ public class Module implements Serializable
 
 	@javax.persistence.ManyToMany(mappedBy = "module") 
 	protected Set<UserAvis> userAvis;
-
+	
+	@javax.persistence.OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="form_id")
+	protected Form form;
+	
 	@javax.persistence.Id 
 	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Long id;
@@ -87,7 +91,18 @@ public class Module implements Serializable
 			tmp.setModule(this);
 		
 	}
-
+	public void basicSetForm(Form myForm) {
+		if (this.form != myForm) {
+			if (myForm != null){
+				if (this.form != myForm) {
+					Form oldform = this.form;
+					this.form = myForm;
+					if (oldform != null)
+						oldform.unsetModule();
+				}
+			}
+		}
+	}
 	public void addAllCours(Set<Cours> newCours) {
 		if (this.cours == null) {
 			this.cours = new HashSet<Cours>();
@@ -95,6 +110,21 @@ public class Module implements Serializable
 		for (Cours tmp : newCours)
 			tmp.setModule(this);
 		
+	}
+	public Form getForm() {
+		return this.form;
+	}
+	public void setForm(Form myForm) {
+		this.basicSetForm(myForm);
+		myForm.basicSetModule(this);
+		
+	}
+	public void unsetForm() {
+		if (this.form == null)
+			return;
+		Form oldform = this.form;
+		this.form = null;
+		oldform.unsetModule();
 	}
 
 	public void addAllUserAvis(Set<UserAvis> newUserAvis) {

@@ -1,7 +1,5 @@
 package com.falcon.avisep.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,11 +20,10 @@ import com.falcon.avisep.model.Role;
 import com.falcon.avisep.model.Student;
 import com.falcon.avisep.model.VTeacher;
 import com.falcon.avisep.service.UserAvisServiceImpl;
-import com.falcon.avisep.util.utilMethod;
 @Controller 
 public class LoginController  {
 
-	private final Logger log = LoggerFactory.getLogger(IndexController.class);
+	private final Logger log = LoggerFactory.getLogger(LoginController.class);
 	@Autowired
 	private UserAvisServiceImpl userService;
 	@RequestMapping(value = "login", method = RequestMethod.GET)
@@ -37,16 +34,15 @@ public class LoginController  {
     public String logout(HttpServletRequest request){
         HttpSession httpSession = request.getSession();
         httpSession.invalidate();
-        return "redirect:/";
+        return "redirect:/login";
     }
 	@RequestMapping(value= "login", method = RequestMethod.POST)
 	public String login(HttpSession session,@RequestParam("login") String login, @RequestParam("passwd") String passwd){
 
 		if(userService.userExist(login)>0){
-			
-			List<Role> roles=utilMethod.toList(userService.findByLogin(login).getRole());
-			System.out.println(roles.get(0)+" "+login+" "+passwd);
-			if(roles.get(0).name().equalsIgnoreCase(Role.ROLE_STUDENT.name())){
+			Role role=userService.findByLogin(login).getRole();
+			System.out.println(role+" "+login+" "+passwd);
+			if(role.name().equalsIgnoreCase(Role.ROLE_STUDENT.name())){
 				Student userLog=(Student) userService.findByLogin(login);
 				if((userLog.getLogin().equalsIgnoreCase(login) && 
 						userLog.getPasswd().equalsIgnoreCase(passwd)))
@@ -54,12 +50,12 @@ public class LoginController  {
 					//checkUser(login,passwd))
 				{
 					session.setAttribute("userLogged", userLog);
-					return "redirect:/index";
+					return "redirect:/welcomeS";
 				}
 				else{
 					return "redirect:/login-error";
 				}
-			}else if(roles.get(0).name().equalsIgnoreCase(Role.ROLE_VTEACHER.name())){
+			}else if(role.name().equalsIgnoreCase(Role.ROLE_VTEACHER.name())){
 				VTeacher userLog=(VTeacher) userService.findByLogin(login);
 				if((userLog.getLogin().equalsIgnoreCase(login) && 
 						userLog.getPasswd().equalsIgnoreCase(passwd)))
@@ -67,12 +63,12 @@ public class LoginController  {
 					//checkUser(login,passwd))
 				{
 					session.setAttribute("userLogged", userLog);
-					return "redirect:/index";
+					return "redirect:/welcomeT";
 				}
 				else{
 					return "redirect:/login-error";
 				}
-			}else if(roles.get(0).name().equalsIgnoreCase(Role.ROLE_ETEACHER.name())){
+			}else if(role.name().equalsIgnoreCase(Role.ROLE_ETEACHER.name())){
 				ETeacher userLog=(ETeacher) userService.findByLogin(login);
 				if((userLog.getLogin().equalsIgnoreCase(login) && 
 						userLog.getPasswd().equalsIgnoreCase(passwd)))
@@ -80,12 +76,12 @@ public class LoginController  {
 					//checkUser(login,passwd))
 				{
 					session.setAttribute("userLogged", userLog);
-					return "redirect:/index";
+					return "redirect:/welcomeT";
 				}
 				else{
 					return "redirect:/login-error";
 				}
-			}else if(roles.get(0).name().equalsIgnoreCase(Role.ROLE_ADMIN.name())){
+			}else if(role.name().equalsIgnoreCase(Role.ROLE_ADMIN.name())){
 				Admin userLog=(Admin) userService.findByLogin(login);
 				if((userLog.getLogin().equalsIgnoreCase(login) && 
 						userLog.getPasswd().equalsIgnoreCase(passwd)))
@@ -93,7 +89,7 @@ public class LoginController  {
 					//checkUser(login,passwd))
 				{
 					session.setAttribute("userLogged", userLog);
-					return "redirect:/index";
+					return "redirect:/welcomeA";
 				}
 				else{
 					return "redirect:/login-error";

@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.GenerationType;
-
+import javax.persistence.JoinColumn;
 
  
 @javax.persistence.Entity 
@@ -27,6 +28,11 @@ public class Salle implements Serializable
 	@javax.persistence.ManyToOne 
 	@javax.persistence.JoinColumn(nullable = false) 
 	protected Cours cours;
+	
+	
+	@javax.persistence.OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="form_id") 
+	protected Form form;
 
 	@javax.persistence.Id 
 	@javax.persistence.GeneratedValue(strategy=GenerationType.IDENTITY) 
@@ -47,6 +53,35 @@ public class Salle implements Serializable
 				}
 			}
 		}
+	}
+	
+	public void basicSetForm(Form myForm) {
+		if (this.form != myForm) {
+			if (myForm != null){
+				if (this.form != myForm) {
+					Form oldform = this.form;
+					this.form = myForm;
+					if (oldform != null)
+						oldform.unsetSalle();
+				}
+			}
+		}
+	}
+	public Form getForm() {
+		return this.form;
+	}
+	
+	public void setForm(Form myForm) {
+		this.basicSetForm(myForm);
+		myForm.basicSetSalle(this);
+		
+	}
+	public void unsetForm() {
+		if (this.form == null)
+			return;
+		Form oldform = this.form;
+		this.form = null;
+		oldform.unsetSalle();
 	}
 	public String getName() {
 		return this.name;

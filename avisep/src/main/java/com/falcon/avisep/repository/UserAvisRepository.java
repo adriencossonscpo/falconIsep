@@ -16,6 +16,7 @@ public interface UserAvisRepository extends JpaRepository<UserAvis,Long> {
 	UserAvis findByLogin(String login,String passwd,Role role);
 	UserAvis findByLogin(String login,String passwd);
 	UserAvis findByLogin(String login);
+	
 	@Query("select count(login) from UserAvis user where user.login =:login")
 	int exist(@Param("login")String login);
 }

@@ -15,7 +15,10 @@ public class Evaluation implements Serializable
 	 
 	@javax.persistence.Column(nullable = false)
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
-	protected Date eData;
+	protected Date eDate;
+	
+	@javax.persistence.Column
+	protected String eData;
 
 	 
 	@javax.persistence.ManyToOne 
@@ -48,6 +51,15 @@ public class Evaluation implements Serializable
 
 	public Evaluation(){
 		super();
+	}
+	public String getEData() {
+		return this.eData;
+	}
+	public void setEData(String data) {
+		this.eData = data;
+	}
+	public void unsetEData() {
+		this.eData = null;
 	}
 	public void basicSetSalle(Salle mySalle) {
 		if (this.salle != mySalle) {
@@ -124,8 +136,8 @@ public class Evaluation implements Serializable
 		}
 	}
 
-	public Date getEData() {
-		return this.eData;
+	public Date getEDate() {
+		return this.eDate;
 	}
 
 	public Salle getSalle() {
@@ -155,8 +167,8 @@ public class Evaluation implements Serializable
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public void setEData(Date myEData) {
-		this.eData = myEData;
+	public void setEDate(Date myEData) {
+		this.eDate = myEData;
 	}
 
 	public void setSalle(Salle mySalle) {
@@ -187,8 +199,8 @@ public class Evaluation implements Serializable
 		myQuestion.addEvaluation(this);
 	}
 
-	public void unsetEData() {
-		this.eData = null;
+	public void unsetEDate() {
+		this.eDate = null;
 	}
 	public void unsetSalle() {
 		if (this.salle == null)
