@@ -12,18 +12,145 @@
 <div layout:fragment="page-content">
 
 <div class="content">
-  <ul class="nav nav-tabs" style="border-color:">
+  <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-    <li><a data-toggle="tab" href="#users">Manage Users</a></li>
-    <li><a data-toggle="tab" href="#modules">Manage Modules</a></li>
-    <li><a data-toggle="tab" href="#courses">Manage Courses</a></li>
-    <li><a data-toggle="tab" href="#classrooms">Manage Classrooms</a></li>
-    <li><a data-toggle="tab" href="#classes">Manage Classes</a></li>
+    <li><a data-toggle="tab" href="#usersedit">Users</a></li>
+    <li><a data-toggle="tab" href="#modulesedit">Modules</a></li>
+    <li><a data-toggle="tab" href="#coursesedit">Courses</a></li>
   </ul>
 
-  
-
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+    	<div class="panel panel-default">
+    		<h3 class="panel-body">Welcome, Admin !</h3>
+        	<h4 class="panel-body">You can edit every single information from the application.</h4>
+        	<p class="panel-body">Click on the different tabs to manage them.</p>
+    	</div>
+    </div>
+    
+    <!-- Manage Users -->
+    <div id="usersedit" class="tab-pane fade">
+    	<div class="panel panel-default">
+    		<h3 class="panel-body">Manage Avisep Users</h3>
+        	
+        	<div class="panel-body">
+        		<form action="addUser" method="post">
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<label for="fname">First Name</label> <input type="text"
+							class="form-control" id="fname" name="firstN" placeholder="First Name" required="required" />
+					</div>
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<label for="lname">Last Name</label> <input type="text"
+							class="form-control" id="lname" name="lastN" placeholder="Last Name"  required="required" />
+					</div>
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<label for="loname">Login</label> <input type="text"
+							class="form-control" id="login" name="login" placeholder="Login"  required="required" />
+					</div>
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<label for="email">E-mail</label> <input type="email"
+							class="form-control" id="email" name="email" placeholder="Email"  required="required" />
+					</div>
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<label for="password">Password</label> <input
+							type="password" class="form-control" id="password" name="password" placeholder="Password"  required="required" />
+					</div>
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+  						<label for="role">Role</label>
+  						<select class="form-control" id="role" name="role">
+   							<option>Student</option>
+    						<option>Teacher</option>
+    						<option>Admin</option>
+  						</select>
+					</div>
+					
+					<div class="form-group" align="right">
+						<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add user</button>
+					</div>
+				</form>
+        	</div>
+        	
+        	<div class="panel-body">
+        		<table class="table table-hover">
+        			<thead>
+        				<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Email</th>
+							<th>Role</th>
+							<th>Remove User</th>
+						</tr>
+        			</thead>
+        			<tbody>
+        				<tr>
+        					<td>First Names</td>
+        					<td>Last Names</td>
+        					<td>Email's</td>
+        					<td>Roles</td>
+        					<td><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        	
+        	</div>
+    	</div>
+    </div>
+    
+    
+    
+    <!-- Manage Modules -->
+    <div id="modulesedit" class="tab-pane fade">
+    	<div class="panel panel-default">
+    		<h3 class="panel-body">Manage Avisep Modules</h3>
+        	
+        	<div class="panel-body">
+        		<form action="addModule" method="post">
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<label for="fname">Module Name</label> <input type="text"
+							class="form-control" id="mname" name="firstN" placeholder="Module Name"  required="required" />
+					</div>
+					<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+						<label for="lname">Description</label> <textarea
+							class="form-control" id="mdesc" name="lastN" placeholder="Description" rows="1" required="required" ></textarea>
+					</div>
+					
+					<div class="form-group" align="right">
+						<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add module</button>
+					</div>
+				</form>
+        	</div>
+        	
+        	<div class="panel-body">
+        		<table class="table table-hover">
+        			<thead>
+        				<tr>
+							<th>Module Name</th>
+							<th>Description</th>
+							<th>Remove Module</th>
+						</tr>
+        			</thead>
+        			<tbody>
+        				<tr>
+        					<td>Module Names</td>
+        					<td>Description</td>
+        					<td><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        	
+        	</div>
+    	</div>
+    </div>
+    <div id="coursesedit" class="tab-pane fade">
+    	<div class="panel panel-default">
+    		<h3 class="panel-body">Courses</h3>
+        	<p class="panel-body">Edit Courses</p>
+    	</div>
+    </div>
+  </div>
 </div>
+
+
 </div>
 </body>
 </html>
