@@ -1,1 +1,37 @@
+# AVISEP
 
+AVISEP is an evaluation system of courses and modules, dedicated to ISEP.
+It should be used to improve the way teachers organize their courses and how to present them.
+
+## Local Deployement
+
+AVISEP is a Dynamic Web Project that works perfectly on Spring Tool Suite
+
+1. Download Zip or Clone the git repository.
+2. Import as a Maven Existing Project in Spring Tool Suite
+3. Create a database called 'avisepdb' in your favourite SQL manager (default : MySQL)
+4. Set your properties in the 'application.properties' file (spring.datasource.username, spring.datasource.password and spring.datasource.url)
+5. Right click on the avisep file in STS, then Run As > Spring Boot App.
+6. Go on localhost:8080 and it should work !
+
+## Back-End
+
+Only Java language, with Spring framework.
+
+## Front-End
+
+Basic front, including jQuery, Bootstrap and Ajax.
+It contains :
+1. A login page
+2. 3 'Welcome' pages, depending on the role of the user that will be logged in.
+3. A 'Create Form' page, which is the form builder.
+4. A 'Answer Form' page, which is where the form created by a teacher for a specific course or module will be displayed to students who are registered in this one.
+5. A "View Results' page, which is made for teachers, to consult students' answers for each form.
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request
